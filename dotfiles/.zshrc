@@ -4,22 +4,28 @@ if [ "$TERM" != "dumb" ]; then
 fi
 export CLI_COLOR='Yes'
 export PATH=/opt/local/bin:opt/local/sbin:$PATH
-export M2_HOME=/maven3
-export PATH=$M2_HOME/bin:$PATH
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
-export PATH=$JAVA_HOME/bin:$PATH
 autoload -U zmv
 set -o vi
 autoload colors; colors
-autoload -U compinit; compinit
-#completion cache
-#
+autoload -Uz compinit 
+compinit
+#vi editing
+bindkey -v
+
+#autoload -Uz bashcompinit
+#bashcompinit
+#source /usr/local/share/compleat-1.0/compleat_setup
+
 ZCACHEDIR=~/.zsh/cache
 zstyle ':completion:*' cache-path $ZCACHEDIR 
 zstyle ':completion:*' use-cache on
 compinit -C -d $ZCACHEDIR/compdump
 #color completions
-zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
+
+zmodload -i zsh/complist
+#zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+#zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
+zstyle ':completion:*:*:kill:*' list-colors '=%*=01;31'
 zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
 # history
 zstyle ':completion:*:history-words' stop yes
@@ -88,16 +94,28 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git dirpersist extract history-substring-search svn vi-mode)
+plugins=(git dirpersist extract history-substring-search svn osx gnu-utils vi-mode zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 #export JETTY_VERSION=7.5.4.v20111024
+
+export PATH=/Applications:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/X11/bin
+alias trash="mv $1 ~/Trash"
 
 # Customize to your needs...
 #zsh specifc alias
 alias mmv='noglob zmv -W'
 alias ls='gls $LS_OPTIONS'
-#alias ls='ls --color=tty'
+#----
+#    export TERM=xterm; alias ls='ls --color=tty'
+export M2_HOME=/maven3
+export PATH=$M2_HOME/bin:$PATH
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
+export PATH=$JAVA_HOME/bin:$PATH
+alias mv='nocorrect mv'
+alias cp='nocorrect cp'
+alias mkdir='nocorrect mkdir'
+alias grep='grep --color=auto'
 alias c='clear'
 alias cc='c;c;c;c'
 alias p='pushd .'
@@ -111,5 +129,7 @@ alias mcit='maven clean install -Dmaven.test.skip=true'
 alias runjetty='java -jar start.jar etc/jetty-ssl.xml -Dcom.abwg.configurl=file:///Users/sraghav1/workspace/mdf_streaming_deployment/config'
 export PATH=$JAVA_HOME/bin/:$PATH
 # on bash, also do: 
-# export PS1="[\u@\h:\w] $"
-export PATH=/Applications:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/X11/bin
+# export PS1="[\u@\h:\w] $ "
+
+
+

@@ -20,6 +20,7 @@ TERM con80x43
 TERM con80x50
 TERM con80x60
 TERM xterm
+TERM xterm-256color
 TERM xterm-color
 TERM xterm-debian
 TERM rxvt
@@ -55,11 +56,15 @@ EXEC 01;35
 # (and any comments you want to add after a '#')
 
 # If you use DOS-style suffixes, you may want to uncomment the following:
-#.cmd 01;32 # executables (bright green)
-#.exe 01;32
-#.com 01;32
-#.btm 01;32
-#.bat 01;32
+.cmd 01;32 # executables (bright green)
+.exe 01;32
+.com 01;32
+.btm 01;32
+.bat 01;32
+
+#txt-like files
+.txt 00:37
+.log 00:37
 
 .tar 01;31 # archives or compressed (bright red)
 .tgz 01;31
@@ -95,6 +100,11 @@ EXEC 01;35
 
 # source code files
 .pl 00;33
+.java 00;33
+.cpp 00;33
+.h 00;33
+.template 00;33
+.hpp 00;33
 .PL 00;33
 .pm 00;33
 .tt 00;33
@@ -102,4 +112,7 @@ EXEC 01;35
 .sql 00;33
 .html 00;33
 .css 00;33
+.xml 00;33
+.hs 00;33
 .js 00;33
+.sh 00;33
