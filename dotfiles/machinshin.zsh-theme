@@ -36,7 +36,7 @@ local pwd="%{$fg[white]%}%~%{$reset_color%}"
 #local pwd="%{$fg[white]%}$(collapse_pwd)%{$reset_color%}"
 #i don't recally care to see the current time on the prompt. waste of space
 #PROMPT='${time} ${user}${host} ${pwd} $(git_prompt_info)'
-PROMPT='${user}${host}[$(svn_prompt_info)$(git_prompt_info)]${pwd} '
+PROMPT='${user}${host}[$(svn_prompt_info)$(git_prompt_info)]${pwd} $ '
 
 # i would prefer 1 icon that shows the "most drastic" deviation from HEAD,
 # but lets see how this works out
