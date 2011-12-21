@@ -8,23 +8,14 @@
 
 typeset -A host_repr
 
-# translate hostnames into shortened, colorcoded strings
-host_repr=('dieter-ws-a7n8x-arch' "%{$fg_bold[green]%}ws" 'dieter-p4sci-arch' "%{$fg_bold[blue]%}p4")
-
-# local time, color coded by last return code
-time_enabled="%(?.%{$fg[green]%}.%{$fg[red]%})%*%{$reset_color%}"
-time_disabled="%{$fg[green]%}%*%{$reset_color%}"
-time=$time_disabled
+local orange_bold="%B%F{130}"
 
 # user part, color coded by privileges
 local user="%(!.%{$fg[white]%}.%{$fg[red]%})%n%{$reset_color%}"
 
 # Hostname part.  compressed and colorcoded per host_repr array
 # if not found, regular hostname in default color
-#local host="@%{$fg[orange]%}${host_repr[$(hostname)]:-$(hostname)}%{$reset_color%}"
-local orange="%B%F{130}"
-local host="@${orange}${host_repr[$(hostname)]:-$(hostname)}%{$reset_color%}"
-
+local host="${orange_bold}$(hostname)}%{$reset_color%}"
 
 function collapse_pwd {
     echo $(pwd | set -e "s,^$HOME,~,")
@@ -35,8 +26,7 @@ local pwd="%{$fg[white]%}%~%{$reset_color%}"
 #local pwd="%{$fg[white]%}${PWD/#$HOME/~}%{$reset_color%}"
 #local pwd="%{$fg[white]%}$(collapse_pwd)%{$reset_color%}"
 #i don't recally care to see the current time on the prompt. waste of space
-#PROMPT='${time} ${user}${host} ${pwd} $(git_prompt_info)'
-PROMPT='${user}${host}[$(svn_prompt_info)$(git_prompt_info)]${pwd} $ '
+PROMPT='${user}@${host}[$(svn_prompt_info)$(git_prompt_info)]${pwd} $ '
 
 # i would prefer 1 icon that shows the "most drastic" deviation from HEAD,
 # but lets see how this works out
