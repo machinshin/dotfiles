@@ -1,14 +1,24 @@
-if [ "$TERM" != "dumb" ]; then
-	export LS_OPTIONS='--color=auto'
-	eval `/opt/local/bin/gdircolors ~/.dir_colors`
-fi
-export CLI_COLOR='Yes'
-export PATH=/opt/local/bin:opt/local/sbin:$PATH
 autoload -U zmv
-set -o vi
 autoload colors; colors
+HISTFILE=~/.histfile
+HISTSIZE=SAVEHIST=9999
 autoload -Uz compinit 
 compinit
+setopt correctall
+autoload -U promptinit
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+
+setopt incappendhistory
+setopt sharehistory
+setopt extendedhistory
+
+#superglobs
+setopt extendedglob
+unsetopt caseglob
+setopt interactivecomments # pound sign in interactive promt
+REPORTTIME=10
+
 #vi editing
 bindkey -v
 
@@ -60,10 +70,9 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 # I'm bonelazy ;) Complete the hosts and - last but not least - the remote
 # directories. Try it:
 #  $ scp file username@<TAB><TAB>:/<TAB>
-zstyle ':completion:*:(ssh|scp|ftp):*' hosts $hosts
-zstyle ':completion:*:(ssh|scp|ftp):*' users $users
+zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
+zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
 #--------------
-export PATH=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:$PATH
 #export https_proxy=https://10.21.79.250:8080
 #export http_proxy=http://10.21.79.250:8080
 #export RSYNC_PROXY='http://10.21.79.250:8080'
@@ -79,9 +88,11 @@ ZSH_THEME="machinshin"
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+OS=`uname`
+if [[ "$OS" == "Linux" ]]; then
+  # Comment this out to disable weekly auto-update checks
+  DISABLE_AUTO_UPDATE="true"
+fi
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -94,42 +105,25 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git dirpersist extract history-substring-search svn osx gnu-utils vi-mode zsh-syntax-highlighting)
+plugins=(dirpersist extract history-substring-search vi-mode zsh-syntax-highlighting ssh git github svn)
 
 source $ZSH/oh-my-zsh.sh
 #export JETTY_VERSION=7.5.4.v20111024
 
-export PATH=/Applications:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin:/maven3/bin:/opt/local/bin:opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/X11/bin
-alias trash="mv $1 ~/Trash"
-
 # Customize to your needs...
 #zsh specifc alias
 alias mmv='noglob zmv -W'
-alias ls='gls $LS_OPTIONS'
-#----
-#    export TERM=xterm; alias ls='ls --color=tty'
-export M2_HOME=/maven3
-export PATH=$M2_HOME/bin:$PATH
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
-export PATH=$JAVA_HOME/bin:$PATH
+alias ls='ls $LS_OPTIONS'
 alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
-alias grep='grep --color=auto'
-alias c='clear'
-alias cc='c;c;c;c'
-alias p='pushd .'
-alias u='popd'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ll='ls -alh' 
-alias maven='mvn'
-alias mci='maven clean install'
-alias mcit='maven clean install -Dmaven.test.skip=true'
-alias runjetty='java -jar start.jar etc/jetty-ssl.xml -Dcom.abwg.configurl=file:///Users/sraghav1/workspace/mdf_streaming_deployment/config'
-export PATH=$JAVA_HOME/bin/:$PATH
-# on bash, also do: 
-# export PS1="[\u@\h:\w] $ "
 
+if [[ -f $HOME/.corp.env.sh ]]; then 
+  source $HOME/.corp.env.sh
+fi
+
+if [[ -f $HOME/.env.sh ]]; then 
+  source $HOME/.env.sh
+fi
 
 

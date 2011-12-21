@@ -63,8 +63,8 @@ EXEC 01;35
 .bat 01;32
 
 #txt-like files
-.txt 00:37
-.log 00:37
+.txt 00;37
+.log 00;37
 
 .tar 01;31 # archives or compressed (bright red)
 .tgz 01;31
