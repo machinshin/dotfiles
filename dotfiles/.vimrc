@@ -87,5 +87,11 @@ map <A-i> i <ESC>r " alt-i (normal mode) inserts a single char, and then switche
 map <F2> <ESC>ggVG:call SuperRetab(2)<left>
 map <F8> ggVGg? " encypt the file (toggle)
 nmap <A-r>  <ESC>:call RestartVim()<CR>
+set makeprg=mvn\ clean\ install\ -Dmaven.test.skip=true
+
 "press F5 to get a list of buffers and goto a the selected buffer
 nnoremap <F5> :buffers<CR>:buffer<Space>
+
+
+
+

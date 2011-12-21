@@ -13,7 +13,7 @@ fi
 eval `$DIRCOLORS ~/.dir_colors`
 
 if [[ "$OS" == "Darwin" ]]; then
-  export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/
+  export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/
 fi
 
 export CLI_COLOR='Yes'
