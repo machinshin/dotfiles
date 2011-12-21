@@ -73,9 +73,6 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
 #--------------
-#export https_proxy=https://10.21.79.250:8080
-#export http_proxy=http://10.21.79.250:8080
-#export RSYNC_PROXY='http://10.21.79.250:8080'
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -125,5 +122,3 @@ fi
 if [[ -f $HOME/.env.sh ]]; then 
   source $HOME/.env.sh
 fi
-
-
