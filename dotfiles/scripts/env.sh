@@ -33,6 +33,11 @@ alias p='pushd .'
 alias u='popd'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ..2='cd ../../../'
+alias ..3='cd ../../../../'
+alias ..4='cd ../../../../../'
+alias ..5='cd ../../../../../../'
+
 alias ll='ls -alh' 
 alias vi='vim'
 alias v='vim'
@@ -41,4 +46,6 @@ export M2_HOME=$HOME/maven3
 PATH=/opt/local/bin:opt/local/sbin:$PATH
 PATH=$M2_HOME/bin:$PATH
 export PATH=$JAVA_HOME/bin:$PATH
-
+alias maven='mvn'
+alias mci='maven clean install'
+alias mcit='mci -Dmaven.test.skip=true'
