@@ -59,6 +59,8 @@ xdvi() { command xdvi ${*:-*.dvi(om[1])} }
 zstyle ':completion:*:*:xdvi:*' menu yes select
 zstyle ':completion:*:*:xdvi:*' file-sort time
 #pids menu selection
+#zstyle 'completion:*:*:*:*:processes' menu yes select
+#zstyle 'copmletion:*:*:*:*:processes' force-list always
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
 #If you end up using a directory as argument, this will 
@@ -102,7 +104,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(dirpersist extract history-substring-search vi-mode zsh-syntax-highlighting ssh git github svn)
+plugins=(dirpersist extract history-substring-search vi-mode zsh-syntax-highlighting ssh git battery github svn)
 
 source $ZSH/oh-my-zsh.sh
 #export JETTY_VERSION=7.5.4.v20111024
@@ -115,10 +117,11 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
-if [[ -f $HOME/.corp.env.sh ]]; then 
-  source $HOME/.corp.env.sh
+export PATH=$PATH:$HOME/scripts/
+if [[ -f $HOME/scripts/corp.env.sh ]]; then 
+  source $HOME/scripts/corp.env.sh
 fi
 
-if [[ -f $HOME/.env.sh ]]; then 
-  source $HOME/.env.sh
+if [[ -f $HOME/scripts/env.sh ]]; then 
+  source $HOME/scripts/env.sh
 fi
