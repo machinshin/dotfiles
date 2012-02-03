@@ -2,7 +2,10 @@
 "
 " remap leader key to comma
 set nocompatible " get out of horrible vi-compatible mode
-
+" show the current command in progress
+set showcmd
+" set to autoread when a file is changed from teh outside
+set autoread
 set t_Co=256
 filetype on " detect the type of file
 set history=1000 " How many lines of history to remember
@@ -24,7 +27,10 @@ set directory=~/.vim/temp " directory is the directory for temp file
 set makeef=error.err " When using make, where should it dump the file
 "source $VIMRUNTIME/mswin.vim
 set lsp=0 " space it out a little more (easier to read)
-set wildmenu " turn on wild menu
+"first tab: longest match. list in the statusbar, follow tabs: cycle through
+"matches
+set wildmenu wildmode=longest:full,full
+"set wildmenu " turn on wild menu
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
 set number " turn on line numbers
@@ -41,10 +47,10 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 " Visual Cues
 set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
-set nohlsearch " do not highlight searched for phrases
+set hlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$ " what to show when I hit :set list
-set list " turns out, I don't like listchars -- show chars on end of line, whitespace, etc
+set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
 "set lines=80 " 80 lines tall
 "set columns=160 " 160 cols wide
 "set so=10 " Keep 10 lines (top/bottom) for scope
@@ -64,14 +70,17 @@ set nowrap " do not wrap lines
 set smarttab " use tabs at the start of a line, spaces elsewhere
 "map <Esc> to ii,thus easy to switch to cmd mod
 imap ii <esc>
+let mapleader=","
+let maplocalleader="<"
+let g:mapleader=","
 " keep selection on indenting in visual mode
-vmap > :><cr>gv
-vmap < :<<cr>gv
+vmap <Leader>> :><cr>gv
+vmap <Leader>< :<<cr>gv
 
 " Custom Functions
 " Select range, then hit :SuperRetab($width) - by p0g and FallingCow
 function! SuperRetab(width) range
-  silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
+silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
 endfunction
 "Keyboard mapping
 noremap <F6> :GundoToggle<CR>
@@ -103,10 +112,14 @@ autocmd FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
 "inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 "inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
 "colors for omnicomplete color menu
+
 highlight Pmenu ctermfg=DarkGreen ctermbg=Black
 highlight PmenuSel ctermfg=Red ctermbg=White
 highlight PmenuSbar ctermfg=White ctermbg=DarkBlue
 highlight PmenuThumb ctermfg=LightGray ctermbg=Black
+highlight CursorLine ctermbg=red ctermfg=white cterm=undercurl,bold
+highlight CursorColumn ctermbg=red ctermfg=yellow
+
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
@@ -117,13 +130,16 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 "change leader
-let mapleader=","
-
+"quicksave
+nmap <Leader>s :w!<cr>
+"fast edit of vimrc
+map <Leader><F2> :e! ~/.vimrc<cr>
+map <Leader>cc :set cursorcolumn!<cr> :set cursorline!<cr>
 " Window resizing mappings /*{{{*/
 nnoremap <S-Up> :normal <c-r>=Resize('+')<CR><CR>
 nnoremap <S-Down> :normal <c-r>=Resize('-')<CR><CR>
-nnoremap <S-Left> :normal <c-r>=Resize('<')<CR><CR>
-nnoremap <S-Right> :normal <c-r>=Resize('>')<CR><CR>
+nnoremap <S-Left> :normal <c-r>=Resize('>')<CR><CR>
+nnoremap <S-Right> :normal <c-r>=Resize('<')<CR><CR>
 "Window movement/management
 " go up a window
 nnoremap <Leader>t <C-w>k
@@ -176,14 +192,16 @@ function! Resize(dir)
     return ""
   endif
 endfunction
-" /*}}}*/ 
 
 set foldenable
 set foldmethod=manual
 set foldcolumn=2
 "maps for foldng
+" close all open folds
 map <Leader>f <cr>zM<cr>
+" open all closed folds
 map <Leader>F <cr>zR<cr>
+
 "fold color
 highlight Folded ctermfg=Yellow ctermbg=Black cterm=bold,undercurl
 " remember folding state
@@ -194,4 +212,16 @@ function! DoPrettyXML()
 		1,$!xmllint --format --recover -
 endfunction
 command! PrettyXML call DoPrettyXML()
+"clear hlsearch results by typing ,,
+map <Leader><Leader> <C-N> :let @/=""<CR>
+
+if exists('+colorcolumn')
+	set colorcolumn=80
+"else
+"	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+" add newline in insert mode
+imap <f3> <esc>o
+" add newline in insert mode
+imap <f4> <esc>O
 
