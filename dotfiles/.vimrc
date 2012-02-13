@@ -90,11 +90,6 @@ noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
-"map <right> <ESC>:MBEbn<RETURN> " right arrow (normal mode) switches buffers  (excluding minibuf)
-"map <left> <ESC>:MBEbp<RETURN> " left arrow (normal mode) switches buffers (excluding minibuf)
-"noremap <C-u> <up>
-"noremap <C-d> <down>
-"map <F3> <ESC>ggVG:call SuperRetab(2)<left>
 map <F8> ggVGg? " encypt the file (toggle)
 nmap <A-r>  <ESC>:call RestartVim()<CR>
 set makeprg=mvn\ clean\ install\ -Dmaven.test.skip=true
@@ -113,13 +108,10 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
-"inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
-"inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
-
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-let g:snips_author = 'Srivatsan (Vat) Raghavan ( srivatsan.raghavan@etrade.com ) '
+let g:snips_author = '<removed for github>'
 
 "disable autoindent before pasting. 
 nnoremap <F2> :set invpaste paste?<CR>
@@ -129,13 +121,13 @@ set showmode
 "quicksave
 nmap <Leader>s :w!<cr>
 "fast edit of vimrc
-map <Leader><F2> :e! ~/.vimrc<cr>
-map <Leader>cc :set cursorcolumn!<cr> :set cursorline!<cr>
+map <silent> <Leader><F2> :e! ~/.vimrc<cr>
+map <silent> <Leader>cc :set cursorcolumn!<cr> :set cursorline!<cr>
 " Window resizing mappings /*{{{*/
-nnoremap <S-Up> :normal <c-r>=Resize('+')<CR><CR>
-nnoremap <S-Down> :normal <c-r>=Resize('-')<CR><CR>
-nnoremap <S-Left> :normal <c-r>=Resize('>')<CR><CR>
-nnoremap <S-Right> :normal <c-r>=Resize('<')<CR><CR>
+nnoremap <silent> <S-Up> :normal <c-r>=Resize('+')<CR><CR>
+nnoremap <silent> <S-Down> :normal <c-r>=Resize('-')<CR><CR>
+nnoremap <silent> <S-Left> :normal <c-r>=Resize('>')<CR><CR>
+nnoremap <silent> <S-Right> :normal <c-r>=Resize('<')<CR><CR>
 "Window movement/management
 " go up a window
 nnoremap <Leader>t <C-w>k
@@ -170,7 +162,7 @@ let NERDTreeMinimalUI=1
 let NERDTreeShowBookmarks=1
 
 "toggle open nerdtree
-nnoremap <Leader><Leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
 
 function! Resize(dir)
   let this = winnr()
@@ -225,7 +217,7 @@ function! DoPrettyXML()
 endfunction
 command! PrettyXML call DoPrettyXML()
 "clear hlsearch results by typing ,,
-map <Leader><Leader> <C-N> :let @/=""<CR>
+map <silent> <Leader><Leader> <C-N> :let @/=""<CR>
 
 " append newline in insert mode
 imap <f3> <esc>o
