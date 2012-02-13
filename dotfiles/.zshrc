@@ -125,3 +125,7 @@ fi
 if [[ -f $HOME/scripts/env.sh ]]; then 
   source $HOME/scripts/env.sh
 fi
+alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias gvim='/Applications/MacVim.app/Contents/MacOS/MacVim'
+
