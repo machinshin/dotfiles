@@ -1,4 +1,5 @@
 set nocompatible
+scriptencoding utf-8
 filetype off
 filetype plugin off
 filetype plugin indent off
@@ -26,6 +27,7 @@ Bundle 'spiiph/vim-space'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-commentary'
@@ -55,6 +57,10 @@ Bundle 'c9s/perlomni.vim'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'tehmaze/profont-powerline'
+Bundle 'tmhedberg/matchit'
+Bundle 'vim-scripts/python_match.vim'
+Bundle 'semmons99/vim-ruby-matchit'
+Bundle 'tysontate/HTML-AutoCloseTag'
 
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
@@ -83,19 +89,26 @@ set ffs=unix,mac,dos "support all three, in this order
 " Files/Backups
 set backup " make backup file
 set backupdir=~/.vim/backup " where to put backup file
+set undofile
+set undolevels=1000
+set undoreload=10000
+
+set updatetime=180 "save to swap file after 3 minutes
 set directory=~/.vim/temp " directory is the directory for temp file
 set makeef=error.err " When using make, where should it dump the file
 set lsp=0 " space it out a little more (easier to read)
 "first tab: longest match. list in the statusbar, follow tabs: cycle through matches
-set wildmenu wildmode=longest:full,full
+set wildmenu 
+set wildmode=longest:full,full
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
 set number " turn on line numbers
 set hid " you can change buffer without saving
 set backspace=2 " make backspace work normal
-set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
+set whichwrap+=<,>,h,l,b,s,[,]  " backspace and cursor keys wrap to
 set mouse=a " use mouse everywhere
-set shortmess=atI " shortens messages to avoid 'press a key' prompt
+"set shortmess=atI 
+set shortmess=filmnrwxsWI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
 " make the splitters between windows be blank
@@ -106,8 +119,12 @@ set mat=5 " how many tenths of a second to blink matching brackets for
 set hlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
 "only show listchars in insert mode
-"augroup trailing
-set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$ " what to show when I hit :set list
+if has("multi_byte")
+	set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
+else 
+	set listchars=tab:\|\,eol:$,trail:.,extends:>,precedes:<,nbsp:." what to show when I hit :set list
+end 
+
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
 "set lines=80 " 80 lines tall
 "set columns=160 " 160 cols wide
@@ -123,10 +140,12 @@ set cindent " do c-style indenting
 set tabstop=2 " tab spacing (settings below are just to unify it)
 set softtabstop=2 " unify
 set shiftwidth=2 " unify
-"set expandtab " real tabs please!
+set expandtab " real tabs please!
 set nowrap " do not wrap lines 
 set smarttab " use tabs at the start of a line, spaces elsewhere
 "map <Esc> to jj,thus easy to switch to cmd mod
+
+
 imap jj <ESC>
 " remap leader key to comma
 let mapleader=","
@@ -181,6 +200,23 @@ let g:notes_suffix='.txt'
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+
+function! PasterToggle()
+	let w:check_paste_status =exists('w:check_paste_status') ? !w:check_paste_status : 1
+	"echo "paster toggle " &w:check_paste_status
+	execute "set list!"
+	execute "set number!"
+	call QuickfixsignsToggle()
+	if( w:check_paste_status)
+		execute "set mouse="
+	execute "set foldcolumn=0"
+	else 
+		execute "set mouse=a"
+	execute "set foldcolumn=1"
+	endif
+endfunction
+nnoremap <silent><Leader>2 :call PasterToggle()<CR>
+
 "change leader
 "quicksave
 nmap <Leader>s :w!<cr>
@@ -232,6 +268,9 @@ nnoremap <Leader><Leader>l <C-W>L
 nnoremap <Leader><Leader>t <C-W>K
 " move current window to bottom 
 nnoremap <Leader><Leader>b <C-W>J
+"remap j to next row, not next line
+nnoremap j gj
+nnoremap k gk
 
 let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen=1
@@ -286,15 +325,15 @@ map <Leader>f <cr>zM<cr>
 map <Leader>F <cr>zR<cr>
 
 " remember folding state
-au BufWinLeave * mkview
+au BufWinLeave * silent mkview
 au BufWinEnter * silent loadview
 "indent xml properly
 function! DoPrettyXML()
 		1,$!xmllint --format --recover -
 endfunction
 command! PrettyXML call DoPrettyXML()
-"clear hlsearch results by typing ,,
-map <silent> <Leader><Leader>c let @/=""<CR>
+"clear hlsearch results by typing ,,c
+nnoremap <silent> <Leader><Leader>c let @/=""<CR>
 
 " append newline in insert mode
 imap <f3> <esc>o
@@ -346,4 +385,51 @@ map Q @@
 nnoremap <silent>.n :n<cr>
 nnoremap <silent>.p :N<cr>
 nnoremap <silent><Leader><Leader>q :qa<CR>
+nnoremap / /\v
+vnoremap / /\v
+set gdefault
+"traverse help docs easier
+nnoremap <buffer> <CR> <C-]>
+nnoremap <buffer> <BS> <C-T>
+nnoremap <buffer> o /'\l\{2,\}'<CR>
+nnoremap <buffer> O ?'\l\{2,\}'<CR>
+nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+"run maven
+function! RunMavenInSrcDir()
+	let src_dir = finddir('src', ';')
+	src_dir = fnamemodify(src_dir, ':p:h')
+	exec 'cd' fnameescape(src_dir)
+	!mvn clean install -Dmaven.test.skip=true
+	cd -
+endfunction
+map <F6> :call RunMavenInSrcDir()<CR>
+"save on focuslost
+au FocusLost * :wa
+" visually select everything between 2 %'s'
+noremap <Leader>% v%
+"scroll screen on brace highlight
+inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+
+" Tabularize {
+if exists(":Tabularize")
+	nmap <Leader>a= :Tabularize /=<CR>
+	vmap <Leader>a= :Tabularize /=<CR>
+	nmap <Leader>a: :Tabularize /:<CR>
+	vmap <Leader>a: :Tabularize /:<CR>
+	nmap <Leader>a:: :Tabularize /:\zs<CR>
+	vmap <Leader>a:: :Tabularize /:\zs<CR>
+	nmap <Leader>a, :Tabularize /,<CR>
+	vmap <Leader>a, :Tabularize /,<CR>
+	nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+	vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+endif
+" Y to end of line 
+nnoremap Y y$
+
+
+
+
 
