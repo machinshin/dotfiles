@@ -333,12 +333,12 @@ function! DoPrettyXML()
 endfunction
 command! PrettyXML call DoPrettyXML()
 "clear hlsearch results by typing ,,c
-nnoremap <silent> <Leader><Leader>c let @/=""<CR>
+nnoremap <silent> <Leader><Leader>c :nohlsearch<CR>
 
 " append newline in insert mode
-imap <f3> <esc>o
+"imap <f3> <esc>o
 " prepend newline in insert mode
-imap <f4> <esc>O
+"imap <f4> <esc>O
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -429,7 +429,8 @@ endif
 " Y to end of line 
 nnoremap Y y$
 
-
-
+imap ,, <C-X><CR>
+imap .. <C-X><Space>
+let g:ragtag_global_maps = 1
 
 
