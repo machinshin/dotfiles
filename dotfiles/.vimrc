@@ -72,8 +72,9 @@ let g:neocomplcache_enable_auto_select=1
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
 filetype plugin indent on
-syntax on " syntax highlighting on
-colorscheme machinshin " my theme
+"syntax on " syntax highlighting on
+syntax off" syntax highlighting on
+"colorscheme machinshin " my theme
 let g:Powerline_symbols='fancy'
 "show the current command in progress
 set showcmd
@@ -89,7 +90,7 @@ set ffs=unix,mac,dos "support all three, in this order
 " Files/Backups
 set backup " make backup file
 set backupdir=~/.vim/backup " where to put backup file
-set undofile
+set undodir=~/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
@@ -98,7 +99,7 @@ set directory=~/.vim/temp " directory is the directory for temp file
 set makeef=error.err " When using make, where should it dump the file
 set lsp=0 " space it out a little more (easier to read)
 "first tab: longest match. list in the statusbar, follow tabs: cycle through matches
-set wildmenu 
+set wildmenu
 set wildmode=longest:full,full
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
@@ -119,11 +120,11 @@ set mat=5 " how many tenths of a second to blink matching brackets for
 set hlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
 "only show listchars in insert mode
-if has("multi_byte")
-	set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
-else 
-	set listchars=tab:\|\,eol:$,trail:.,extends:>,precedes:<,nbsp:." what to show when I hit :set list
-end 
+"if has("multi_byte")
+"	set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
+"else 
+	set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
+"end 
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
 "set lines=80 " 80 lines tall
@@ -140,12 +141,11 @@ set cindent " do c-style indenting
 set tabstop=2 " tab spacing (settings below are just to unify it)
 set softtabstop=2 " unify
 set shiftwidth=2 " unify
-set expandtab " real tabs please!
+"set expandtab " real tabs please!
+set noexpandtab " real tabs please!
 set nowrap " do not wrap lines 
 set smarttab " use tabs at the start of a line, spaces elsewhere
 "map <Esc> to jj,thus easy to switch to cmd mod
-
-
 imap jj <ESC>
 " remap leader key to comma
 let mapleader=","
@@ -204,19 +204,33 @@ set showmode
 function! PasterToggle()
 	let w:check_paste_status =exists('w:check_paste_status') ? !w:check_paste_status : 1
 	"echo "paster toggle " &w:check_paste_status
-	execute "set list!"
-	execute "set number!"
 	call QuickfixsignsToggle()
 	if( w:check_paste_status)
 		execute "set mouse="
-	execute "set foldcolumn=0"
+  	execute "set foldcolumn=0"
+  	execute "set nolist"
+  	execute "set nonumber"
 	else 
 		execute "set mouse=a"
-	execute "set foldcolumn=1"
+	  execute "set foldcolumn=1"
+  	execute "set list"
+  	execute "set number"
 	endif
 endfunction
 nnoremap <silent><Leader>2 :call PasterToggle()<CR>
 
+function! DoChighlight()
+	let w:check_highlight_status =exists('w:check_highlight_status ') ? !w:check_highlight_status : 1
+  if( w:check_highlight_status )
+    execute "syntax on"
+    execute "colorscheme machinshin"
+  else 
+    execute "syntax off"
+  endif
+endfunc
+syntax on 
+colorscheme machinshin
+nnoremap <silent><Leader>3 :call DoChighlight()<CR>
 "change leader
 "quicksave
 nmap <Leader>s :w!<cr>
@@ -272,7 +286,7 @@ nnoremap <Leader><Leader>b <C-W>J
 nnoremap j gj
 nnoremap k gk
 
-let NERDTreeDirArrows=1
+let NERDTreeDirArrows=0
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
 let NERDTreeShowBookmarks=1
@@ -318,6 +332,8 @@ endfunction
 set foldenable
 set foldmethod=manual
 set foldcolumn=1
+set foldlevelstart=20
+set foldlevel=20
 "maps for foldng
 " close all open folds
 map <Leader>f <cr>zM<cr>
@@ -405,7 +421,7 @@ function! RunMavenInSrcDir()
 endfunction
 map <F6> :call RunMavenInSrcDir()<CR>
 "save on focuslost
-au FocusLost * :wa
+"au FocusLost * :wa
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
 "scroll screen on brace highlight
@@ -432,5 +448,10 @@ nnoremap Y y$
 imap ,, <C-X><CR>
 imap .. <C-X><Space>
 let g:ragtag_global_maps = 1
-
+" both syntax-based folds & manual folds on top
+" this isn't currently working?!?
+augroup vimrc
+  au BufReadPre * setlocal foldmethod=syntax
+  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
+augroup END
 
