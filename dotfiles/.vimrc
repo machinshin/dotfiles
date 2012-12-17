@@ -1,8 +1,24 @@
 set nocompatible
+let s:running_windows = has("was16") || has("win32") || has("win64")
+let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
+let g:erlangHighlightBif=1
+let g:erlangHighLightOperators=1
+set fenc=utf-8 "utf-8
 scriptencoding utf-8
 filetype off
 filetype plugin off
 filetype plugin indent off
+set cpoptions=aABceFsmq
+" |||||||||
+" ||||||||+-- When joining lines, leave the cursor between joined lines
+" |||||||+-- When a new match is created (showmatch) pause for .5
+" ||||||+-- Set buffer options when entering the buffer
+" |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
+" |||+-- Searching continues at the end of the match at the cursor position
+" ||+-- A backslash has no special meaning in mappings
+" |+-- :write updates alternative file name
+" +-- :read updates alternative file name
+
 syntax off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -37,8 +53,8 @@ Bundle 'sjl/splice.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/vimproc'
 "neocomplecache should use 'master' snipmate :/ 
-Bundle 'Shougo/neocomplcache-snippets-complete'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neosnippet'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'honza/snipmate-snippets'
@@ -66,15 +82,38 @@ Bundle 'tysontate/HTML-AutoCloseTag'
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
 let g:neocomplcache_enable_underbar_completion=1
+let g:neocomplcache_enable_camel_case_completion=1
+let g:neocomplcache_enable_underbar_completion=1
 let g:neocomplcache_max_menu_width=25
 let g:neocomplcache_temporary_dir='~/.vim/neocon/'
 let g:neocomplcache_enable_auto_select=1
+
+"Plugin key mappings
+"imap <C-k> <Plug>(neocomplcache_snippets_expand)
+"smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"imap <C-k> <Plug>(neosnippet_expand_or_jump)
+"smap <C-k> <Plug>(neosnippet_expand_or_jump)
+inoremap <expr><C-g>  neocomplcache#undo_completion()
+inoremap <expr><C-l>  neocomplcache#complete_common_string()
+
+"Recommended key mappings
+"<CR>: close popup and save indent
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" <TAB>: completion
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()"
+
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
 filetype plugin indent on
 "syntax on " syntax highlighting on
 syntax off" syntax highlighting on
-"colorscheme machinshin " my theme
+colorscheme machinshin " my theme
 let g:Powerline_symbols='fancy'
 "show the current command in progress
 set showcmd
@@ -84,31 +123,50 @@ set t_Co=256
 let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' } 
 set history=5000 " How many lines of history to remember
 set cf " enable error files and error jumping
-set clipboard+=unnamed "turns out I do like is sharing windows clipboard
+set clipboard+=unnamed "share windows clipboard
 set ffs=unix,mac,dos "support all three, in this order
 
 " Files/Backups
 set backup " make backup file
-set backupdir=~/.vim/backup " where to put backup file
-set undodir=~/.vim/undo
+if s:running_windows
+  set backupdir=~/vimfiles/backup " where to put backup file
+  set undodir=~/vimfiles/undo
+  set directory=~/vimfiles/temp " directory is the directory for temp file
+else
+  set backupdir=~/.vim/backup " where to put backup file
+  set undodir=~/.vim/undo
+  set directory=~/.vim/temp " directory is the directory for temp file
+endif
 set undolevels=1000
 set undoreload=10000
 
 set updatetime=180 "save to swap file after 3 minutes
-set directory=~/.vim/temp " directory is the directory for temp file
 set makeef=error.err " When using make, where should it dump the file
 set lsp=0 " space it out a little more (easier to read)
 "first tab: longest match. list in the statusbar, follow tabs: cycle through matches
 set wildmenu
 set wildmode=longest:full,full
+set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.so.*,*.jpg,*.gif,*.png
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
 set number " turn on line numbers
 set hid " you can change buffer without saving
-set backspace=2 " make backspace work normal
-set whichwrap+=<,>,h,l,b,s,[,]  " backspace and cursor keys wrap to
+set backspace=indent,eol,start
+set whichwrap+=<,>,h,l,b,s,[,],~  " backspace and cursor keys wrap to
+             " | | | | | | | | |
+             " | | | | | | | | +-- "]" Insert and Replace
+             " | | | | | | | +-- "[" Insert and Replace
+             " | | | | | | +-- "~" Normal
+             " | | | | | +-- <Right> Normal and Visual
+             " | | | | +-- <Left> Normal and Visual
+             " | | | +-- "l" Normal and Visual (not recommended)
+             " | | +-- "h" Normal and Visual (not recommended)
+             " | +-- <Space> Normal and Visual
+             " +-- <BS> Normal and Visual
 set mouse=a " use mouse everywhere
-"set shortmess=atI 
+set linespace=0
+set sidescroll=10
+set sidescrolloff=10
 set shortmess=filmnrwxsWI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
@@ -119,12 +177,13 @@ set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
 set hlsearch " do not highlight searched for phrases
 set incsearch " BUT do highlight as you type you search phrase
+set formatoptions=rq
 "only show listchars in insert mode
-"if has("multi_byte")
-"	set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
-"else 
-	set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
-"end 
+if has("multi_byte")
+  set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
+else 
+  set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
+end 
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
 "set lines=80 " 80 lines tall
@@ -158,7 +217,7 @@ vmap <Leader>< :<<cr>gv
 " Custom Functions
 " Select range, then hit :SuperRetab($width) - by p0g and FallingCow
 function! SuperRetab(width) range
-silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
+  silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
 endfunction
 "Keyboard mapping
 noremap <F6> :GundoToggle<CR>
@@ -182,12 +241,12 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-	
+
 " Restore cursor position
 autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
@@ -202,25 +261,24 @@ set pastetoggle=<F2>
 set showmode
 
 function! PasterToggle()
-	let w:check_paste_status =exists('w:check_paste_status') ? !w:check_paste_status : 1
-	"echo "paster toggle " &w:check_paste_status
-	call QuickfixsignsToggle()
-	if( w:check_paste_status)
-		execute "set mouse="
-  	execute "set foldcolumn=0"
-  	execute "set nolist"
-  	execute "set nonumber"
-	else 
-		execute "set mouse=a"
-	  execute "set foldcolumn=1"
-  	execute "set list"
-  	execute "set number"
-	endif
+  let w:check_paste_status =exists('w:check_paste_status') ? !w:check_paste_status : 1
+  call QuickfixsignsToggle()
+  if( w:check_paste_status)
+    execute "set mouse="
+    execute "set foldcolumn=0"
+    execute "set nolist"
+    execute "set nonumber"
+  else 
+    execute "set mouse=a"
+    execute "set foldcolumn=1"
+    execute "set list"
+    execute "set number"
+  endif
 endfunction
 nnoremap <silent><Leader>2 :call PasterToggle()<CR>
 
 function! DoChighlight()
-	let w:check_highlight_status =exists('w:check_highlight_status ') ? !w:check_highlight_status : 1
+  let w:check_highlight_status =exists('w:check_highlight_status ') ? !w:check_highlight_status : 1
   if( w:check_highlight_status )
     execute "syntax on"
     execute "colorscheme machinshin"
@@ -229,7 +287,6 @@ function! DoChighlight()
   endif
 endfunc
 syntax on 
-colorscheme machinshin
 nnoremap <silent><Leader>3 :call DoChighlight()<CR>
 "change leader
 "quicksave
@@ -239,11 +296,11 @@ map <silent> <Leader><F2> :e! ~/.vimrc<cr>
 map <silent> <Leader>cc :set cursorcolumn!<cr> :set cursorline!<cr>
 
 function! g:ToggleColorColumn()
-	if &colorcolumn != ''
-		setlocal colorcolumn&
-	else
-		setlocal colorcolumn=80
-	endif
+  if &colorcolumn != ''
+    setlocal colorcolumn&
+  else
+    setlocal colorcolumn=80
+  endif
 endfunction
 noremap <silent><Leader>co :call g:ToggleColorColumn()<CR>
 
@@ -290,50 +347,56 @@ let NERDTreeDirArrows=0
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
 let NERDTreeShowBookmarks=1
-
+let NERDTreeIgnore=['\.svn', '\.git']
 "toggle open nerdtree
 nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
 
 function! Resize(dir)
-	let this = winnr()
-	if '+' == a:dir || '-' == a:dir
-		execute "normal \<c-w>k"
-		let up = winnr()
-		if up != this
-			execute "normal \<c-w>j"
-			let x = 'bottom'
-		else
-			let x = 'top'
-		endif
-	elseif '>' == a:dir || '<' == a:dir
-		execute "normal \<c-w>h"
-		let left = winnr()
-		if left != this
-			execute "normal \<c-w>l"
-			let x = 'right'
-		else
-			let x = 'left'
-		endif
-	endif
-	if ('+' == a:dir && 'bottom' == x) || ('-' == a:dir && 'top' == x)
-		return "5\<c-v>\<c-w>+"
-	elseif ('-' == a:dir && 'bottom' == x) || ('+' == a:dir && 'top' == x)
-		return "5\<c-v>\<c-w>-"
-	elseif ('<' == a:dir && 'left' == x) || ('>' == a:dir && 'right' == x)
-		return "5\<c-v>\<c-w><"
-	elseif ('>' == a:dir && 'left' == x) || ('<' == a:dir && 'right' == x)
-		return "5\<c-v>\<c-w>>"
-	else
-		echo "oops. check your ~/.vimrc"
-		return ""
-	endif
+  let this = winnr()
+  if '+' == a:dir || '-' == a:dir
+    execute "normal \<c-w>k"
+    let up = winnr()
+    if up != this
+      execute "normal \<c-w>j"
+      let x = 'bottom'
+    else
+      let x = 'top'
+    endif
+  elseif '>' == a:dir || '<' == a:dir
+    execute "normal \<c-w>h"
+    let left = winnr()
+    if left != this
+      execute "normal \<c-w>l"
+      let x = 'right'
+    else
+      let x = 'left'
+    endif
+  endif
+  if ('+' == a:dir && 'bottom' == x) || ('-' == a:dir && 'top' == x)
+    return "5\<c-v>\<c-w>+"
+  elseif ('-' == a:dir && 'bottom' == x) || ('+' == a:dir && 'top' == x)
+    return "5\<c-v>\<c-w>-"
+  elseif ('<' == a:dir && 'left' == x) || ('>' == a:dir && 'right' == x)
+    return "5\<c-v>\<c-w><"
+  elseif ('>' == a:dir && 'left' == x) || ('<' == a:dir && 'right' == x)
+    return "5\<c-v>\<c-w>>"
+  else
+    echo "oops. check your ~/.vimrc"
+    return ""
+  endif
 endfunction
 
 set foldenable
 set foldmethod=manual
 set foldcolumn=1
 set foldlevelstart=20
-set foldlevel=20
+set foldlevel=10
+set foldopen=block,hor,mark,percent,quickfix,tag "what movements open folds"
+function SimpleFoldText() 
+  return getline(v:foldstart).' '
+endfunction
+set foldtext=SimpleFoldText()
+
 "maps for foldng
 " close all open folds
 map <Leader>f <cr>zM<cr>
@@ -343,11 +406,13 @@ map <Leader>F <cr>zR<cr>
 " remember folding state
 au BufWinLeave * silent mkview
 au BufWinEnter * silent loadview
+
 "indent xml properly
 function! DoPrettyXML()
-		1,$!xmllint --format --recover -
+  1,$!xmllint --format --recover -
 endfunction
 command! PrettyXML call DoPrettyXML()
+
 "clear hlsearch results by typing ,,c
 nnoremap <silent> <Leader><Leader>c :nohlsearch<CR>
 
@@ -384,7 +449,7 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-let g:AutoClosePairs_add="<> | '"
+let g:AutoClosePairs_add="<> | ' []"
 let java_highlight_debug=1
 let java_highlight_all=1
 inoremap <F1> <ESC>
@@ -404,24 +469,25 @@ nnoremap <silent><Leader><Leader>q :qa<CR>
 nnoremap / /\v
 vnoremap / /\v
 set gdefault
-"traverse help docs easier
+"make traversing help docs easier
 nnoremap <buffer> <CR> <C-]>
 nnoremap <buffer> <BS> <C-T>
 nnoremap <buffer> o /'\l\{2,\}'<CR>
 nnoremap <buffer> O ?'\l\{2,\}'<CR>
 nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
 nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+
 "run maven
 function! RunMavenInSrcDir()
-	let src_dir = finddir('src', ';')
-	src_dir = fnamemodify(src_dir, ':p:h')
-	exec 'cd' fnameescape(src_dir)
-	!mvn clean install -Dmaven.test.skip=true
-	cd -
+  let src_dir = finddir('src', ';')
+  src_dir = fnamemodify(src_dir, ':p:h')
+  exec 'cd' fnameescape(src_dir)
+  !mvn clean install -Dmaven.test.skip=true
+  cd -
 endfunction
 map <F6> :call RunMavenInSrcDir()<CR>
-"save on focuslost
-"au FocusLost * :wa
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
 "scroll screen on brace highlight
@@ -431,16 +497,16 @@ inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
 
 " Tabularize {
 if exists(":Tabularize")
-	nmap <Leader>a= :Tabularize /=<CR>
-	vmap <Leader>a= :Tabularize /=<CR>
-	nmap <Leader>a: :Tabularize /:<CR>
-	vmap <Leader>a: :Tabularize /:<CR>
-	nmap <Leader>a:: :Tabularize /:\zs<CR>
-	vmap <Leader>a:: :Tabularize /:\zs<CR>
-	nmap <Leader>a, :Tabularize /,<CR>
-	vmap <Leader>a, :Tabularize /,<CR>
-	nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-	vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:<CR>
+  vmap <Leader>a: :Tabularize /:<CR>
+  nmap <Leader>a:: :Tabularize /:\zs<CR>
+  vmap <Leader>a:: :Tabularize /:\zs<CR>
+  nmap <Leader>a, :Tabularize /,<CR>
+  vmap <Leader>a, :Tabularize /,<CR>
+  nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+  vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 endif
 " Y to end of line 
 nnoremap Y y$
@@ -454,4 +520,11 @@ augroup vimrc
   au BufReadPre * setlocal foldmethod=syntax
   au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
 augroup END
+
+set csprg=gtags-cscope
+set cscopetag
+set nocsverb
+let GtagsCscope_Auto_Load=1
+let GtagsCscope_Auto_Map=1
+let GtagsCscope_Quiet=1
 
