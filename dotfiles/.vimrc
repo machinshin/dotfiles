@@ -77,7 +77,8 @@ Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
 Bundle 'semmons99/vim-ruby-matchit'
 Bundle 'tysontate/HTML-AutoCloseTag'
-
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'chreekat/vim-paren-crosshairs'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -226,7 +227,7 @@ noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
-map <F8> ggVGg? " encypt the file (toggle)
+"map <F8> ggVGg? " encypt the file (toggle)
 nmap <A-r>  <ESC>:call RestartVim()<CR>
 
 "press F5 to get a list of buffers and goto a the selected buffer
@@ -513,6 +514,7 @@ nnoremap Y y$
 
 imap ,, <C-X><CR>
 imap .. <C-X><Space>
+nnoremap <silent><Leader>~ :set tildeop!<CR>
 let g:ragtag_global_maps = 1
 " both syntax-based folds & manual folds on top
 " this isn't currently working?!?
