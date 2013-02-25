@@ -79,6 +79,7 @@ Bundle 'semmons99/vim-ruby-matchit'
 Bundle 'tysontate/HTML-AutoCloseTag'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
+Bundle 'derekwyatt/vim-scala'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -181,7 +182,8 @@ set incsearch " BUT do highlight as you type you search phrase
 set formatoptions=rq
 "only show listchars in insert mode
 if has("multi_byte")
-  set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
+  "set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
+  set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼" what to show when I hit :set listchars
 else 
   set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
 end 
@@ -492,9 +494,9 @@ map <F6> :call RunMavenInSrcDir()<CR>
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
 "scroll screen on brace highlight
-inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+"inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+"inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+"inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
 
 " Tabularize {
 if exists(":Tabularize")
