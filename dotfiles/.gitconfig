@@ -32,7 +32,7 @@
 	cm = commit -m
 	#display all aliases
 	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
-	unstage = rest HEAD --
+	unstage = reset HEAD --
 	last = log -l HEAD
 	visual = !gitk
 	pom = push origin master
