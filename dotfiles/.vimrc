@@ -184,8 +184,10 @@ set formatoptions=rq
 if has("multi_byte")
   "set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
   set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼" what to show when I hit :set listchars
+  let g:tagbar_iconchars = ['▾', '▸']
 else 
   set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
+  let g:tagbar_iconchars = ['+', '-']  (default on Windows)
 end 
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
@@ -229,7 +231,6 @@ noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
-"map <F8> ggVGg? " encypt the file (toggle)
 nmap <A-r>  <ESC>:call RestartVim()<CR>
 
 "press F5 to get a list of buffers and goto a the selected buffer
@@ -494,9 +495,9 @@ map <F6> :call RunMavenInSrcDir()<CR>
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
 "scroll screen on brace highlight
-"inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-"inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-"inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
+inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
 
 " Tabularize {
 if exists(":Tabularize")
@@ -525,10 +526,15 @@ augroup vimrc
   au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
 augroup END
 
-set csprg=gtags-cscope
-set cscopetag
-set nocsverb
-let GtagsCscope_Auto_Load=1
-let GtagsCscope_Auto_Map=1
-let GtagsCscope_Quiet=1
+"set csprg=gtags-cscope
+"set cscopetag
+"set nocsverb
+"let GtagsCscope_Auto_Load=1
+"let GtagsCscope_Auto_Map=1
+"let GtagsCscope_Quiet=1
+nnoremap <silent> <F9> :TagbarOpen fj<CR>
+"Tagbar options
+let g:tagbar_compact=1
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+
 
