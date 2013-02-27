@@ -1,23 +1,25 @@
+set fenc=utf-8 "utf-8
+set termencoding=utf-8
+scriptencoding utf-8
+set ambiwidth=double
 set nocompatible
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
 let g:erlangHighlightBif=1
 let g:erlangHighLightOperators=1
-set fenc=utf-8 "utf-8
-scriptencoding utf-8
 filetype off
 filetype plugin off
 filetype plugin indent off
 set cpoptions=aABceFsmq
-" |||||||||
-" ||||||||+-- When joining lines, leave the cursor between joined lines
-" |||||||+-- When a new match is created (showmatch) pause for .5
-" ||||||+-- Set buffer options when entering the buffer
-" |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
-" |||+-- Searching continues at the end of the match at the cursor position
-" ||+-- A backslash has no special meaning in mappings
-" |+-- :write updates alternative file name
-" +-- :read updates alternative file name
+            " |||||||||
+            " ||||||||+-- When joining lines, leave the cursor between joined lines
+            " |||||||+-- When a new match is created (showmatch) pause for .5
+            " ||||||+-- Set buffer options when entering the buffer
+            " |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
+            " |||+-- Searching continues at the end of the match at the cursor position
+            " ||+-- A backslash has no special meaning in mappings
+            " |+-- :write updates alternative file name
+            " +-- :read updates alternative file name
 
 syntax off
 set rtp+=~/.vim/bundle/vundle/
