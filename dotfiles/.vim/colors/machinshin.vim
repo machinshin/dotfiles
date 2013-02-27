@@ -2,7 +2,7 @@
 " vim: tw=0 ts=4 sw=4
 " Vim color file
 " Maintainer:		Srivatsan Raghavan - vat.raghavan@gmail.com
-" Last Change:	12/24/2012
+" Last Change:	Feb 06 2013
 
 set background=light
 hi clear
@@ -132,6 +132,9 @@ else
 	exec "hi DiffChange cterm=bold   ctermfg=Yellow  ctermbg=" . <SID>X(81)
 	exec "hi DiffText cterm=undercurl ctermfg=" . <SID>X(73) . " ctermbg=" . <SID>X(81)
 	exec "hi DiffDelete cterm=none ctermfg=Black ctermbg=" . <SID>X(81)
+	"highlight for whitespace chars
+	exec "hi NonText ctermfg=" . <SID>X(80)
+	exec "hi SpecialKey ctermfg=" . <SID>X(80)
 endif
 
 hi! link MoreMsg Comment

@@ -182,8 +182,7 @@ set incsearch " BUT do highlight as you type you search phrase
 set formatoptions=rq
 "only show listchars in insert mode
 if has("multi_byte")
-  "set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼,nbsp:. " what to show when I hit :set listchars
-  set listchars=tab:▻\ ,eol:⌙,trail:⦁,extends:⧽,precedes:⧼" what to show when I hit :set listchars
+  set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼" what to show when I hit :set listchars
   let g:tagbar_iconchars = ['▾', '▸']
 else 
   set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
@@ -536,5 +535,4 @@ nnoremap <silent> <F9> :TagbarOpen fj<CR>
 "Tagbar options
 let g:tagbar_compact=1
 autocmd VimEnter * nested :call tagbar#autoopen(1)
-
 
