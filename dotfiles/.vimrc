@@ -102,7 +102,7 @@ inoremap <expr><C-l>  neocomplcache#complete_common_string()
 
 "Recommended key mappings
 "<CR>: close popup and save indent
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion
 inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
 
@@ -176,7 +176,7 @@ set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
 " make the splitters between windows be blank
 set fillchars=vert:\ ,stl:\ ,stlnc:\
-" Visual Cues
+" Visual Cues 
 set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
 set hlsearch " do not highlight searched for phrases
@@ -397,10 +397,22 @@ set foldcolumn=1
 set foldlevelstart=20
 set foldlevel=10
 set foldopen=block,hor,mark,percent,quickfix,tag "what movements open folds"
-function SimpleFoldText() 
-  return getline(v:foldstart).' '
+"function SimpleFoldText() 
+" return getline(v:foldstart).' '
+"endfunction
+"set foldtext=SimpleFoldText()
+function! NeatFoldText() "{{{2
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = split(filter(split(&fillchars, ','), 'v:val =~# "fold"')[0], ':')[-1]
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let length = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g'))
+  return foldtextstart . repeat(foldchar, winwidth(0)-length) . foldtextend
 endfunction
-set foldtext=SimpleFoldText()
+set foldtext=NeatFoldText()
+" }}}2
 
 "maps for foldng
 " close all open folds
@@ -522,10 +534,10 @@ nnoremap <silent><Leader>~ :set tildeop!<CR>
 let g:ragtag_global_maps = 1
 " both syntax-based folds & manual folds on top
 " this isn't currently working?!?
-augroup vimrc
-  au BufReadPre * setlocal foldmethod=syntax
-  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
-augroup END
+"augroup vimrc
+"  au BufReadPre * setlocal foldmethod=syntax
+"  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
+"augroup END
 
 "set csprg=gtags-cscope
 "set cscopetag
@@ -533,7 +545,7 @@ augroup END
 "let GtagsCscope_Auto_Load=1
 "let GtagsCscope_Auto_Map=1
 "let GtagsCscope_Quiet=1
-nnoremap <silent> <F9> :TagbarOpen fj<CR>
+nnoremap <silent> <F8> :TagbarOpen fj<CR>
 "Tagbar options
 let g:tagbar_compact=1
 autocmd VimEnter * nested :call tagbar#autoopen(1)
