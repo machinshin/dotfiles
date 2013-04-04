@@ -42,6 +42,7 @@
 	token = faf03543c81b5ee13885108ab3582c78
 [core]
 	trustctime = false
+	excludesfile = /Users/vat/.gitignore_global
 	#editor = vim
 	#pager=most +s +'/---'
 [merge]
