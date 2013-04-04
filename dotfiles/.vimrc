@@ -310,11 +310,6 @@ endfunction
 noremap <silent><Leader>co :call g:ToggleColorColumn()<CR>
 
 
-" Window resizing mappings /*{{{*/
-nnoremap <silent> <S-Up> :normal <c-r>=Resize('+')<CR><CR>
-nnoremap <silent> <S-Down> :normal <c-r>=Resize('-')<CR><CR>
-nnoremap <silent> <S-Left> :normal <c-r>=Resize('>')<CR><CR>
-nnoremap <silent> <S-Right> :normal <c-r>=Resize('<')<CR><CR>
 "Window movement/management
 " go up a window
 nnoremap <Leader>t <C-w>k
@@ -348,7 +343,7 @@ nnoremap <Leader><Leader>b <C-W>J
 nnoremap j gj
 nnoremap k gk
 
-let NERDTreeDirArrows=0
+let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
 let NERDTreeShowBookmarks=1
@@ -356,40 +351,11 @@ let NERDTreeIgnore=['\.svn', '\.git']
 "toggle open nerdtree
 nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
 
-function! Resize(dir)
-  let this = winnr()
-  if '+' == a:dir || '-' == a:dir
-    execute "normal \<c-w>k"
-    let up = winnr()
-    if up != this
-      execute "normal \<c-w>j"
-      let x = 'bottom'
-    else
-      let x = 'top'
-    endif
-  elseif '>' == a:dir || '<' == a:dir
-    execute "normal \<c-w>h"
-    let left = winnr()
-    if left != this
-      execute "normal \<c-w>l"
-      let x = 'right'
-    else
-      let x = 'left'
-    endif
-  endif
-  if ('+' == a:dir && 'bottom' == x) || ('-' == a:dir && 'top' == x)
-    return "5\<c-v>\<c-w>+"
-  elseif ('-' == a:dir && 'bottom' == x) || ('+' == a:dir && 'top' == x)
-    return "5\<c-v>\<c-w>-"
-  elseif ('<' == a:dir && 'left' == x) || ('>' == a:dir && 'right' == x)
-    return "5\<c-v>\<c-w><"
-  elseif ('>' == a:dir && 'left' == x) || ('<' == a:dir && 'right' == x)
-    return "5\<c-v>\<c-w>>"
-  else
-    echo "oops. check your ~/.vimrc"
-    return ""
-  endif
-endfunction
+" Window resizing mappings
+nnoremap <silent> <S-Up> :<c-u>exe "resize " . (winheight(0) + 5)<cr>
+nnoremap <silent> <S-Down> :<c-u>exe "resize " . (winheight(0) - 5)<cr>
+nnoremap <silent> <S-Left> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
+nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) - 5)<cr>
 
 set foldenable
 set foldmethod=manual
@@ -397,11 +363,7 @@ set foldcolumn=1
 set foldlevelstart=20
 set foldlevel=10
 set foldopen=block,hor,mark,percent,quickfix,tag "what movements open folds"
-"function SimpleFoldText() 
-" return getline(v:foldstart).' '
-"endfunction
-"set foldtext=SimpleFoldText()
-function! NeatFoldText() "{{{2
+function! NeatFoldText()
   let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g') . ' '
   let lines_count = v:foldend - v:foldstart + 1
   let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
@@ -412,7 +374,6 @@ function! NeatFoldText() "{{{2
   return foldtextstart . repeat(foldchar, winwidth(0)-length) . foldtextend
 endfunction
 set foldtext=NeatFoldText()
-" }}}2
 
 "maps for foldng
 " close all open folds
