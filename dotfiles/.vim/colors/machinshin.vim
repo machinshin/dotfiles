@@ -4,7 +4,7 @@
 " Maintainer:		Srivatsan Raghavan - vat.raghavan@gmail.com
 " Last Change:	Feb 06 2013
 
-set background=light
+set background=dark
 hi clear
 if exists("syntax_on")
 	syntax reset
@@ -39,84 +39,79 @@ fun! <SID>X(a)
 endfun
 
 function! E2T(a)
-    return s:X(a:a)
+	return s:X(a:a)
 endfunction
 
 function! s:choose(mediocre,good)
-    if &t_Co != 88 && &t_Co != 256
-        return a:mediocre
-    else
-        return s:X(a:good)
-    endif
+	if &t_Co != 88 && &t_Co != 256
+		return a:mediocre
+	else
+		return s:X(a:good)
+	endif
 endfunction
 
 function! s:hifg(group,guifg,first,second,...)
-    if a:0 && &t_Co == 256
-        let ctermfg = a:1
-    else
-        let ctermfg = s:choose(a:first,a:second)
-    endif
-    exe "highlight ".a:group." guifg=".a:guifg." ctermfg=".ctermfg
+	if a:0 && &t_Co == 256
+		let ctermfg = a:1
+	else
+		let ctermfg = s:choose(a:first,a:second)
+	endif
+	exe "highlight ".a:group." guifg=".a:guifg." ctermfg=".ctermfg
 endfunction
 
 function! s:hibg(group,guibg,first,second)
-    let ctermbg = s:choose(a:first,a:second)
-    exe "highlight ".a:group." guibg=".a:guibg." ctermbg=".ctermbg
+	let ctermbg = s:choose(a:first,a:second)
+	exe "highlight ".a:group." guibg=".a:guibg." ctermbg=".ctermbg
 endfunction
 
 if has("gui_running") 
-	hi Normal guifg=black guibg=white
-	hi Comment term=standout ctermfg=gray gui=bold guifg=gray
+	hi Normal guifg=#17e600 guibg=Black
+	hi Comment term=standout ctermfg=gray guifg=gray
 	hi Constant term=underline ctermfg=Magenta guifg=Magenta
-	hi String  gui=NONE   guifg=#ffcd8b   guibg=#404040
-	hi Character gui=NONE   guifg=#ffcd8b   guibg=#404040
+	hi Pmenu guifg=DarkGreen guibg=Black ctermfg=DarkGreen ctermbg=Black
+	hi PmenuSel guifg=Red guibg=White ctermfg=Red ctermbg=White
+	hi PmenuSbar guifg=White guibg=DarkBlue ctermfg=White ctermbg=DarkBlue
+	hi PmenuThumb guifg=LightGray guibg=Black ctermfg=LightGray ctermbg=Black
+	hi Tag guifg=DarkGreen term=bold ctermfg=DarkGreen 
+	hi Todo guifg=Black guibg=Yellow term=standout ctermbg=Yellow ctermfg=Black 
+	hi Visual guifg=Yellow guibg=Red term=reverse ctermfg=Yellow ctermbg=Red 
+	hi Search guifg=Black guibg=Cyan term=reverse ctermfg=Black ctermbg=Cyan 
+	hi StatusLine gui=reverse guifg=Yellow guibg=DarkGray term=reverse cterm=NONE ctermfg=Yellow ctermbg=DarkGray
+	hi Folded  gui=undercurl guifg=Yellow guibg=Black  ctermfg=Yellow ctermbg=Black cterm=bold,undercurl
+	hi Character guifg=#FEAE5E guibg=#262626
+	hi String guifg=#FEAE5E guibg=#262626
+	hi PreProc guifg=#c0e8fc
 	hi Special term=bold ctermfg=Magenta guifg=Magenta
-	hi Identifier guifg=Red
-	"hi Conditional gui=none guifg= guifg=
-	hi Statement term=none ctermfg=131 gui=bold guifg=#ff0000
-	hi PreProc gui=NONE   guifg=#409090   guibg=NONE
-	"hi Type           gui=NONE   guifg=#ff8bff   guibg=NONE
-	hi Type gui=NONE guifg=Blue
-	hi Visual term=reverse ctermfg=Yellow ctermbg=Red gui=NONE guifg=Black guibg=Yellow
-	hi Search term=reverse ctermfg=Black ctermbg=Cyan gui=NONE guifg   = Black guibg = Cyan
-	hi Tag term=bold ctermfg=DarkGreen guifg=DarkGreen
-	hi Error term=reverse guibg=Red guifg=White
-	hi Todo term=standout ctermbg=Yellow ctermfg=Black guifg=Blue guibg=Yellow
-	hi StatusLine term=bold,reverse cterm=NONE ctermfg=Yellow ctermbg=DarkGray gui=NONE guifg=Yellow guibg=DarkGray
-	hi Pmenu ctermfg=DarkGreen ctermbg=Black
-	hi PmenuSel ctermfg=Red ctermbg=White
-	hi PmenuSbar ctermfg=White ctermbg=DarkBlue
-	hi PmenuThumb ctermfg=LightGray ctermbg=Black
-	hi CursorLine ctermbg=red ctermfg=white cterm=undercurl,bold
-	hi CursorColumn ctermbg=red ctermfg=yellow
-	hi ColorColumn ctermbg=red ctermfg=yellow
-	hi Folded ctermfg=Yellow ctermbg=Black cterm=bold,undercurl
-	hi MatchParen   gui=NONE      guifg=#cfbfad   guibg=#4e4e8f
-	"hi Conditional gui= guifg= guibg=
+	hi VisualNOS guifg=#444444
+	hi MatchParen guifg=#1100AA
+	hi ColorColumn guibg=#333333
+	hi CursorLine guibg=#333333
+	hi CursorColumn guibg=#333333
+	hi Identifier guifg=#87d7d8
+	hi Type guifg=#f5f52c gui=NONE
+	hi Statement guifg=#FF8636 gui=NONE
+	hi DiffAdd gui=bold guifg=Black  guibg=#262626
+	hi DiffChange gui=bold guifg=Yellow guibg=#262626
+	hi DiffText gui=undercurl guifg=#FEAE5E guibg=#262626
+	hi DiffDelete guifg=Black  guibg=#262626
+	hi NonText guifg=#353E3F
+	hi SpecialKey guifg=#353E3F
 else
 	hi Comment term=standout ctermfg=gray gui=bold guifg=gray
 	hi Constant term=underline ctermfg=Magenta guifg=Magenta
 	exec "hi String cterm=NONE   ctermfg=" . <SID>X(73) . " ctermbg=" . <SID>X(81)
 	exec "hi PreProc cterm=NONE   ctermfg=" . <SID>X(127) . " ctermbg=" . <SID>X(0)
-	"exec "hi Conditional cterm=NONE ctermbg=" . <SID>X(40) . "ctermfg=" . <SID>X(0)
 	exec "hi Character  cterm=NONE   ctermfg=" . <SID>X(73) . " ctermbg=" . <SID>X(81)
 	call s:hibg("Visual"    ,"#555577","LightBlue",83)
 	call s:hibg("VisualNOS" ,"#444444","DarkBlue",81)
 	call s:hibg("MatchParen","#1100AA","DarkBlue",18)
-
 	hi Special term=bold ctermfg=Magenta guifg=Magenta
 	call s:hifg("Identifier"     ,"#FFCC00","Yellow",72) " 220
-	"hi Identifier ctermfg=Red
-	"hi Type term=None ctermfg=Blue gui=NONE guifg=Blue
-	"exec "hi Type cterm=NONE ctermfg=" . <SID>X(250) . " ctermbg=" . <SID>X(81)
 	call s:hifg("Type"           ,"#AAAA77","Grey",57) " 101
-
 	call s:hifg("Statement"      ,"#FF6600","Brown",68) " 202
-"	hi Statement term=none ctermfg=131 ctermbg=NONE
 	hi Visual term=reverse ctermfg=Yellow ctermbg=Red 
 	hi Search term=reverse ctermfg=Black ctermbg=Cyan 
 	hi Tag term=bold ctermfg=DarkGreen 
-	"hi Error term=none ctermfg=215 ctermbg=9 
 	hi Todo term=standout ctermbg=Yellow ctermfg=Black 
 	hi StatusLine term=bold,reverse cterm=NONE ctermfg=Yellow ctermbg=DarkGray
 	hi Pmenu ctermfg=DarkGreen ctermbg=Black

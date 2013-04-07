@@ -20,7 +20,7 @@ set cpoptions=aABceFsmq
             " ||+-- A backslash has no special meaning in mappings
             " |+-- :write updates alternative file name
             " +-- :read updates alternative file name
-
+"TODO
 syntax off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -49,6 +49,7 @@ Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-fugitive'
 Bundle 'tsaleh/vim-align'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'sjl/splice.vim'
@@ -252,7 +253,6 @@ autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
       \ endif
-
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
