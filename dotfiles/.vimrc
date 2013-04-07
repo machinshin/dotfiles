@@ -39,9 +39,8 @@ set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not b
 " NOTE: comments after Bundle command are not allowed..
 "let vundle manage vundle
 Bundle 'gmarik/vundle'
-Bundle 'xolox/vim-notes'
-Bundle 'scrooloose/nerdtree'
 Bundle 'spiiph/vim-space'
+Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
@@ -60,7 +59,7 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'honza/snipmate-snippets'
+Bundle 'honza/vim-snippets'
 Bundle 'garbas/vim-snipmate'
 Bundle 'vim-scripts/javacomplete'
 Bundle 'Townk/vim-autoclose'
@@ -83,6 +82,7 @@ Bundle 'tysontate/HTML-AutoCloseTag'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'derekwyatt/vim-scala'
+Bundle 'paradigm/vim-multicursor'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -122,6 +122,8 @@ colorscheme machinshin " my theme
 let g:Powerline_symbols='fancy'
 "show the current command in progress
 set showcmd
+"automatically save before commands like :next and :make 
+set autowrite
 " set to autoread when a file is changed from teh outside
 set autoread
 set t_Co=256
@@ -346,10 +348,14 @@ nnoremap k gk
 let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen=1
 let NERDTreeMinimalUI=1
+let NERDTreeShowHidden=1
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.svn', '\.git']
 "toggle open nerdtree
 nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
+"locate curent file in nerdtree
+nnoremap <silent> <Leader><Leader>f :NERDTreeFind<CR>
+nnoremap <silent> <Leader><Leader>w :NERDTreeCWD<CR>
 
 " Window resizing mappings
 nnoremap <silent> <S-Up> :<c-u>exe "resize " . (winheight(0) + 5)<cr>
@@ -510,4 +516,19 @@ nnoremap <silent> <F8> :TagbarOpen fj<CR>
 "Tagbar options
 let g:tagbar_compact=1
 autocmd VimEnter * nested :call tagbar#autoopen(1)
+"multi-cursor keybindings
+nnoremap m<Space> :<c-u>call MultiCursorPlaceCursor()<cr>
+nnoremap m<CR> :<c-u>call MultiCursorManual()<cr>
+nnoremap m<bs> :<c-u>call MultiCursorRemoveCursor()<cr>
+xnoremap m<cr> :<c-u>call MultiCursorVisual()<cr>
+"To have MultiCursor prompt you for the search pattern:
+nnoremap m/ :<c-u>call MultiCursorSearch('')<cr>
+
+"create a cursor at every word like the word under the cursor:
+nnoremap m* :<c-u>call MultiCursorSearch('<c-r><c-w>')<cr>
+"Or every group of characters like those visually selected:
+xnoremap m* "*y<Esc>:call MultiCursorSearch('<c-r>=substitute(escape(@*, '\/.*$^~[]'), "\n", '\\n', "g")<cr>')<cr>
+let g:multicursor_quit ="q"
+let g:multicursor_debug = 1
+set shell=zsh 
 

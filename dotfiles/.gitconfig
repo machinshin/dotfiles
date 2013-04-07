@@ -11,7 +11,7 @@
 	up=pull origin
 	st=status
 	df=diff
-	d=diff --color-words
+	d = difftool
 	co=checkout
 	br=branch
 	sta=stash
@@ -44,3 +44,7 @@
 	excludesfile = /Users/vat/.gitignore_global
 	editor = vim
 	pager = cat
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
