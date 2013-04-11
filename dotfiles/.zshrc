@@ -117,15 +117,22 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
-export PATH=$PATH:$HOME/scripts/
-if [[ -f $HOME/scripts/corp.env.sh ]]; then 
-  source $HOME/scripts/corp.env.sh
+export PATH=$PATH:$HOME/.scripts/
+if [[ -f $HOME/.scripts/corp.env.sh ]]; then 
+  source $HOME/.scripts/corp.env.sh
 fi
 
-if [[ -f $HOME/scripts/env.sh ]]; then 
-  source $HOME/scripts/env.sh
-fi
+if [[ -f $HOME/.scripts/env.sh ]]; then 
+  source $HOME/.scripts/env.sh
+fi 
+source $HOME/.scripts/tmux-windows.sh
+
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias gvim='/Applications/MacVim.app/Contents/MacOS/MacVim'
+export EDITOR='/Applications/MacVim.app/Contents/MacOS/Vim'
+export SHELL='/opt/local/bin/zsh'
 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+perlbrew switch perl-5.14.2

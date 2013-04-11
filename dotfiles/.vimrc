@@ -72,9 +72,10 @@ Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
+Bundle 'vim-perl/vim-perl'
 Bundle 'Rip-Rip/clang_complete'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'tehmaze/profont-powerline'
+"Bundle 'Lokaltog/vim-powerline'
+"Bundle 'tehmaze/profont-powerline'
 Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
 Bundle 'semmons99/vim-ruby-matchit'
@@ -82,7 +83,10 @@ Bundle 'tysontate/HTML-AutoCloseTag'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'derekwyatt/vim-scala'
-Bundle 'paradigm/vim-multicursor'
+Bundle 'kana/vim-fakeclip'
+Bundle 'kien/ctrlp.vim'
+Bundle 'sjl/gundo.vim'
+
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -206,11 +210,10 @@ set fo=tcrqn " See Help (complex)
 set ai " autoindent
 set si " smartindent
 set cindent " do c-style indenting
-set tabstop=2 " tab spacing (settings below are just to unify it)
-set softtabstop=2 " unify
-set shiftwidth=2 " unify
-"set expandtab " real tabs please!
-set noexpandtab " real tabs please!
+set tabstop=4 " tab spacing (settings below are just to unify it)
+set softtabstop=4 " unify
+set shiftwidth=4 " unify
+set expandtab " real tabs please!
 set nowrap " do not wrap lines 
 set smarttab " use tabs at the start of a line, spaces elsewhere
 "map <Esc> to jj,thus easy to switch to cmd mod
@@ -309,8 +312,8 @@ function! g:ToggleColorColumn()
     setlocal colorcolumn=80
   endif
 endfunction
-noremap <silent><Leader>co :call g:ToggleColorColumn()<CR>
-
+"noremap <silent><Leader>co :call g:ToggleColorColumn()<CR>
+set colorcolumn=80
 
 "Window movement/management
 " go up a window
@@ -344,18 +347,23 @@ nnoremap <Leader><Leader>b <C-W>J
 "remap j to next row, not next line
 nnoremap j gj
 nnoremap k gk
+"show at top
+let g:ctrlp_match_window_bottom=0
+let g:ctrlp_clear_cache_on_exit=0
 
-let NERDTreeDirArrows=1
-let NERDTreeQuitOnOpen=1
-let NERDTreeMinimalUI=1
-let NERDTreeShowHidden=1
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.svn', '\.git']
+nnoremap <F3> :GundoToggle<CR>
+
+"let NERDTreeDirArrows=1
+"let NERDTreeQuitOnOpen=1
+"let NERDTreeMinimalUI=1
+"let NERDTreeShowHidden=1
+"let NERDTreeShowBookmarks=1
+"let NERDTreeIgnore=['\.svn', '\.git']
 "toggle open nerdtree
-nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
+"nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
 "locate curent file in nerdtree
-nnoremap <silent> <Leader><Leader>f :NERDTreeFind<CR>
-nnoremap <silent> <Leader><Leader>w :NERDTreeCWD<CR>
+"nnoremap <silent> <Leader><Leader>f :NERDTreeFind<CR>
+"nnoremap <silent> <Leader><Leader>w :NERDTreeCWD<CR>
 
 " Window resizing mappings
 nnoremap <silent> <S-Up> :<c-u>exe "resize " . (winheight(0) + 5)<cr>
@@ -422,16 +430,6 @@ nnoremap m ]czzzv
 nnoremap M [czzzv
 nnoremap <Leader>p do<CR>
 nnoremap <Leader>P dp<CR>
-
-" Show syntax highlighting groups for word under cursor
-
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 
 let g:AutoClosePairs_add="<> | ' []"
 let java_highlight_debug=1
@@ -512,23 +510,14 @@ let g:ragtag_global_maps = 1
 "let GtagsCscope_Auto_Load=1
 "let GtagsCscope_Auto_Map=1
 "let GtagsCscope_Quiet=1
-nnoremap <silent> <F8> :TagbarOpen fj<CR>
+nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 let g:tagbar_compact=1
 autocmd VimEnter * nested :call tagbar#autoopen(1)
-"multi-cursor keybindings
-nnoremap m<Space> :<c-u>call MultiCursorPlaceCursor()<cr>
-nnoremap m<CR> :<c-u>call MultiCursorManual()<cr>
-nnoremap m<bs> :<c-u>call MultiCursorRemoveCursor()<cr>
-xnoremap m<cr> :<c-u>call MultiCursorVisual()<cr>
-"To have MultiCursor prompt you for the search pattern:
-nnoremap m/ :<c-u>call MultiCursorSearch('')<cr>
-
-"create a cursor at every word like the word under the cursor:
-nnoremap m* :<c-u>call MultiCursorSearch('<c-r><c-w>')<cr>
-"Or every group of characters like those visually selected:
-xnoremap m* "*y<Esc>:call MultiCursorSearch('<c-r>=substitute(escape(@*, '\/.*$^~[]'), "\n", '\\n', "g")<cr>')<cr>
-let g:multicursor_quit ="q"
-let g:multicursor_debug = 1
 set shell=zsh 
 
+au BufNewFile,BufRead *.tt setf tt2
+au BufNewFile,BufRead *.tt2 setf tt2
+if $TMUX == ''
+	set clipboard+=unnamed
+endif
