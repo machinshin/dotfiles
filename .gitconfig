@@ -1,6 +1,6 @@
 [user]
-    name = Srivatsan Raghavan
-    email = machinshin@gmail.com
+    name = Vat Raghavan
+    email = vat@crowdtilt.com
 [color]
     diff=auto
     status=auto
@@ -16,7 +16,6 @@
     br=branch
     sta=stash
     l = log --no-merges
-	m = checkout master
     # not a fan of random merges
     pull = pull --ff-only
         # various pretty loggers from various places
@@ -36,7 +35,6 @@
     last = log -l HEAD
     visual = !gitk
     po = push origin
-    pom = push origin
     pod = push origin dev
 [github]
     user = machinshin
@@ -50,3 +48,5 @@
     tool = vimdiff
 [difftool]
     prompt = false
+[push]
+    default = simple
