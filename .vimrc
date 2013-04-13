@@ -11,15 +11,15 @@ filetype off
 filetype plugin off
 filetype plugin indent off
 set cpoptions=aABceFsmq
-            " |||||||||
-            " ||||||||+-- When joining lines, leave the cursor between joined lines
-            " |||||||+-- When a new match is created (showmatch) pause for .5
-            " ||||||+-- Set buffer options when entering the buffer
-            " |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
-            " |||+-- Searching continues at the end of the match at the cursor position
-            " ||+-- A backslash has no special meaning in mappings
-            " |+-- :write updates alternative file name
-            " +-- :read updates alternative file name
+              " |||||||||
+              " ||||||||+-- When joining lines, leave the cursor between joined lines
+              " |||||||+-- When a new match is created (showmatch) pause for .5
+              " ||||||+-- Set buffer options when entering the buffer
+              " |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
+              " |||+-- Searching continues at the end of the match at the cursor position
+              " ||+-- A backslash has no special meaning in mappings
+              " |+-- :write updates alternative file name
+              " +-- :read updates alternative file name
 "TODO
 syntax off
 set rtp+=~/.vim/bundle/vundle/
@@ -74,8 +74,8 @@ Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
 Bundle 'vim-perl/vim-perl'
 Bundle 'Rip-Rip/clang_complete'
-"Bundle 'Lokaltog/vim-powerline'
-"Bundle 'tehmaze/profont-powerline'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'tehmaze/profont-powerline'
 Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
 Bundle 'semmons99/vim-ruby-matchit'
@@ -86,7 +86,6 @@ Bundle 'derekwyatt/vim-scala'
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
-
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -120,8 +119,6 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()"
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
 filetype plugin indent on
-"syntax on " syntax highlighting on
-syntax off" syntax highlighting on
 colorscheme machinshin " my theme
 let g:Powerline_symbols='fancy'
 "show the current command in progress
@@ -158,22 +155,23 @@ set lsp=0 " space it out a little more (easier to read)
 set wildmenu
 set wildmode=longest:full,full
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.so.*,*.jpg,*.gif,*.png
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*.tgz,*.gz
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
 set number " turn on line numbers
 set hid " you can change buffer without saving
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l,b,s,[,],~  " backspace and cursor keys wrap to
-             " | | | | | | | | |
-             " | | | | | | | | +-- "]" Insert and Replace
-             " | | | | | | | +-- "[" Insert and Replace
-             " | | | | | | +-- "~" Normal
-             " | | | | | +-- <Right> Normal and Visual
-             " | | | | +-- <Left> Normal and Visual
-             " | | | +-- "l" Normal and Visual (not recommended)
-             " | | +-- "h" Normal and Visual (not recommended)
-             " | +-- <Space> Normal and Visual
-             " +-- <BS> Normal and Visual
+" | | | | | | | | |
+" | | | | | | | | +-- "]" Insert and Replace
+" | | | | | | | +-- "[" Insert and Replace
+" | | | | | | +-- "~" Normal
+" | | | | | +-- <Right> Normal and Visual
+" | | | | +-- <Left> Normal and Visual
+" | | | +-- "l" Normal and Visual (not recommended)
+" | | +-- "h" Normal and Visual (not recommended)
+" | +-- <Space> Normal and Visual
+" +-- <BS> Normal and Visual
 set mouse=a " use mouse everywhere
 set linespace=0
 set sidescroll=10
@@ -203,7 +201,6 @@ set list " turns out, I like listchars -- show chars on end of line, whitespace,
 "set columns=160 " 160 cols wide
 "set so=10 " Keep 10 lines (top/bottom) for scope
 set novisualbell " don't blink
-"set statusline=%F%m%r%h%w\ [FM=%{&ff}]\ [TYPE=%Y]\ [ASC=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set laststatus=2 " always show the status line
 " Text Formatting/Layout
 set fo=tcrqn " See Help (complex)
@@ -223,25 +220,22 @@ let mapleader=","
 let maplocalleader="<"
 let g:mapleader=","
 " keep selection on indenting in visual mode
-vmap <Leader>> :><cr>gv
-vmap <Leader>< :<<cr>gv
+vnoremap < <gv 
+vnoremap > >gv 
 
 " Custom Functions
 " Select range, then hit :SuperRetab($width) - by p0g and FallingCow
 function! SuperRetab(width) range
   silent! exe a:firstline . ',' . a:lastline . 's/\v%(^ *)@<= {'. a:width .'}/\t/g'
 endfunction
-"Keyboard mapping
-noremap <F6> :GundoToggle<CR>
 " map page-up and page-down to ctrl-k & ctrl-j respectively
 noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
-nmap <A-r>  <ESC>:call RestartVim()<CR>
 
 "press F5 to get a list of buffers and goto a the selected buffer
-nnoremap <F5> :buffers<CR>:sbuffer<Space>
+nnoremap <F5> :buffers<CR>:b<Space>
 "turn off *ALL* bells
 set vb t_vb=
 set ofu=syntaxcomplete#Complete
@@ -261,10 +255,8 @@ autocmd BufReadPost *
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-let g:snips_author = 'Srivatsan (Vat) Raghavan ( srivatsan.raghavan@etrade.com ) '
+let g:snips_author = 'Vat Raghavan ( machinshin@gmail.com ) '
 
-let g:notes_directory='~/.notes/'
-let g:notes_suffix='.txt'
 "disable autoindent before pasting. 
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
@@ -298,12 +290,11 @@ function! DoChighlight()
 endfunc
 syntax on 
 nnoremap <silent><Leader>3 :call DoChighlight()<CR>
-"change leader
 "quicksave
 nmap <Leader>s :w!<cr>
 "fast edit of vimrc
-map <silent> <Leader><F2> :e! ~/.vimrc<cr>
-map <silent> <Leader>cc :set cursorcolumn!<cr> :set cursorline!<cr>
+map <silent> <Leader><v> :e! ~/.vimrc<cr>
+map <silent> <Leader><Leader>c :set cursorcolumn!<cr> :set cursorline!<cr>
 
 function! g:ToggleColorColumn()
   if &colorcolumn != ''
@@ -312,7 +303,7 @@ function! g:ToggleColorColumn()
     setlocal colorcolumn=80
   endif
 endfunction
-"noremap <silent><Leader>co :call g:ToggleColorColumn()<CR>
+noremap <silent><Leader><Leader>l :call g:ToggleColorColumn()<CR>
 set colorcolumn=80
 
 "Window movement/management
@@ -349,27 +340,25 @@ nnoremap j gj
 nnoremap k gk
 "show at top
 let g:ctrlp_match_window_bottom=0
-let g:ctrlp_clear_cache_on_exit=0
-
+" Tell Ctrl-P to keep the current VIM working directory when starting a
+" search, another really stupid non default
+"let g:ctrlp_working_path_mode = 0
+" Ctrl-P ignore target dirs so VIM doesn't have to! Yay!
+let g:ctrlp_custom_ignore = { 
+      \ 'dir':  '\v[\/]\.(git|hg|svn|local|locallib)$', 
+      \ 'file': '\v\.(exe|so|dll|tgz|gz)$', 
+      \ }
+" Open a new file in a tab by default
+let g:ctrlp_open_multi = 'i'
+let g:ctrlp_match_window_reverse=0
+let g:ctrlp_clear_cache_on_exit=1
 nnoremap <F3> :GundoToggle<CR>
-
-"let NERDTreeDirArrows=1
-"let NERDTreeQuitOnOpen=1
-"let NERDTreeMinimalUI=1
-"let NERDTreeShowHidden=1
-"let NERDTreeShowBookmarks=1
-"let NERDTreeIgnore=['\.svn', '\.git']
-"toggle open nerdtree
-"nnoremap <silent> <Leader><Leader>n :NERDTreeToggle<CR>
-"locate curent file in nerdtree
-"nnoremap <silent> <Leader><Leader>f :NERDTreeFind<CR>
-"nnoremap <silent> <Leader><Leader>w :NERDTreeCWD<CR>
 
 " Window resizing mappings
 nnoremap <silent> <S-Up> :<c-u>exe "resize " . (winheight(0) + 5)<cr>
 nnoremap <silent> <S-Down> :<c-u>exe "resize " . (winheight(0) - 5)<cr>
-nnoremap <silent> <S-Left> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
-nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) - 5)<cr>
+nnoremap <silent> <S-Left> :<c-u>exe "vertical resize " . (winwidth(0) - 5)<cr>
+nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
 
 set foldenable
 set foldmethod=manual
@@ -391,27 +380,17 @@ set foldtext=NeatFoldText()
 
 "maps for foldng
 " close all open folds
-map <Leader>f <cr>zM<cr>
+nnoremap <Leader>f zM<cr>
 " open all closed folds
-map <Leader>F <cr>zR<cr>
+nnoremap <Leader>F zR<cr>
 
 " remember folding state
 au BufWinLeave * silent mkview
 au BufWinEnter * silent loadview
 
-"indent xml properly
-function! DoPrettyXML()
-  1,$!xmllint --format --recover -
-endfunction
-command! PrettyXML call DoPrettyXML()
-
 "clear hlsearch results by typing ,,c
 nnoremap <silent> <Leader><Leader>c :nohlsearch<CR>
 
-" append newline in insert mode
-"imap <f3> <esc>o
-" prepend newline in insert mode
-"imap <f4> <esc>O
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -428,7 +407,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap m ]czzzv
 nnoremap M [czzzv
-nnoremap <Leader>p do<CR>
+nnoremap <Leader>o do<CR>
 nnoremap <Leader>P dp<CR>
 
 let g:AutoClosePairs_add="<> | ' []"
@@ -441,8 +420,6 @@ vnoremap <F1> <ESC>
 map H ^
 map L $
 " tabbing selected section
-vmap <Tab> >gv
-vmap <Tab> >gv
 "map Q to last recorded macro
 map Q @@
 nnoremap <silent>.n :n<cr>
@@ -461,55 +438,29 @@ nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 
-"run maven
-function! RunMavenInSrcDir()
-  let src_dir = finddir('src', ';')
-  src_dir = fnamemodify(src_dir, ':p:h')
-  exec 'cd' fnameescape(src_dir)
-  !mvn clean install -Dmaven.test.skip=true
-  cd -
-endfunction
-map <F6> :call RunMavenInSrcDir()<CR>
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
 "scroll screen on brace highlight
-inoremap } }<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-inoremap ] ]<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
-inoremap ) )<Left><c-o>%<c-o>:sleep 500m<CR><c-o>%<c-o>a
 
 " Tabularize {
 if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:<CR>
-  vmap <Leader>a: :Tabularize /:<CR>
-  nmap <Leader>a:: :Tabularize /:\zs<CR>
-  vmap <Leader>a:: :Tabularize /:\zs<CR>
-  nmap <Leader>a, :Tabularize /,<CR>
-  vmap <Leader>a, :Tabularize /,<CR>
-  nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-  vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    nmap <Leader>a= :Tabularize /=<CR>
+    vmap <Leader>a= :Tabularize /=<CR>
+    nmap <Leader>a: :Tabularize /:<CR>
+    vmap <Leader>a: :Tabularize /:<CR>
+    nmap <Leader>a:: :Tabularize /:\zs<CR>
+    vmap <Leader>a:: :Tabularize /:\zs<CR>
+    nmap <Leader>a, :Tabularize /,<CR>
+    vmap <Leader>a, :Tabularize /,<CR>
+    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 endif
+" }Tabularize 
 " Y to end of line 
 nnoremap Y y$
 
-imap ,, <C-X><CR>
-imap .. <C-X><Space>
 nnoremap <silent><Leader>~ :set tildeop!<CR>
 let g:ragtag_global_maps = 1
-" both syntax-based folds & manual folds on top
-" this isn't currently working?!?
-"augroup vimrc
-"  au BufReadPre * setlocal foldmethod=syntax
-"  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif
-"augroup END
-
-"set csprg=gtags-cscope
-"set cscopetag
-"set nocsverb
-"let GtagsCscope_Auto_Load=1
-"let GtagsCscope_Auto_Map=1
-"let GtagsCscope_Quiet=1
 nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 let g:tagbar_compact=1
@@ -519,5 +470,5 @@ set shell=zsh
 au BufNewFile,BufRead *.tt setf tt2
 au BufNewFile,BufRead *.tt2 setf tt2
 if $TMUX == ''
-	set clipboard+=unnamed
+  set clipboard+=unnamed
 endif
