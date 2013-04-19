@@ -136,3 +136,4 @@ export SHELL='/opt/local/bin/zsh'
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 perlbrew switch perl-5.14.2
+export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/

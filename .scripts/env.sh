@@ -45,9 +45,9 @@ alias tnb='tmux new -s b'
 alias ll='ls -alh' 
 alias vi='vim'
 alias v='vim'
-
+alias n='notes '
+alias ack='ack-5.12'
+alias a='ack-5.12'
+alias gitd='git difftool --'
 PATH=/opt/local/bin:opt/local/sbin:$PATH
 export PATH=$JAVA_HOME/bin:$PATH
-alias maven='mvn'
-alias mci='maven clean install'
-alias mcit='mci -Dmaven.test.skip=true'

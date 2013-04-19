@@ -86,6 +86,7 @@ Bundle 'derekwyatt/vim-scala'
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
+Bundle 'terryma/vim-multiple-cursors'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -95,7 +96,7 @@ let g:neocomplcache_enable_underbar_completion=1
 let g:neocomplcache_max_menu_width=25
 let g:neocomplcache_temporary_dir='~/.vim/neocon/'
 let g:neocomplcache_enable_auto_select=1
-
+let g:multi_cursor_quit_key='C-q'
 "Plugin key mappings
 "imap <C-k> <Plug>(neocomplcache_snippets_expand)
 "smap <C-k> <Plug>(neocomplcache_snippets_expand)
@@ -108,7 +109,13 @@ inoremap <expr><C-l>  neocomplcache#complete_common_string()
 "<CR>: close popup and save indent
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
+"inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
+"inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <C-j>     pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k>       pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <expr> <C-u>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
@@ -445,6 +452,7 @@ noremap <Leader>% v%
 " Tabularize {
 if exists(":Tabularize")
     nmap <Leader>a= :Tabularize /=<CR>
+    nmap <Leader>a> :Tabularize /=><CR>
     vmap <Leader>a= :Tabularize /=<CR>
     nmap <Leader>a: :Tabularize /:<CR>
     vmap <Leader>a: :Tabularize /:<CR>
@@ -464,7 +472,10 @@ let g:ragtag_global_maps = 1
 nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 let g:tagbar_compact=1
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+if &diff 
+else
+    autocmd VimEnter * nested :call tagbar#autoopen(1)
+endif
 set shell=zsh 
 
 au BufNewFile,BufRead *.tt setf tt2
@@ -472,3 +483,4 @@ au BufNewFile,BufRead *.tt2 setf tt2
 if $TMUX == ''
   set clipboard+=unnamed
 endif
+set tags=tags;

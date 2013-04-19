@@ -6,6 +6,7 @@ alias chost='cd $CT_DEV_PATH/Crowdhoster'
 alias ch='cd $CT_DEV_PATH/chef'
 alias api='cd $CT_DEV_PATH/crowdtilt-internal-api'
 alias aspec='cd $CT_DEV_PATH/crowdtilt-api-spec'
+alias pub='cd $CT_DEV_PATH/crowdtilt-public-site'
 
 pullreq() {
     [ -z $BRANCH ] && BRANCH="dev"
@@ -16,11 +17,12 @@ pullreq() {
     CUR_BRANCH=${HEAD#refs/heads/}
 
     if [[ "$CUR_BRANCH" == "dev" || "$CUR_BRANCH" == "master" ]]; then
-echo "You can't push directly to $CUR_BRANCH, thicky"
-        return
-fi
-git push origin $CUR_BRANCH
-    hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
+      echo "You can't push directly to $CUR_BRANCH, thicky"
+      return
+    fi 
+    echo "CURRENT BRANCH is $CUR_BRANCH | $HEAD | $REMOTE | $MSG | $BRANCH"
+    #git push origin $CUR_BRANCH
+    #hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
 }
 
 psg() {

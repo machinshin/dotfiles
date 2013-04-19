@@ -41,12 +41,13 @@
     token = faf03543c81b5ee13885108ab3582c78
 [core]
     trustctime = false
-    excludesfile = /Users/vat/.gitignore_global
+	excludesfile = /Users/VatRaghavan/.gitconfig_global
     editor = vim
-    pager = cat
 [diff]
     tool = vimdiff
 [difftool]
     prompt = false
 [push]
     default = simple
+[commit]
+	template = /Users/VatRaghavan/.gitmessage.text

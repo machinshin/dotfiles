@@ -35,4 +35,11 @@
 .Trashes
 Icon?
 ehthumbs.db
-Thumbs.db
+Thumbs.db 
+
+#Tags
+#+/tags
+#+tags
+#*.tags
+tags
+
