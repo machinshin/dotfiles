@@ -42,7 +42,7 @@
 [core]
     trustctime = false
 	excludesfile = /Users/VatRaghavan/.gitconfig_global
-    editor = vim
+    editor = vim -f
 [diff]
     tool = vimdiff
 [difftool]
