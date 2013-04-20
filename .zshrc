@@ -104,7 +104,9 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(dirpersist extract history-substring-search vi-mode zsh-syntax-highlighting ssh git battery github svn)
+plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \ 
+	battery github svn autojump cpanm gas gem git-hubflow git-remote-branch gnu-utils \ 
+	knife macports osx perl themes vagrant ) 
 
 source $ZSH/oh-my-zsh.sh
 #export JETTY_VERSION=7.5.4.v20111024
@@ -137,3 +139,5 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 perlbrew switch perl-5.14.2
 export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
+export FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/4.3.11/functions:/opt/local/share/zsh/site-functions/
+
