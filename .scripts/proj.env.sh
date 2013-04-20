@@ -15,7 +15,7 @@ pullreq() {
     #hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
 }
 
-g_pcb() { 
+pcb() { 
     ### TODO: how to get git commit to work? 
     echo `git commit`
     HEAD=$(git symbolic-ref HEAD 2> /dev/null)
