@@ -9,19 +9,20 @@
 typeset -A host_repr
 
 local orange_bold="%B%F{130}"
-
+local yellow_bold="%B%{$fg[yellow]%}"
 # user part, color coded by privileges
 local user="%(!.%{$fg[white]%}.%{$fg[red]%})%n%{$reset_color%}"
 
 # Hostname part.  compressed and colorcoded per host_repr array
 # if not found, regular hostname in default color
-local host="${orange_bold}$(hostname)%{$reset_color%}"
+#local host="${orange_bold}$(hostname)%{$reset_color%}"
+local host="${orange_bold}%m%{$reset_color%}"
 
 # Compacted $PWD
 local pwd="%{$fg[white]%}%~%{$reset_color%}"
 #local pwd="%{$fg[white]%}${$PWD/#$HOME/~}%{$reset_color%}"
 #I don't recally care to see the current time on the prompt. waste of space
-PROMPT='${user}@${host}($(svn_prompt_info)$(git_prompt_info))[${pwd}] $ '
+PROMPT='${yellow_bold}%h:%{$reset_color%}${user}@${host}($(git_prompt_info))[${pwd}] $ '
 
 # i would prefer 1 icon that shows the "most drastic" deviation from HEAD,
 # but lets see how this works out
