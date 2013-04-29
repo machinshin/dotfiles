@@ -2,7 +2,7 @@ autoload -U zmv
 autoload colors; colors
 HISTFILE=~/.histfile
 HISTSIZE=SAVEHIST=9999
-autoload -Uz compinit 
+autoload -Uz compinit
 compinit
 setopt correctall
 autoload -U promptinit
@@ -27,7 +27,7 @@ bindkey -v
 #source /usr/local/share/compleat-1.0/compleat_setup
 
 ZCACHEDIR=~/.zsh/cache
-zstyle ':completion:*' cache-path $ZCACHEDIR 
+zstyle ':completion:*' cache-path $ZCACHEDIR
 zstyle ':completion:*' use-cache on
 compinit -C -d $ZCACHEDIR/compdump
 #color completions
@@ -63,7 +63,7 @@ zstyle ':completion:*:*:xdvi:*' file-sort time
 #zstyle 'copmletion:*:*:*:*:processes' force-list always
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
-#If you end up using a directory as argument, this will 
+#If you end up using a directory as argument, this will
 #remove the trailing slash (usefull in ln)
 zstyle ':completion:*' squeeze-slashes true
 #cd never select the parent directory (e.g.: cd ../<TAB>):
@@ -87,11 +87,8 @@ ZSH_THEME="machinshin"
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
-OS=`uname`
-if [[ "$OS" == "Linux" ]]; then
-  # Comment this out to disable weekly auto-update checks
-  DISABLE_AUTO_UPDATE="true"
-fi
+# Comment this out to disable weekly auto-update checks
+#DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -104,12 +101,11 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \ 
-	battery github svn autojump cpanm gas gem git-hubflow git-remote-branch gnu-utils \ 
-	knife macports osx perl themes vagrant ) 
+plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \
+	battery github svn autojump cpanm gas gem git-hubflow git-remote-branch gnu-utils \
+	knife macports osx perl themes vagrant )
 
 source $ZSH/oh-my-zsh.sh
-#export JETTY_VERSION=7.5.4.v20111024
 
 # Customize to your needs...
 #zsh specifc alias
@@ -120,13 +116,17 @@ alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
 export PATH=$PATH:$HOME/.scripts/
-if [[ -f $HOME/.scripts/corp.env.sh ]]; then 
+if [[ -f $HOME/.scripts/corp.env.sh ]]; then
   source $HOME/.scripts/corp.env.sh
 fi
 
-if [[ -f $HOME/.scripts/env.sh ]]; then 
+if [[ -f $HOME/.scripts/env.sh ]]; then
   source $HOME/.scripts/env.sh
-fi 
+fi
+if [[ -f $HOME/.scripts/proj.env.sh ]]; then
+  source $HOME/.scripts/proj.env.sh
+fi
+
 source $HOME/.scripts/tmux-windows.sh
 
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
@@ -136,8 +136,12 @@ export EDITOR='/Applications/MacVim.app/Contents/MacOS/Vim'
 export SHELL='/opt/local/bin/zsh'
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 perlbrew switch perl-5.14.2
 export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
 export FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/4.3.11/functions:/opt/local/share/zsh/site-functions/
+
+if [ -f /opt/local/etc/profile.d/autojump.sh ]; then
+    . /opt/local/etc/profile.d/autojump.sh
+fi
 

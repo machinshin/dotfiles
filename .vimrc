@@ -54,7 +54,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'sjl/splice.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/vimproc'
-"neocomplecache should use 'master' snipmate :/ 
+"neocomplecache should use 'master' snipmate :/
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -109,7 +109,7 @@ inoremap <expr><C-l>  neocomplcache#complete_common_string()
 "<CR>: close popup and save indent
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion
-"inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
+"inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <C-j>     pumvisible() ? "\<C-n>" : "\<C-j>"
@@ -130,12 +130,12 @@ colorscheme machinshin " my theme
 let g:Powerline_symbols='fancy'
 "show the current command in progress
 set showcmd
-"automatically save before commands like :next and :make 
+"automatically save before commands like :next and :make
 set autowrite
 " set to autoread when a file is changed from teh outside
 set autoread
 set t_Co=256
-let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' } 
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set history=5000 " How many lines of history to remember
 set cf " enable error files and error jumping
 set clipboard+=unnamed "share windows clipboard
@@ -188,7 +188,7 @@ set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
 " make the splitters between windows be blank
 set fillchars=vert:\ ,stl:\ ,stlnc:\
-" Visual Cues 
+" Visual Cues
 set showmatch " show matching brackets
 set mat=5 " how many tenths of a second to blink matching brackets for
 set hlsearch " do not highlight searched for phrases
@@ -198,10 +198,10 @@ set formatoptions=rq
 if has("multi_byte")
   set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼" what to show when I hit :set listchars
   let g:tagbar_iconchars = ['▾', '▸']
-else 
+else
   set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
   let g:tagbar_iconchars = ['+', '-']  (default on Windows)
-end 
+end
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
 "set lines=80 " 80 lines tall
@@ -218,7 +218,7 @@ set tabstop=4 " tab spacing (settings below are just to unify it)
 set softtabstop=4 " unify
 set shiftwidth=4 " unify
 set expandtab " real tabs please!
-set nowrap " do not wrap lines 
+set nowrap " do not wrap lines
 set smarttab " use tabs at the start of a line, spaces elsewhere
 "map <Esc> to jj,thus easy to switch to cmd mod
 imap jj <ESC>
@@ -227,8 +227,8 @@ let mapleader=","
 let maplocalleader="<"
 let g:mapleader=","
 " keep selection on indenting in visual mode
-vnoremap < <gv 
-vnoremap > >gv 
+vnoremap < <gv
+vnoremap > >gv
 
 " Custom Functions
 " Select range, then hit :SuperRetab($width) - by p0g and FallingCow
@@ -264,7 +264,7 @@ let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 let g:snips_author = 'Vat Raghavan ( machinshin@gmail.com ) '
 
-"disable autoindent before pasting. 
+"disable autoindent before pasting.
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
@@ -277,7 +277,7 @@ function! PasterToggle()
     execute "set foldcolumn=0"
     execute "set nolist"
     execute "set nonumber"
-  else 
+  else
     execute "set mouse=a"
     execute "set foldcolumn=1"
     execute "set list"
@@ -291,11 +291,11 @@ function! DoChighlight()
   if( w:check_highlight_status )
     execute "syntax on"
     execute "colorscheme machinshin"
-  else 
+  else
     execute "syntax off"
   endif
 endfunc
-syntax on 
+syntax on
 nnoremap <silent><Leader>3 :call DoChighlight()<CR>
 "quicksave
 nmap <Leader>s :w!<cr>
@@ -318,7 +318,7 @@ set colorcolumn=80
 nnoremap <Leader>t <C-w>k
 " go down a window
 nnoremap <Leader>b <C-w>j
-" go left a window 
+" go left a window
 nnoremap <Leader>h <C-w>h
 " go right a window
 nnoremap <Leader>l <C-w>l
@@ -328,19 +328,19 @@ nnoremap <Leader>n <C-w>n
 nnoremap <Leader>q <C-w>q
 " quit all windows & shutdown vim
 nnoremap <silent><Leader><Leader>q <ESC>:qa<CR>
-"rotate windows to the bottom/right 
+"rotate windows to the bottom/right
 nnoremap <Leader><Leader>r <C-w>r
-"rotate windows to the top/left 
+"rotate windows to the top/left
 nnoremap <Leader><Leader>R <C-w>r
 "make only window
 nnoremap <Leader><Leader>o <C-w>o
 " move current window to far left
 nnoremap <Leader><Leader>h <C-W>H
-" move current window to far right 
+" move current window to far right
 nnoremap <Leader><Leader>l <C-W>L
 " move current window to top, not j/k cause i hit ,, (then j/k) too often, and fuck things up
 nnoremap <Leader><Leader>t <C-W>K
-" move current window to bottom 
+" move current window to bottom
 nnoremap <Leader><Leader>b <C-W>J
 "remap j to next row, not next line
 nnoremap j gj
@@ -350,12 +350,12 @@ let g:ctrlp_match_window_bottom=0
 " Tell Ctrl-P to keep the current VIM working directory when starting a
 " search, another really stupid non default
 "let g:ctrlp_working_path_mode = 0
-" Ctrl-P ignore target dirs so VIM doesn't have to! Yay!
-let g:ctrlp_custom_ignore = { 
-      \ 'dir':  '\v[\/]\.(git|hg|svn|local|locallib)$', 
-      \ 'file': '\v\.(exe|so|dll|tgz|gz)$', 
+" Ctrl-P ignore target dirs so VIM doesn't have to!
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]\.(git|hg|svn|local|locallib)$',
+      \ 'file': '\v\.(exe|so|dll|tgz|gz)$',
       \ }
-" Open a new file in a tab by default
+let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
@@ -463,8 +463,8 @@ if exists(":Tabularize")
     nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
     vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 endif
-" }Tabularize 
-" Y to end of line 
+" }Tabularize
+" Y to end of line
 nnoremap Y y$
 
 nnoremap <silent><Leader>~ :set tildeop!<CR>
@@ -472,11 +472,11 @@ let g:ragtag_global_maps = 1
 nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 let g:tagbar_compact=1
-if &diff 
+if &diff
 else
     autocmd VimEnter * nested :call tagbar#autoopen(1)
 endif
-set shell=zsh 
+set shell=zsh
 
 au BufNewFile,BufRead *.tt setf tt2
 au BufNewFile,BufRead *.tt2 setf tt2
@@ -484,3 +484,18 @@ if $TMUX == ''
   set clipboard+=unnamed
 endif
 set tags=tags;
+"highlight trailing whitespace in vim on non empty lines, but not while typing in insert mode!
+highlight ExtraWhitespace ctermbg=red guibg=Brown
+au ColorScheme * highlight ExtraWhitespace guibg=red
+au BufEnter * match ExtraWhitespace /\S\zs\s\+$/
+"au InsertEnter * match ExtraWhitespace /\S\zs\s\+\%#\@<!$/
+"au InsertLeave * match ExtraWhiteSpace /\S\zs\s\+$/>
+" lets you do w!! to sudo write the file
+nnoremap <Leader>w! :w !sudo tee % >/dev/null<cr>
+"open vimrc file
+nmap <Leader>ov :vsp ~/.vimrc<CR>
+"edit vimrc file
+nmap <Leader>v :so ~/.vimrc<CR>
+" Delete all trailing spaces from lines but keep search buffer in place
+nnoremap <Leader><Leader>dw :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+autocmd BufNewFile,BufRead *.yml set filetype=yaml

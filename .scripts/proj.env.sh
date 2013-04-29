@@ -9,20 +9,20 @@ pullreq() {
     if [[ "$CUR_BRANCH" == "dev" || "$CUR_BRANCH" == "master" ]]; then
       echo "You can't push directly to $CUR_BRANCH, thicky"
       return
-    fi 
+    fi
     echo "CURRENT BRANCH is $CUR_BRANCH | $HEAD | $REMOTE | $MSG | $BRANCH"
     #git push origin $CUR_BRANCH
     #hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
 }
 
-pcb() { 
-    ### TODO: how to get git commit to work? 
+pcb() {
+    ### TODO: how to get git commit to work?
     echo `git commit`
     HEAD=$(git symbolic-ref HEAD 2> /dev/null)
     CUR_BRANCH=${HEAD#refs/heads/}
     echo `git push origin $CUR_BRANCH`
 }
-gip() { 
+gip() {
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
     echo `git push origin $CUR_BRANCH`
 }
