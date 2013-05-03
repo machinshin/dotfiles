@@ -87,6 +87,7 @@ Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'paradigm/SkyBison'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -122,6 +123,9 @@ inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()"
+"skybison configuration
+"nnoremap : :<c-u>call SkyBison("")<cr>
+let g:skybison_fuzz=1
 
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
@@ -359,6 +363,9 @@ let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
+let g:ctrlp_custom_ignore={
+    \ 'dir': '\v[\/]Crowdtilt-Internal-API-0.0100' }
+
 nnoremap <F3> :GundoToggle<CR>
 
 " Window resizing mappings

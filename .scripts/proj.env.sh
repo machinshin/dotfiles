@@ -11,17 +11,17 @@ pullreq() {
       return
     fi
     echo "CURRENT BRANCH is $CUR_BRANCH | $HEAD | $REMOTE | $MSG | $BRANCH"
-    #git push origin $CUR_BRANCH
-    #hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
+    git push origin $CUR_BRANCH
+    hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
 }
 
 pcb() {
     ### TODO: how to get git commit to work?
     echo `git commit`
-    HEAD=$(git symbolic-ref HEAD 2> /dev/null)
-    CUR_BRANCH=${HEAD#refs/heads/}
+    CUR_BRANCH=`git symbolic-ref --short -q HEAD`
     echo `git push origin $CUR_BRANCH`
 }
+
 gip() {
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
     echo `git push origin $CUR_BRANCH`
@@ -91,4 +91,4 @@ shc() {
 prod() {
     osascript ~/prod.applescript
 }
-
+export PATH=$PATH:/opt/local/lib/mysql55/bin/

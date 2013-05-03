@@ -52,5 +52,7 @@ alias v='vim'
 alias n='notes '
 alias ack='ack-5.12'
 alias a='ack-5.12'
-PATH=/opt/local/bin:opt/local/sbin:$PATH
-export PATH=$JAVA_HOME/bin:$PATH
+alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
+
+PATH=/opt/local/bin:opt/local/sbin:$JAVA_HOME/bin:$PATH
+export PATH=$PATH:~/.play/

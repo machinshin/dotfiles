@@ -1,6 +1,6 @@
 [user]
-    name = Vat Raghavan
-    email = vat@crowdtilt.com
+	name = Srivatsan Raghavan
+	email = machinshin@gmail.com
 [color]
     diff=auto
     status=auto
@@ -43,6 +43,7 @@
     trustctime = false
 	excludesfile = /Users/VatRaghavan/.gitconfig_global
     editor = vim -f
+	pager = cat
 [diff]
     tool = vimdiff
 [difftool]
