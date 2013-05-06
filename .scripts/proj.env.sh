@@ -17,7 +17,7 @@ pullreq() {
 
 pcb() {
     ### TODO: how to get git commit to work?
-    echo `git commit`
+    echo `git commit -m "$1"`
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
     echo `git push origin $CUR_BRANCH`
 }

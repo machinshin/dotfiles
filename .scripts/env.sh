@@ -55,4 +55,6 @@ alias a='ack-5.12'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 
 PATH=/opt/local/bin:opt/local/sbin:$JAVA_HOME/bin:$PATH
-export PATH=$PATH:~/.play/
+export PATH=$PATH:~/.play/:/usr/local/mysql/bin/:~/.gwt/
+
+
