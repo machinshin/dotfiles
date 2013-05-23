@@ -6,7 +6,7 @@
     status=auto
     branch=auto
     interactive=auto
-    ui=auto
+	ui = auto
 [alias]
     up=pull origin
     st=status

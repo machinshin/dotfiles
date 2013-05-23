@@ -1,14 +1,22 @@
 export CT_DEV_PATH=$HOME/workspace/ct
-alias vag='cd $CT_DEV_PATH/vagrant'
-alias ct='cd $CT_DEV_PATH/'
-alias chost='cd $CT_DEV_PATH/Crowdhoster'
-alias ch='cd $CT_DEV_PATH/chef'
-alias api='cd $CT_DEV_PATH/crowdtilt-internal-api'
 alias aspec='cd $CT_DEV_PATH/crowdtilt-api-spec'
-alias pub='cd $CT_DEV_PATH/crowdtilt-public-site'
-alias vs='vagrant ssh srv1'
-alias vu='vagrant up sr1'
-alias vk='vagrant destroy srv1'
-alias vr='vagrant restart srv1'
-alias vp='vagrant provision srv1'
+alias vs1='vagrant ssh srv1'
+alias vu1='vagrant up srv1'
+alias vd1='vagrant destroy srv1'
+alias vr1='vagrant restart srv1'
+alias vp1='vagrant provision srv1'
+
+alias vs2='vagrant ssh srv2'
+alias vu2='vagrant up sr2'
+alias vd2='vagrant destroy srv2'
+alias vr2='vagrant restart srv2'
+alias vp2='vagrant provision srv2'
+
+alias vs3='vagrant ssh srv3'
+alias vu3='vagrant up sr3'
+alias vd3='vagrant destroy srv3'
+alias vr3='vagrant restart srv3'
+alias vp3='vagrant provision srv3'
+
+
 alias vpsql="ssh -t -i ~/.ssh/vagrant vagrant@33.33.33.11 \"sudo su postgres -c 'psql crowdtilt'\""

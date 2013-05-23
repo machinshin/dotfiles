@@ -2,7 +2,7 @@ OS=`uname`
 
 export LS_OPTIONS='--color=auto'
 if [[ "$OS" == "Darwin" ]]; then
-  PORTSBIN="/opt/local/bin/"
+  PORTSBIN="/usr/local/bin/"
   DIRCOLORS="$PORTSBIN/gdircolors"
   alias ls="$PORTSBIN/gls $LS_OPTIONS "
 else
@@ -42,19 +42,12 @@ alias ..7='cd ../../../../../../../../'
 alias ..8='cd ../../../../../../../../../'
 alias ..9='cd ../../../../../../../../../../'
 alias td='tmux detach'
-alias ta='tmux attach -t a'
-alias tb='tmux attach -t b'
-alias tna='tmux new -s a'
-alias tnb='tmux new -s b'
+alias tl='tmux attach -t leftscr'
+alias tr='tmux attach -t rightscr'
 alias ll='ls -alh'
 alias vi='vim'
 alias v='vim'
 alias n='notes '
-alias ack='ack-5.12'
-alias a='ack-5.12'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 
-PATH=/opt/local/bin:opt/local/sbin:$JAVA_HOME/bin:$PATH
-export PATH=$PATH:~/.play/:/usr/local/mysql/bin/:~/.gwt/
-
-
+#export PATH=$PATH:~/.play/:/usr/local/mysql/bin/:~/.gwt/

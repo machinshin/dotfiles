@@ -27,6 +27,11 @@ gip() {
     echo `git push origin $CUR_BRANCH`
 }
 
+gipf() {
+    CUR_BRANCH=`git symbolic-ref --short -q HEAD`
+    echo `git push -f origin $CUR_BRANCH`
+}
+
 psg() {
     ps axu | grep -v grep | grep "$@" -i --color=auto;
 }
@@ -90,4 +95,4 @@ shc() {
 prod() {
     osascript ~/prod.applescript
 }
-export PATH=$PATH:/opt/local/lib/mysql55/bin/
+#export PATH=$PATH:/opt/local/lib/mysql55/bin/
