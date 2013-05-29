@@ -6,12 +6,12 @@
     status=auto
     branch=auto
     interactive=auto
-	ui = auto
+	ui=auto
 [alias]
     up=pull origin
     st=status
     df=diff
-    d = difftool
+	dt=difftool
     co=checkout
     br=branch
     sta=stash
@@ -45,10 +45,10 @@
     editor = vim -f
 	pager = cat
 [diff]
-    tool = vimdiff
+	tool=vimdiff
 [difftool]
-    prompt = false
+	prompt=false
 [push]
-    default = simple
+    default=simple
 [commit]
 	template = /Users/VatRaghavan/.gitmessage.text

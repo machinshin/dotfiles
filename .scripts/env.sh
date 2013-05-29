@@ -49,5 +49,5 @@ alias vi='vim'
 alias v='vim'
 alias n='notes '
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
-
+alias a ='ack'
 #export PATH=$PATH:~/.play/:/usr/local/mysql/bin/:~/.gwt/

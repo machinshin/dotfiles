@@ -1,3 +1,8 @@
+
+#FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/functions:/usr/local/share/zsh/site-functions/
+#fpath=($HOME/.zsh/func $fpath)
+#FPATH=($FPATH $fpath)
+#typeset -U fpath
 autoload -U zmv
 autoload colors; colors
 HISTFILE=~/.histfile
@@ -33,11 +38,11 @@ compinit -C -d $ZCACHEDIR/compdump
 #color completions
 
 zmodload -i zsh/complist
-#zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-#zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
 zstyle ':completion:*:*:kill:*' list-colors '=%*=01;31'
 zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
-# history
+#history
 zstyle ':completion:*:history-words' stop yes
 zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
@@ -126,8 +131,9 @@ fi
 if [[ -f $HOME/.scripts/proj.env.sh ]]; then
   source $HOME/.scripts/proj.env.sh
 fi
+#this stops refresh issues with irssi && tmux in iterm2
+alias irssi='TERM=scren-256color irssi'
 
-source $HOME/.scripts/tmux-windows.sh
 alias -g TC='| tee command.log'
 alias -g T='| tee '
 
@@ -146,4 +152,3 @@ export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 
 perlbrew switch perl-5.14.2
 #export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
-export FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/functions:/usr/local/share/zsh/site-functions/
