@@ -26,7 +26,7 @@ REPORTTIME=10
 
 #vi editing
 bindkey -v
-
+bindkey "^R" history-incremental-search-backward
 #autoload -Uz bashcompinit
 #bashcompinit
 #source /usr/local/share/compleat-1.0/compleat_setup
@@ -132,7 +132,7 @@ if [[ -f $HOME/.scripts/proj.env.sh ]]; then
   source $HOME/.scripts/proj.env.sh
 fi
 #this stops refresh issues with irssi && tmux in iterm2
-alias irssi='TERM=scren-256color irssi'
+alias irssi='TERM=screen-256color irssi'
 
 alias -g TC='| tee command.log'
 alias -g T='| tee '
