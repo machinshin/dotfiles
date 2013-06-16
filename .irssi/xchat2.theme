@@ -95,6 +95,13 @@ formats = {
     chansetup_header = "%w-%c-%C- %WChannel         Network    Password   Settings";
     chansetup_line = "%w-%c-%C- %n{hilight $[15]0} $[10]1 $[10]2 $3";
     chansetup_footer = "";
+    msgownnick = "%Y{msgnick $0 $1-$Y}%n"
+    ownmsgnick = "%Y{msgnick $0 $1-%Y}%n";
+    pubmsgnick = "%K{msgnick $0 $1-%K}%n";
+    pubmsgmenick = "%K{msgnick $0 $1-%K}%n";
+    pubmsghinick = "%K{msgnick $1 $0$2-%n%K}%n";
+    ownprivmsgnick = "%K{msgnick  $*%K}%n";
+    privmsgnick = "%K{msgnick  %R$*%K}%n";
     own_msg = "{ownmsgnick $2 {ownnick $[16]0}}$1";
     own_msg_channel = "{ownmsgnick $3 {ownnick $[16]0}{msgchannel $1}}$2";
     own_msg_private_query = "{ownprivmsgnick {ownprivnick $[16]2}}$1";
@@ -102,8 +109,8 @@ formats = {
     pubmsg_me_channel = "{pubmsgmenick $3 {menick $[16]0}{msgchannel $1}}$2";
     pubmsg_hilight = "{pubmsghinick $0 $3 $[16]1%n}$2";
     pubmsg_hilight_channel = "{pubmsghinick $0 $4 $[16]1{msgchannel $2}}$3";
-    pubmsg = "{pubmsgnick $2 {pubnick %G$[16]0}}$1";
-    pubmsg_channel = "{pubmsgnick $2 {pubnick %G$[16]0}}$1";
+    pubmsg = "{pubmsgnick $2 {pubnick $[16]0}}$1";
+    pubmsg_channel = "{pubmsgnick $2 {pubnick $[16]0}}$1";
     msg_private_query = "{privmsgnick $[16]0}$2";
     no_msgs_got = "%b{fq Error} %bYou have not received a message from anyone yet";
     no_msgs_sent = "%b{fq Error} %bYou have not sent a message to anyone yet";
@@ -277,5 +284,8 @@ formats = {
     window_info_scroll = "%w-%c-%C- %WWindow: %nWindow Scroll   : $0";
     paste_warning = "%w-%c-%C- %rWARNING: %nTrying to paste %C$0%n lines to %W$1%n.";
     paste_prompt = "%RPress Ctrl-K to continue, Ctrl-C to abort.";
+  };
+  "Irssi::Script::nickcolor" = {
+    pubmsg_hilight = "{pubmsghinick $0 $3 $[16]1%n}$2";
   };
 };
