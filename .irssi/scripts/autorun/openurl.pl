@@ -27,9 +27,9 @@ $recent = 1;
 
 # RegExp & defaultcommands
 %urltypes = ( http => { regexp => qr#((?:https?://[^\s<>"]+|www\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'w3m "$1"' },
-              ftp  => { regexp => qr#((?:ftp://[^\s<>"]+|ftp\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'ncftp "$1"' },
-	      mail => { regexp => qr#([-_a-z0-9.]+\@[-a-z0-9.]+\.[-a-z0-9.]+)#, cmd => 'mutt "$1" -s "$2"' },
-	    );
+    ftp  => { regexp => qr#((?:ftp://[^\s<>"]+|ftp\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'ncftp "$1"' },
+    mail => { regexp => qr#([-_a-z0-9.]+\@[-a-z0-9.]+\.[-a-z0-9.]+)#, cmd => 'mutt "$1" -s "$2"' },
+);
 
 sub draw_box ($$$$) {
     my ($title, $text, $footer, $colour) = @_;
@@ -45,22 +45,22 @@ sub draw_box ($$$$) {
 sub show_help() {
     my $help=$IRSSI{name}." ".$VERSION."
 /openurl
-    List the saved URLs
+List the saved URLs
 /openurl <number> <number>...
-    Load the corresponding URLs in your browser/mailer
+Load the corresponding URLs in your browser/mailer
 /openurl paste <number> <number>...
-    Paste the selected URLs to the current channel/query
+Paste the selected URLs to the current channel/query
 /openurl topics
-    Look for URLs in channel topics
+Look for URLs in channel topics
 /openurl clear
-    Clear all URLs
+Clear all URLs
 /openurl help
-    Display this help
+Display this help
 ";
     my $text = '';
     foreach (split(/\n/, $help)) {
         $_ =~ s/^\/(.*)$/%9\/$1%9/;
-	$text .= $_."\n";
+        $text .= $_."\n";
     }
     print CLIENTCRAP draw_box($IRSSI{name}." help", $text, "help", 1) ;
 }
@@ -69,23 +69,23 @@ sub list_urls {
     my $string = '';
     my $i = 1;
     foreach (@urls) {
-	my $text = $_->{url};
-	my $url = $_->{url};
-	$text = $_->{text} if Irssi::settings_get_bool('openurl_display_context');
-	$url =~ s/%/%%/g;
-	$text =~ s/%/%%/g;
-	$text =~ s/\Q$url/%U$url%U/;
-	if ($recent-1 == $i) {
-	    $string .= '%B»%n';
-	} else {
-	    $string .= ' ';
-	}
-	$string .= '%r['.$i.']%n ';
-	$string .= '<'.$_->{channel};
-	$string .= '/'.$_->{nick} unless $_->{nick} eq "";
-	$string .= '> ';
-	$string .= $text." %n\n";
-	$i++;
+        my $text = $_->{url};
+        my $url = $_->{url};
+        $text = $_->{text} if Irssi::settings_get_bool('openurl_display_context');
+        $url =~ s/%/%%/g;
+        $text =~ s/%/%%/g;
+        $text =~ s/\Q$url/%U$url%U/;
+        if ($recent-1 == $i) {
+            $string .= '%B»%n';
+        } else {
+            $string .= ' ';
+        }
+        $string .= '%r['.$i.']%n ';
+        $string .= '<'.$_->{channel};
+        $string .= '/'.$_->{nick} unless $_->{nick} eq "";
+        $string .= '> ';
+        $string .= $text." %n\n";
+        $i++;
     }
     print CLIENTCRAP draw_box("OpenURL", $string, "URLs", 1);
 }
@@ -105,25 +105,34 @@ sub event_topic_changed {
 
 sub process_line ($$$$) {
     my ($server, $target, $nick, $line) = @_;
-    my $url = get_url($line);
-    if ($url) {
-	my $type = url_type($url);
-	return unless Irssi::settings_get_bool('openurl_watch_'.$type);
-	new_url($server, $target, $nick, $line, $url);
+    my @match_urls = get_url($line);
+    if (@match_urls) {
+        my $i = 0;
+        foreach my $url (@match_urls) {
+            my $type = url_type($url);
+            next unless Irssi::settings_get_bool('openurl_watch_'.$type);
+            #this is a total HACK
+            new_url($server, $target, $nick, $line . "-" . $i, $url);
+            $i++;
+        }
     }
 }
 
 sub get_url ($) {
     my ($text) = @_;
+    my @matches;
+
     foreach (keys %urltypes) {
-	return $1 if ($text =~ /$urltypes{$_}->{regexp}/);
+        my @type_matches = $text =~ /$urltypes{$_}->{regexp}/g;
+        push @matches, @type_matches;
     }
+    return @matches;
 }
 
 sub url_type ($) {
     my ($url) = @_;
     foreach (keys %urltypes) {
-	return $_ if ($url =~ /$urltypes{$_}->{regexp}/);
+        return $_ if ($url =~ /$urltypes{$_}->{regexp}/);
     }
 }
 
@@ -133,8 +142,8 @@ sub launch_url ($) {
     my $address = $url;
     my $suffix= "";
     if ($type eq "mail") {
-	$address = $1 if $url =~ /(.*?@.*?)($|\?)/;
-	$suffix = $2 if $url =~ /(.*?@.*?)\?subject=(.*)/;
+        $address = $1 if $url =~ /(.*?@.*?)($|\?)/;
+        $suffix = $2 if $url =~ /(.*?@.*?)\?subject=(.*)/;
     }
     my $command = Irssi::settings_get_str("openurl_app_".$type);
     $command =~ s/\$1/$address/;
@@ -148,24 +157,28 @@ sub new_url ($$$$$) {
     # Check for existance of URL
     my $i = 1;
     foreach (@urls) {
-	if ($text eq $_->{text} && $channel eq $_->{channel}) {
-	    my $note_id = add_note($server, $channel, $i);
-	    push @{$_->{notes}}, $note_id;
-	    return();
-	}
-	$i++;
+        if ($text eq $_->{text} && $channel eq $_->{channel}) {
+            my $note_id = add_note($server, $channel, $i);
+            push @{$_->{notes}}, $note_id;
+            return();
+        }
+        $i++;
     }
     if (defined $urls[$recent-1]) {
-	del_notes($recent);
+        del_notes($recent);
     }
-    $urls[$recent-1] = {channel => $channel,
-                        text    => $text,
-			nick    => $nick,
-			url     => $url,
-			notes   => [],
-			};
+    $urls[$recent-1] = {
+        channel => $channel,
+        text    => $text,
+        nick    => $nick,
+        url     => $url,
+        notes   => [],
+    };
     my $note_id = add_note($server, $channel, $recent);
     push @{$urls[$recent-1]{notes}}, $note_id;
+    use Data::Dumper;
+    print CRAP "URLs = " . Dumper @urls;
+    print CRAP "recent = $recent";
     $recent++;
 }
 
@@ -175,16 +188,16 @@ sub del_notes ($) {
     my $view;
     my $witem = Irssi::window_item_find($urls[$num-1]->{channel});
     if (defined $witem) {
-	$view =  $witem->window()->view();
+        $view =  $witem->window()->view();
     }
     if (defined $view) {
-	foreach (@{$urls[$num-1]->{notes}}) {
-	    my $line = $view->get_bookmark($_);
-	    $view->remove_line($line) if defined $line;
-	    $view->set_bookmark($_, undef);
-	}
-	@{$urls[$num-1]->{notes}} = ();
-	$view->redraw();
+        foreach (@{$urls[$num-1]->{notes}}) {
+            my $line = $view->get_bookmark($_);
+            $view->remove_line($line) if defined $line;
+            $view->set_bookmark($_, undef);
+        }
+        @{$urls[$num-1]->{notes}} = ();
+        $view->redraw();
     }
 }
 
@@ -192,16 +205,16 @@ sub add_note ($$$) {
     my ($server, $target, $num) = @_;
     my $witem;
     if (defined $server) {
-	$witem = $server->window_item_find($target);
+        $witem = $server->window_item_find($target);
     } else {
-	$witem = Irssi::window_item_find($target);
+        $witem = Irssi::window_item_find($target);
     }
     if (defined $witem) {
-	$witem->print("%R>>%n OpenURL ".$num, MSGLEVEL_CLIENTCRAP);
-	# create a unique ID for the mark
-	my $foo = time().'-'.int(rand()*1000);
-	$witem->window()->view()->set_bookmark_bottom("openurl_".$num.'-'.$foo);
-	return("openurl_".$num.'-'.$foo);
+        $witem->print("%R>>%n OpenURL ".$num, MSGLEVEL_CLIENTCRAP);
+        # create a unique ID for the mark
+        my $foo = time().'-'.int(rand()*1000);
+        $witem->window()->view()->set_bookmark_bottom("openurl_".$num.'-'.$foo);
+        return("openurl_".$num.'-'.$foo);
     }
     return(undef);
 }
@@ -217,33 +230,33 @@ sub cmd_openurl ($$$) {
     my ($arg, $server, $witem) = @_;
     my @args = split(/ /, $arg);
     if (scalar(@args) == 0) {
-	list_urls;
+        list_urls;
     } elsif ($args[0] eq 'clear') {
-	clear_urls;
+        clear_urls;
     } elsif ($args[0] eq 'topics') {
-    	event_topic_changed($_) foreach (Irssi::channels());
+        event_topic_changed($_) foreach (Irssi::channels());
     } elsif ($args[0] eq 'help') {
-	show_help();
+        show_help();
     } elsif ($args[0] eq 'open') {
-	launch_url($args[1]);
+        launch_url($args[1]);
     } else {
-	my $paste = 0;
-	if ($args[0] eq 'paste') {
-	    $paste = 1;
-	    shift(@args);
-	}
-	foreach (@args) {
-	    next unless /\d+/;
-	    next unless defined $urls[$_-1];
-	    my $url = $urls[$_-1]->{url};
-	    if ($paste == 1) {
-		if (ref $witem && ($witem->{type} eq "CHANNEL" || $witem->{type} eq "QUERY")) {
-		    $witem->command("MSG ".$witem->{name}." ".$url);
-		}
-	    } else {
-		launch_url($url);
-	    }
-	}
+        my $paste = 0;
+        if ($args[0] eq 'paste') {
+            $paste = 1;
+            shift(@args);
+        }
+        foreach (@args) {
+            next unless /\d+/;
+            next unless defined $urls[$_-1];
+            my $url = $urls[$_-1]->{url};
+            if ($paste == 1) {
+                if (ref $witem && ($witem->{type} eq "CHANNEL" || $witem->{type} eq "QUERY")) {
+                    $witem->command("MSG ".$witem->{name}." ".$url);
+                }
+            } else {
+                launch_url($url);
+            }
+        }
     }
 }
 
@@ -262,7 +275,7 @@ Irssi::signal_add_last("channel topic changed", "event_topic_changed");
 
 foreach my $cmd ('topics', 'clear', 'paste', 'help') {
     Irssi::command_bind('openurl '.$cmd => sub {
-	cmd_openurl("$cmd ".$_[0], $_[1], $_[2]); });
+            cmd_openurl("$cmd ".$_[0], $_[1], $_[2]); });
 }
 Irssi::command_bind('openurl', 'cmd_openurl');
 
