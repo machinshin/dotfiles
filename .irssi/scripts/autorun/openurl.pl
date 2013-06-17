@@ -177,8 +177,6 @@ sub new_url ($$$$$) {
     my $note_id = add_note($server, $channel, $recent);
     push @{$urls[$recent-1]{notes}}, $note_id;
     use Data::Dumper;
-    print CRAP "URLs = " . Dumper @urls;
-    print CRAP "recent = $recent";
     $recent++;
 }
 
