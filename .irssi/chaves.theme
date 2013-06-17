@@ -57,7 +57,7 @@ abstracts = {
   ##
 
   # text to insert at the beginning of each non-message line
-  line_start = "%R:%Y:%G:%n ";
+  line_start = "%R:%Y:%W:%n ";
 
   # timestamp styling, nothing by default
   timestamp = "%c$0-%n";
@@ -94,18 +94,18 @@ abstracts = {
   ##
 
   # highlighted nick/host is printed (joins)
-  channick_hilight = "%G$0-%n";
-  chanhost_hilight = "{nickhost %g$0-%n}";
+  channick_hilight = "%W$0-%n";
+  chanhost_hilight = "{nickhost %w$0-%n}";
 
   # nick/host is printed (parts, quits, etc.)
-  channick = "%g$0-%n";
+  channick = "%w$0-%n";
   chanhost = "{nickhost $0-}";
 
   # highlighted channel name is printed
   channelhilight = "%y$0-%n";
 
   # ban/ban exception/invite list mask is printed
-  ban = "%g$0-%n";
+  ban = "%w$0-%n";
 
   ##
   ## messages
@@ -131,7 +131,7 @@ abstracts = {
   #  privmsgnick = "%K{msgnick  %R$0-%K}%n";
 
   # $0 = nick mode, $1 = nick
-  ownmsgnick = "{msgnick %_<%_$0%_ $1->}%R";
+  ownmsgnick = "%Y{msgnick %_<%_$0%_ $1->}%R%n";
   ownnick = "%R$0-%n";
 
   # public message in channel, $0 = nick mode, $1 = nick
@@ -139,12 +139,12 @@ abstracts = {
   pubnick = "$0-%n";
 
   # public message in channel meant for me, $0 = nick mode, $1 = nick
-  pubmsgmenick = "{msgnick %Y>>%W$0 %P$1-%Y<<}%G";
+  pubmsgmenick = "{msgnick %Y>>%W$0 %P$1-%Y<<}%W";
   menick = "%P$0-%n";
 
   # public highlighted message in channel
   # $0 = highlight color, $1 = nick mode, $2 = nick
-  pubmsghinick = "{msgnick %Y>>%W$1 %P$2-%Y<<}%G";
+  pubmsghinick = "{msgnick %Y>>%W$1 %P$2-%Y<<}%W";
 
   # channel name is printed with message
   msgchannel = "%K:%c$0-%n";
@@ -153,7 +153,7 @@ abstracts = {
   privmsg = "[%Y$0%K(%y$1-%K)%n] ";
 
   # private message from you, $0 = "msg", $1 = target nick
-  ownprivmsg = "[%G$0%K(%Y$1-%K)%n] ";
+  ownprivmsg = "[%W$0%K(%Y$1-%K)%n] ";
 
   # own private message in query
   ownprivmsgnick = "{msgnick  $0-}";
@@ -167,7 +167,7 @@ abstracts = {
   ##
 
   # used internally by this theme
-  action_core = "%R >%Y>%G> %C$0-%n";
+  action_core = "%R >%Y>%W> %C$0-%n";
 
   # generic one that's used by most actions
   action = "{action_core $0-} ";
@@ -179,7 +179,7 @@ abstracts = {
   ownaction_target = "{action_core $0}%K:%c$1%n ";
 
   # private action sent by others
-  pvtaction = " (%R>%Y>%G>%n) %C$0-%n ";
+  pvtaction = " (%R>%Y>%W>%n) %C$0-%n ";
   pvtaction_query = "{action $0-}";
 
   # public action sent by others
@@ -213,7 +213,7 @@ abstracts = {
   # /names list
   names_nick = "[%_$0%_%m$1-%n] ";
   names_users = "[%g$0-%n]";
-  names_channel = "%G$0-%n";
+  names_channel = "%W$0-%n";
 
   # DCC
   dcc = "<%g$0-%n>";
@@ -226,9 +226,9 @@ abstracts = {
   dccownaction_target = "{action_core $0}%K:%c$1%n ";
 
   # DCC chat, others
-  dccmsg = "[%G$1-%K(%g$0%K)%n] ";
+  dccmsg = "[%W$1-%K(%g$0%K)%n] ";
   dccquerynick = "<%C$0-%n>";
-  dccaction = " %R>%Y>%G>%n %C$0-%n %|";
+  dccaction = " %R>%Y>%W>%n %C$0-%n %|";
 
   ##
   ## statusbar
@@ -253,5 +253,22 @@ abstracts = {
   sbact_det = " Det: $0-";
 };
 formats = {
-  "fe-common/core" = { pubmsg = "{pubmsgnick $2 {pubnick $0}}$1"; };
+  "fe-common/core" = {
+    pubmsg = "{pubmsgnick $2 {pubnick %y$[16]0}}$1";
+    own_msg = "{ownmsgnick $2 {ownnick $[16]0}}$1";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $[16]0}{msgchannel $1}}$2";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $[16]2}}$1";
+    pubmsg_me = "{pubmsgmenick $2 {menick $[16]0}}$1";
+    pubmsg_me_channel = "{pubmsgmenick $3 {menick $[16]0}{msgchannel $1}}$2";
+    pubmsg_hilight = "{pubmsghinick $0 $3 $[16]1%n}$2";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $[16]1{msgchannel $2}}$3";
+    pubmsg_channel = "{pubmsgnick $2 {pubnick %y$[16]0}}$1";
+    msg_private_query = "{privmsgnick $[16]0}$2";
+  };
+  "fe-common/irc" = {
+    own_action = "{ownaction $[14]0} $1";
+    action_private = "{pvtaction $[14]0}$1";
+    action_private_query = "{pvtaction_query $[14]0} $2";
+    action_public = "{pubaction $[14]0}$1";
+  };
 };

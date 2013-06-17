@@ -223,3 +223,6 @@ abstracts = {
   sb_act_hilight_color = "$0$1-%n";
 };
 
+formats = {
+  "fe-common/core" = { pubmsg = "{pubmsgnick $2 {pubnick \0030%5$0}}$1"; };
+};
