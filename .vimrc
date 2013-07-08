@@ -11,15 +11,15 @@ filetype off
 filetype plugin off
 filetype plugin indent off
 set cpoptions=aABceFsmq
-              " |||||||||
-              " ||||||||+-- When joining lines, leave the cursor between joined lines
-              " |||||||+-- When a new match is created (showmatch) pause for .5
-              " ||||||+-- Set buffer options when entering the buffer
-              " |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
-              " |||+-- Searching continues at the end of the match at the cursor position
-              " ||+-- A backslash has no special meaning in mappings
-              " |+-- :write updates alternative file name
-              " +-- :read updates alternative file name
+            " |||||||||
+            " ||||||||+-- When joining lines, leave the cursor between joined lines
+            " |||||||+-- When a new match is created (showmatch) pause for .5
+            " ||||||+-- Set buffer options when entering the buffer
+            " |||||+-- :write command updates current file name automatically add <CR> to the last line when using :@r
+            " |||+-- Searching continues at the end of the match at the cursor position
+            " ||+-- A backslash has no special meaning in mappings
+            " |+-- :write updates alternative file name
+            " +-- :read updates alternative file name
 "TODO
 syntax off
 set rtp+=~/.vim/bundle/vundle/
@@ -74,7 +74,7 @@ Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
 Bundle 'vim-perl/vim-perl'
 Bundle 'Rip-Rip/clang_complete'
-Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/vim-owerline'
 Bundle 'tehmaze/profont-powerline'
 Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
@@ -86,8 +86,12 @@ Bundle 'derekwyatt/vim-scala'
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'paradigm/SkyBison'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'sjbach/lusty'
+Bundle 'mileszs/ack.vim'
+Bundle 'bling/vim-bufferline'
+Bundle 'bling/vim-airline'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -244,9 +248,10 @@ noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
+let g:LustyJugglerDefaultMappings=0
+let g:LustyJugglerShowKeys='a'
+nnoremap <F5> :LustyJuggler<CR>
 
-"press F5 to get a list of buffers and goto a the selected buffer
-nnoremap <F5> :buffers<CR>:b<Space>
 "turn off *ALL* bells
 set vb t_vb=
 set ofu=syntaxcomplete#Complete
@@ -304,7 +309,7 @@ nnoremap <silent><Leader>3 :call DoChighlight()<CR>
 "quicksave
 nmap <Leader>s :w!<cr>
 "fast edit of vimrc
-map <silent> <Leader><v> :e! ~/.vimrc<cr>
+map <silent> <Leader>v :e! ~/.vimrc<cr>
 map <silent> <Leader><Leader>c :set cursorcolumn!<cr> :set cursorline!<cr>
 
 function! g:ToggleColorColumn()
@@ -499,10 +504,14 @@ au BufEnter * match ExtraWhitespace /\S\zs\s\+$/
 "au InsertLeave * match ExtraWhiteSpace /\S\zs\s\+$/>
 " lets you do w!! to sudo write the file
 nnoremap <Leader>w! :w !sudo tee % >/dev/null<cr>
-"open vimrc file
-nmap <Leader>ov :vsp ~/.vimrc<CR>
-"edit vimrc file
-nmap <Leader>v :so ~/.vimrc<CR>
 " Delete all trailing spaces from lines but keep search buffer in place
 nnoremap <Leader><Leader>dw :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 autocmd BufNewFile,BufRead *.yml set filetype=yaml
+let g:airline_enable_bufferline=1
+let g:airline_powerline_fonts=1
+let g:airline_theme='badwolf'
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax * RainbowParenthesesLoadChevrons
