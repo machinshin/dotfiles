@@ -152,3 +152,4 @@ export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 setopt NO_NOMATCH
 perlbrew switch perl-5.14.2
 #export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
+eval "$(hub alias -s)"

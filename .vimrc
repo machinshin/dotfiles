@@ -48,10 +48,8 @@ Bundle 'tpope/vim-ragtag'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-fugitive'
 Bundle 'tsaleh/vim-align'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/splice.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/vimproc'
 "neocomplecache should use 'master' snipmate :/
@@ -66,15 +64,14 @@ Bundle 'Townk/vim-autoclose'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tomtom/checksyntax_vim'
 Bundle 'vim-scripts/taglist.vim'
-Bundle 'FSwitch'
+"Bundle 'FSwitch' only useful for c/c++
 Bundle 'godlygeek/tabular'
 Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
 Bundle 'vim-perl/vim-perl'
-Bundle 'Rip-Rip/clang_complete'
-"Bundle 'Lokaltog/vim-owerline'
+"Bundle 'Rip-Rip/clang_complete' only useful for c/c++/obj-c
 Bundle 'tehmaze/profont-powerline'
 Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
@@ -82,16 +79,18 @@ Bundle 'semmons99/vim-ruby-matchit'
 Bundle 'tysontate/HTML-AutoCloseTag'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
-Bundle 'derekwyatt/vim-scala'
+"Bundle 'derekwyatt/vim-scala' only useful for scala
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion' doesn't work with my window-motion keybinds
 Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
 Bundle 'bling/vim-bufferline'
 Bundle 'bling/vim-airline'
+Bundle 'mfontani/vim-cute-perl'
+Bundle 'HarnoRanaivo/vim-neatfoldtext'
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -101,12 +100,7 @@ let g:neocomplcache_enable_underbar_completion=1
 let g:neocomplcache_max_menu_width=25
 let g:neocomplcache_temporary_dir='~/.vim/neocon/'
 let g:neocomplcache_enable_auto_select=1
-let g:multi_cursor_quit_key='C-q'
 "Plugin key mappings
-"imap <C-k> <Plug>(neocomplcache_snippets_expand)
-"smap <C-k> <Plug>(neocomplcache_snippets_expand)
-"imap <C-k> <Plug>(neosnippet_expand_or_jump)
-"smap <C-k> <Plug>(neosnippet_expand_or_jump)
 inoremap <expr><C-g>  neocomplcache#undo_completion()
 inoremap <expr><C-l>  neocomplcache#complete_common_string()
 
@@ -177,16 +171,16 @@ set number " turn on line numbers
 set hid " you can change buffer without saving
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l,b,s,[,],~  " backspace and cursor keys wrap to
-" | | | | | | | | |
-" | | | | | | | | +-- "]" Insert and Replace
-" | | | | | | | +-- "[" Insert and Replace
-" | | | | | | +-- "~" Normal
-" | | | | | +-- <Right> Normal and Visual
-" | | | | +-- <Left> Normal and Visual
-" | | | +-- "l" Normal and Visual (not recommended)
-" | | +-- "h" Normal and Visual (not recommended)
-" | +-- <Space> Normal and Visual
-" +-- <BS> Normal and Visual
+             " | | | | | | | | |
+             " | | | | | | | | +-- "]" Insert and Replace
+             " | | | | | | | +-- "[" Insert and Replace
+             " | | | | | | +-- "~" Normal
+             " | | | | | +-- <Right> Normal and Visual
+             " | | | | +-- <Left> Normal and Visual
+             " | | | +-- "l" Normal and Visual (not recommended)
+             " | | +-- "h" Normal and Visual (not recommended)
+             " | +-- <Space> Normal and Visual
+             " +-- <BS> Normal and Visual
 set mouse=a " use mouse everywhere
 set linespace=0
 set sidescroll=10
@@ -381,21 +375,39 @@ nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
 
 set foldenable
 set foldmethod=manual
-set foldcolumn=1
 set foldlevelstart=20
 set foldlevel=10
 set foldopen=block,hor,mark,percent,quickfix,tag "what movements open folds"
-function! NeatFoldText()
-  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g') . ' '
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
-  let foldchar = split(filter(split(&fillchars, ','), 'v:val =~# "fold"')[0], ':')[-1]
-  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(foldchar, 8)
-  let length = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g'))
-  return foldtextstart . repeat(foldchar, winwidth(0)-length) . foldtextend
-endfunction
-set foldtext=NeatFoldText()
+"let g:NeatFoldTextFillChar = '·'
+let g:NeatFoldTextSymbol='▸'
+let g:NeatFoldTextIndent=1
+let g:NeatFoldTextCountCommentsLines=1
+let g:NeatFoldTextFoldLevelScale=2
+let g:NeatFoldTextShowLineCount=1
+function HasFoldedLine()
+    let lnum=1
+    while lnum <= line("$")
+        if (foldclosed(lnum) > -1)
+            return 1
+        endif
+        let lnum+=1
+    endwhile
+    return 0
+ endfunction
+
+au CursorHold * if HasFoldedLine() == 1 | set foldcolumn=1 | else |set foldcolumn=0 | endif
+
+"function! NeatFoldText()
+  "let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g') . ' '
+  "let lines_count = v:foldend - v:foldstart + 1
+  "let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  "let foldchar = split(filter(split(&fillchars, ','), 'v:val =~# "fold"')[0], ':')[-1]
+  "let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  "let foldtextend = lines_count_text . repeat(foldchar, 8)
+  "let length = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g'))
+  "return foldtextstart . repeat(foldchar, winwidth(0)-length) . foldtextend
+"endfunction
+"set foldtext=NeatFoldText()
 
 "maps for foldng
 " close all open folds
