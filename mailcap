@@ -1,0 +1,12 @@
+# Images
+image/jpeg; /Users/VatRaghavan/.mutt/view_attachment.sh %s
+image/pjpeg; /Users/VatRaghavan/.mutt/view_attachment.sh %s
+image/png; /Users/VatRaghavan/.mutt/view_attachment.sh %s
+image/gif; /Users/VatRaghavan/.mutt/view_attachment.sh %s
+
+# PDF
+application/pdf; /Users/VatRaghavan/.mutt/view_attachment.sh %s pdf
+
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html;                      links %s; nametemplate=%s.html
+text/html;                      links -dump %s; nametemplate=%s.html; copiousoutput

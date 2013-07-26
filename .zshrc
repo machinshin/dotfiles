@@ -108,7 +108,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \
 	battery github svn autojump cpanm gas gem git-hubflow git-remote-branch gnu-utils \
-	knife macports osx perl themes vagrant )
+	knife macports osx perl themes vagrant tmuxinator tmux )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -153,3 +153,9 @@ setopt NO_NOMATCH
 perlbrew switch perl-5.14.2
 #export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
 eval "$(hub alias -s)"
+alias hist='history | grep -v rm | grep '
+alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
+#Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history

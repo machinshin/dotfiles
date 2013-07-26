@@ -1,0 +1,114 @@
+# Paths ----------------------------------------------
+set folder           = ~/.mail               # mailbox location
+set alias_file       = ~/.mutt/alias         # where to store aliases
+set header_cache     = ~/.mutt/cache/headers # where to store headers
+set message_cachedir = ~/.mutt/cache/bodies  # where to store bodies
+set certificate_file = ~/.mutt/certificates  # where to store certs
+set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
+set tmpdir           = ~/.mutt/temp          # where to keep temp files
+set signature        = ~/.mutt/sig           # my signature file
+# Basic Options --------------------------------------
+set wait_key = no        # shut up, mutt
+set mbox_type = Maildir  # mailbox type
+set timeout = 3          # idle time before scanning
+set mail_check = 0       # minimum time between scans
+unset move               # gmail does that
+set delete               # don't ask, just do
+unset confirmappend      # don't ask, just do!
+set quit                 # don't ask, just do!!
+unset mark_old           # read/new is good enough for me
+set beep_new             # bell on new mails
+set pipe_decode          # strip headers and eval mimes when piping
+set thorough_search      # strip headers and eval mimes before searching
+# Sidebar Patch --------------------------------------
+set sidebar_delim   = '  │'
+set sidebar_visible = yes
+set sidebar_width   = 24
+color sidebar_new color221 color233
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Header Options -------------------------------------
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # and in this order
+# A basic .muttrc for use with Gmail
+
+# Change the following six lines to match your Gmail account details
+set imap_user = "vat@crowdtilt.com"
+set imap_pass = ""
+set smtp_url = "smtp://vat@crowdtilt.com@smtp.gmail.com:587/"
+set smtp_pass = ""
+set from = "vat@crowdtilt.com"
+set realname = "Vat Raghavan"
+
+# Change the following line to a different editor you prefer.
+set editor = "vim"
+
+# Basic config, you can leave this as is
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set imap_check_subscribed
+set hostname = gmail.com
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+set postponed = "+[GMail]/Drafts"
+set record = "+[GMail]/Sent Mail"
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set move = no
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
+bind index "^" imap-fetch-mail
+
+# Account Settings -----------------------------------
+
+# Default inbox.
+set spoolfile = "+crowdtilt.com/INBOX"
+
+# Alternate email addresses.
+#alternates
+
+# Mailboxes to show in the sidebar.
+mailboxes +steve-stevelosh.com/INBOX \
+          +steve-stevelosh.com/vim \
+          +steve-stevelosh.com/clojure \
+          +steve-stevelosh.com/python \
+          +steve-stevelosh.com/mercurial \
+          +steve-stevelosh.com/archive \
+          +steve-stevelosh.com/sent \
+          +steve-stevelosh.com/drafts \
+
+# Other special folders.
+set mbox      = "+crowdtilt.com/archive"
+set postponed = "+crowdtilt.com/drafts"
+
+# Gmail-style keyboard shortcuts
+#macro index,pager y "<enter-command>unset trash\n <delete-message>" "Gmail archive message"
+#macro index,pager d "<enter-command>set trash=\"imaps://imap.googlemail.com/[GMail]/Bin\"\n <delete-message>" "Gmail delete message"
+#macro index,pager gi "<change-folder>=INBOX<enter>" "Go to inbox"
+#macro index,pager ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+#macro index,pager gs "<change-folder>=[Gmail]/Starred<enter>" "Go to starred messages"
+#macro index,pager gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+
+#macro index,pager gl "<change-folder>"
+#macro index,pager gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+#macro index,pager gt "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to sent mail"
+
+#source ~/.mutt-colors-solarized-dark-256.muttrc
+

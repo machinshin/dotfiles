@@ -16,10 +16,18 @@ $VERSION = "0.0.2";
 
 sub event_default_command {
 	my ($command, $server) = @_;
-	return if (Irssi::settings_get_bool("dispatch_unknown_commands") == 0
-		|| !$server);
-	$server->send_raw($command);
-	Irssi::signal_stop();
+    if ($command =~ /^\d+$/) {
+        $server->command("window $command");
+        Irssi::signal_stop();
+        return;
+    }
+ 
+    return if (Irssi::settings_get_bool("dispatch_unknown_commands") == 0
+        || !$server
+        || $command =~ y/\/// != 0);
+    return if (ref $server eq 'Irssi::Xmpp::Server');
+    $server->send_raw($command);
+    Irssi::signal_stop();
 }
 
 Irssi::settings_add_bool("misc", "dispatch_unknown_commands", 1);

@@ -83,14 +83,17 @@ Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
-Bundle 'kien/rainbow_parentheses.vim'
+"Bundle 'kien/rainbow_parentheses.vim'
 "Bundle 'Lokaltog/vim-easymotion' doesn't work with my window-motion keybinds
 Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
 Bundle 'bling/vim-bufferline'
 Bundle 'bling/vim-airline'
-Bundle 'mfontani/vim-cute-perl'
+"Bundle 'mfontani/vim-cute-perl'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
+Bundle 'vim-scripts/VisIncr'
+Bundle 'myusuf3/numbers.vim'
+
 "##############################################################
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_fuzzy_completion=1
@@ -355,15 +358,13 @@ let g:ctrlp_match_window_bottom=0
 "let g:ctrlp_working_path_mode = 0
 " Ctrl-P ignore target dirs so VIM doesn't have to!
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn|local|locallib)$',
+      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100)$',
       \ 'file': '\v\.(exe|so|dll|tgz|gz)$',
       \ }
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
-let g:ctrlp_custom_ignore={
-    \ 'dir': '\v[\/]Crowdtilt-Internal-API-0.0100' }
 
 nnoremap <F3> :GundoToggle<CR>
 
@@ -517,13 +518,45 @@ au BufEnter * match ExtraWhitespace /\S\zs\s\+$/
 " lets you do w!! to sudo write the file
 nnoremap <Leader>w! :w !sudo tee % >/dev/null<cr>
 " Delete all trailing spaces from lines but keep search buffer in place
-nnoremap <Leader><Leader>dw :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+"delete whitespace
+nnoremap <Leader><Leader>dw :call Preserve("%s/\\s\\+$//e")<CR>
+"autoindent whole 
+nnoremap <Leader><Leader>i  :call Preserve("normal gg=G")<CR>
+
 autocmd BufNewFile,BufRead *.yml set filetype=yaml
 let g:airline_enable_bufferline=1
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-au Syntax * RainbowParenthesesLoadChevrons
+let g:bufferline_echo=0
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+"au Syntax * RainbowParenthesesLoadChevrons
+
+" Visual ack, used to ack for highlighted text
+function! s:VAck()
+  let old = @"
+  norm! gvy
+  let @z = substitute(escape(@", '\'), '\n', '\\n', 'g')
+  let @" = old
+endfunction
+
+" Ack for visual selection
+vnoremap <Leader>av :<C-u>call <SID>VAck()<CR>:exe "Ack! ".@z.""<CR>
+" Ack for word under cursor
+nnoremap <Leader>av :Ack!<cr>
+" Open Ack
+nnoremap <Leader>ao :Ack! -i
+
