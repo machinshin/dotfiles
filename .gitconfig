@@ -38,6 +38,7 @@
     pod = push origin dev
     dlog = log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     deploys = !git dlog --no-merges origin/master..origin/dev
+	ctags = !.git/hooks/ctags
 [github]
     user = machinshin
     token = faf03543c81b5ee13885108ab3582c78
@@ -54,3 +55,5 @@
     default=simple
 [commit]
 	template = /Users/VatRaghavan/.gitmessage.text
+[init]
+	templatedir = /Users/VatRaghavan/.git_template
