@@ -1,5 +1,4 @@
-export CT_DEV_PATH=$HOME/workspace/ct
-alias aspec='cd $CT_DEV_PATH/crowdtilt-api-spec'
+export CT=$HOME/workspace/ct
 alias vs1='vagrant ssh srv1'
 alias vu1='vagrant up srv1'
 alias vd1='vagrant destroy srv1'

@@ -83,7 +83,7 @@ Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
-"Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'kien/rainbow_parentheses.vim'
 "Bundle 'Lokaltog/vim-easymotion' doesn't work with my window-motion keybinds
 Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
@@ -531,13 +531,14 @@ function! Preserve(command)
 endfunction
 "delete whitespace
 nnoremap <Leader><Leader>dw :call Preserve("%s/\\s\\+$//e")<CR>
-"autoindent whole 
+"autoindent whole
 nnoremap <Leader><Leader>i  :call Preserve("normal gg=G")<CR>
 
 autocmd BufNewFile,BufRead *.yml set filetype=yaml
 let g:airline_enable_bufferline=1
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
+set statusline +=%F
 let g:bufferline_echo=0
 "au VimEnter * RainbowParenthesesToggle
 "au Syntax * RainbowParenthesesLoadRound
@@ -559,4 +560,13 @@ vnoremap <Leader>av :<C-u>call <SID>VAck()<CR>:exe "Ack! ".@z.""<CR>
 nnoremap <Leader>av :Ack!<cr>
 " Open Ack
 nnoremap <Leader>ao :Ack! -i
-
+" set a nicer cursor in insert mode (from terryma on github)
+" Tmux will only forward escape sequences to the terminal if surrounded by
+" a DCS sequence
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif

@@ -143,10 +143,12 @@ alias gvim='mvim -v'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'
 
-PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+export PATH=$PATH:~/workspace/github/rebar/
 
 export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 setopt NO_NOMATCH
