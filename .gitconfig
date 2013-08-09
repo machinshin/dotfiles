@@ -53,7 +53,7 @@
 [difftool]
 	prompt=false
 [push]
-    default=simple
+	default = current
 [commit]
 	template = /Users/VatRaghavan/.gitmessage.text
 [init]
