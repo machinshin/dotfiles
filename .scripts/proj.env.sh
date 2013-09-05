@@ -95,4 +95,3 @@ shc() {
 prod() {
     osascript ~/prod.applescript
 }
-#export PATH=$PATH:/opt/local/lib/mysql55/bin/

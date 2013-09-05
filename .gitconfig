@@ -49,7 +49,7 @@
     editor = vim -f
 	pager = cat
 [diff]
-	tool=vimdiff
+	tool=mvim -d
 [difftool]
 	prompt=false
 [push]

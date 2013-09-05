@@ -52,8 +52,7 @@ Bundle 'tsaleh/vim-align'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/vimproc'
-"neocomplecache should use 'master' snipmate :/
-Bundle 'Shougo/neocomplcache'
+"Bundle 'Shougo/neocomplete'
 Bundle 'Shougo/neosnippet'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
@@ -64,14 +63,14 @@ Bundle 'Townk/vim-autoclose'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tomtom/checksyntax_vim'
 Bundle 'vim-scripts/taglist.vim'
-"Bundle 'FSwitch' only useful for c/c++
+"Bundle 'FSwitch' #only useful for c/c++
 Bundle 'godlygeek/tabular'
 Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
 Bundle 'vim-perl/vim-perl'
-"Bundle 'Rip-Rip/clang_complete' only useful for c/c++/obj-c
+"Bundle 'Rip-Rip/clang_complete' #only useful for c/c++/obj-c
 Bundle 'tehmaze/profont-powerline'
 Bundle 'tmhedberg/matchit'
 Bundle 'vim-scripts/python_match.vim'
@@ -79,12 +78,12 @@ Bundle 'semmons99/vim-ruby-matchit'
 Bundle 'tysontate/HTML-AutoCloseTag'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
-"Bundle 'derekwyatt/vim-scala' only useful for scala
+"Bundle 'derekwyatt/vim-scala' #only useful for scala
 Bundle 'kana/vim-fakeclip'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'kien/rainbow_parentheses.vim'
-"Bundle 'Lokaltog/vim-easymotion' doesn't work with my window-motion keybinds
+"Bundle 'Lokaltog/vim-easymotion' #doesn't work with my window-motion keybinds
 Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
 Bundle 'bling/vim-bufferline'
@@ -92,24 +91,22 @@ Bundle 'bling/vim-airline'
 "Bundle 'mfontani/vim-cute-perl'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
-Bundle 'myusuf3/numbers.vim'
+"Bundle 'myusuf3/numbers.vim'
 
 "##############################################################
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_enable_fuzzy_completion=1
-let g:neocomplcache_enable_underbar_completion=1
-let g:neocomplcache_enable_camel_case_completion=1
-let g:neocomplcache_enable_underbar_completion=1
-let g:neocomplcache_max_menu_width=25
-let g:neocomplcache_temporary_dir='~/.vim/neocon/'
-let g:neocomplcache_enable_auto_select=1
+let g:neocomplete#enable_prefetch=1
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_ignore_case=1
+let g:neocomplete#enable_fuzzy_completion=1
+let g:neocomplete#temporary_dir='~/.vim/neocon/'
+let g:neocomplete#enable_auto_select=1
 "Plugin key mappings
-inoremap <expr><C-g>  neocomplcache#undo_completion()
-inoremap <expr><C-l>  neocomplcache#complete_common_string()
+inoremap <expr><C-g>  neocomplete#undo_completion()
+inoremap <expr><C-l>  neocomplete#complete_common_string()
 
 "Recommended key mappings
 "<CR>: close popup and save indent
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+"inoremap <expr><CR>  neocomplete#smart_close_popup() . "\<CR>"
 " <TAB>: completion
 "inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
@@ -120,10 +117,10 @@ inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
 inoremap <expr> <C-u>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()"
 "skybison configuration
 "nnoremap : :<c-u>call SkyBison("")<cr>
 let g:skybison_fuzz=1
@@ -333,7 +330,7 @@ nnoremap <Leader>n <C-w>n
 " quit window
 nnoremap <Leader>q <C-w>q
 " quit all windows & shutdown vim
-nnoremap <silent><Leader><Leader>q <ESC>:qa<CR>
+nnoremap <silent><Leader><Leader>q <ESC>:xa<CR>
 "rotate windows to the bottom/right
 nnoremap <Leader><Leader>r <C-w>r
 "rotate windows to the top/left
@@ -538,6 +535,11 @@ autocmd BufNewFile,BufRead *.yml set filetype=yaml
 let g:airline_enable_bufferline=1
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
+let g:airline_enable_syntastic=1
+let g:airline_enable_tagbar=1
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_detect_iminsert=1
 set statusline +=%F
 let g:bufferline_echo=0
 "au VimEnter * RainbowParenthesesToggle

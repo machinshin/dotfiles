@@ -16,3 +16,20 @@ alias vu3='vagrant up srv3'
 alias vd3='vagrant destroy srv3'
 alias vr3='vagrant restart srv3'
 alias vp3='vagrant provision srv3'
+
+
+shc() {
+    # If no inputs, ssh to main
+    if [ -z $1 ]; then
+        ssh bastion1
+    else
+        # If it's in config file, ssh to it regularly
+        if [ -n "$(cat ~/.ssh/config | grep "Host $1")" ]; then
+            ssh $1
+        # Otherwise tunnel to it
+        else
+            ssh -t bastion1 "ssh -t $1";
+        fi
+    fi
+}
+
