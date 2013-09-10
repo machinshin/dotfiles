@@ -88,10 +88,6 @@ t() {
     tail -f $1 | perl -pe "s/$2/\e[1;31;43m$&\e[0m/g"
 }
 
-shc() {
-    ssh -t ct "ssh -t $1";
-}
-
 prod() {
     osascript ~/prod.applescript
 }
