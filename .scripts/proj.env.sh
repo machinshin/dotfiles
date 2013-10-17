@@ -1,20 +1,3 @@
-pullreq() {
-    [ -z $BRANCH ] && BRANCH="dev"
-    [ -z $HEAD ] && return # Return if no head
-    REMOTE=`cat .git/config | grep "remote \"origin\"" -A 2 | tail -n1 | sed 's/.*:\([^\/]*\).*/\1/'`
-    MSG=`git log -n1 --pretty=%s`
-    #CUR_BRANCH=${HEAD#refs/heads/}
-    CUR_BRANCH=`git symbolic-ref --short -q HEAD`
-
-    if [[ "$CUR_BRANCH" == "dev" || "$CUR_BRANCH" == "master" ]]; then
-      echo "You can't push directly to $CUR_BRANCH, thicky"
-      return
-    fi
-    echo "CURRENT BRANCH is $CUR_BRANCH | $HEAD | $REMOTE | $MSG | $BRANCH"
-    git push origin $CUR_BRANCH
-    hub pull-request -b $BRANCH -h $REMOTE:$CUR_BRANCH
-}
-
 pcb() {
     ### TODO: how to get git commit to work?
     echo `git commit -m "$1"`

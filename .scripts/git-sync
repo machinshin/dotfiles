@@ -1,0 +1,29 @@
+#!/bin/bash
+git remote | grep 'upstream' 2>&1>/dev/null
+if [[ "$?" -ne "0" ]]; then
+    echo "You don't have an upstream branch, not gonna do this!"
+    exit 1
+fi
+ 
+HEAD=$(git symbolic-ref HEAD 2> /dev/null)
+CUR_BRANCH=${HEAD#refs/heads/}
+ 
+git stash | grep '^Saved' 2>&1>/dev/null
+STASHED=$?
+ 
+# Fetch all upstream and origin changes
+git fetch --all 2>&1>/dev/null
+ 
+git checkout dev 2>&1>/dev/null
+git reset --hard upstream/dev 2>&1>/dev/null
+git push -f origin dev 2>&1>/dev/null
+ 
+git checkout master 2>&1>/dev/null
+git reset --hard upstream/master 2>&1>/dev/null
+git push -f origin master 2>&1>/dev/null
+ 
+# Put us back where we were
+git checkout $CUR_BRANCH 2>&1>/dev/null
+if [[ "$STASHED" -eq "0" ]]; then
+    git stash pop 2>&1>/dev/null
+fi

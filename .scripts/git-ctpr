@@ -1,0 +1,6 @@
+#!/bin/bash
+HEAD=$(git symbolic-ref HEAD 2> /dev/null)
+CUR_BRANCH=${HEAD#refs/heads/}
+git push origin $CURR_BRANCH
+hub pull-request -b crowdtilt:dev -h $CUR_BRANCH
+

@@ -30,7 +30,7 @@
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
     cm = commit -m
     #display all aliases
-    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
     unstage = reset HEAD --
     last = log -l HEAD
     visual = !gitk

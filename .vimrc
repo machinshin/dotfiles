@@ -167,6 +167,7 @@ set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.so.*,*.jpg,*.gif,*.png
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*.tgz,*.gz
 set ruler " Always show current positions along the bottom
 "set cmdheight=2 " the command bar is 2 high
+set relativenumber
 set number " turn on line numbers
 set hid " you can change buffer without saving
 set backspace=indent,eol,start
@@ -279,11 +280,13 @@ function! PasterToggle()
     execute "set mouse="
     execute "set foldcolumn=0"
     execute "set nolist"
+    execute "set norelativenumber"
     execute "set nonumber"
   else
     execute "set mouse=a"
     execute "set foldcolumn=1"
     execute "set list"
+    execute "set relativenumber"
     execute "set number"
   endif
 endfunction
