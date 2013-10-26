@@ -246,6 +246,7 @@ noremap <S-j> <C-d>
 let g:LustyJugglerDefaultMappings=0
 let g:LustyJugglerShowKeys='a'
 nnoremap <F5> :LustyJuggler<CR>
+let g:LustyJugglerSuppressRubyWarning = 1
 
 "turn off *ALL* bells
 set vb t_vb=
@@ -575,3 +576,7 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+" make space execute the 'r' macro (press qr to start recording, q to stop,
+" then [space] to execute.  super convenient)
+noremap <Space> @r

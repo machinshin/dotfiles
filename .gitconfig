@@ -37,7 +37,8 @@
     po = push origin
     pod = push origin dev
     dlog = log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    deploys = !git dlog --no-merges origin/master..origin/dev
+    odeps = !git dlog --no-merges origin/master..origin/dev
+    deploys = !git dlog --no-merges upstream/master..upstream/dev
 	ctags = !.git/hooks/ctags
 	cma = commit -am
 [github]
@@ -49,12 +50,14 @@
     editor = vim -f
 	pager = cat
 [diff]
-	tool=mvim -d
-[difftool]
-	prompt=false
+	tool = mvimdiff
+[difftool "mvimdiff"]
+    cmd = mvim -v -d \"$LOCAL\" \"$REMOTE\"
 [push]
 	default = current
 [commit]
 	template = /Users/VatRaghavan/.gitmessage.text
 [init]
 	templatedir = /Users/VatRaghavan/.git_template
+[difftool]
+	prompt = false
