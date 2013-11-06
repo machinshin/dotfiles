@@ -3,9 +3,9 @@
 #
 # == WHO
 # Patrick Kontschak 2012
-# 
+#
 # Forked from Nate Murray's irssi-growl: https://github.com/jashmenn/irssi-growl
-# 
+#
 # == CONFIG
 #   /SET notifier_on_regex [regex]
 #   /SET notifier_channel_regex [regex]
@@ -23,7 +23,7 @@
 #
 #   only notifier things for mychannel1 and mychannel2
 #   /SET notifier_channel_regex (mychannel1|mychannel2)
-# 
+#
 # == INSTALL
 # Place notifier.pl in `~/.irssi/scripts/`.
 # /script load notifier.pl
@@ -50,7 +50,7 @@ $VERSION = "0.0";
 sub do_notifier {
   my ($server, $title, $data) = @_;
     $data =~ s/["';]//g;
-    system("terminal-notifier -message '$data' -title '$title' >> /dev/null 2>&1");
+    system("terminal-notifier -activate \"com.googlecode.iterm2\" -message '$data' -title '$title' >> /dev/null 2>&1");
     return 1
 }
 
@@ -120,7 +120,7 @@ sub notifier_privmsg {
     my ($target, $text) = split(/ :/, $data, 2);
     # only notify if we're permitting notification on privmsg
     if (Irssi::settings_get_str('notifier_on_privmsg') == 1) {
-        notifier_it($server, $nick, $data, $target, $nick); 
+        notifier_it($server, $nick, $data, $target, $nick);
     }
   Irssi::signal_continue($server, $data, $nick, $host);
 }

@@ -107,8 +107,8 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \
-	battery github svn autojump cpanm gas gem git-hubflow git-remote-branch gnu-utils \
-	knife macports osx perl themes vagrant tmuxinator tmux )
+	battery brew github autojump cpanm gas gem git git-extras git-hubflow github git-remote-branch gnu-utils \
+	knife osx perl themes vagrant tmuxinator tmux pip rebar)
 
 source $ZSH/oh-my-zsh.sh
 

@@ -1,4 +1,6 @@
 export CT=$HOME/workspace/ct
+alias vs='vagrant status'
+
 alias vs1='vagrant ssh srv1'
 alias vu1='vagrant up srv1'
 alias vd1='vagrant destroy srv1'
@@ -16,7 +18,7 @@ alias vu3='vagrant up srv3'
 alias vd3='vagrant destroy srv3'
 alias vr3='vagrant restart srv3'
 alias vp3='vagrant provision srv3'
-
+alias vbox_rs='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
 
 shc() {
     # If no inputs, ssh to main
