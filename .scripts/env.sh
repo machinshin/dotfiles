@@ -51,4 +51,4 @@ alias n='notes '
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias a='ack'
 alias pct='perl -Ilocallib/lib/perl5 -Ilib'
-alias dbon='ssh -L 5432:database2:5432 bastion1 &'
+alias dbon='ssh -L 5432:database2:5432 bastion1'

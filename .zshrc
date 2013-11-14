@@ -1,12 +1,18 @@
-
 #FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/functions:/usr/local/share/zsh/site-functions/
 #fpath=($HOME/.zsh/func $fpath)
 #FPATH=($FPATH $fpath)
 #typeset -U fpath
+eval "$(hub alias -s)"
+export PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:~/workspace/github/rebar/
+export PATH=$PATH:$HOME/.scripts/
+export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
+export EDITOR='mvim -v '
+export SHELL='/usr/local/bin/zsh'
 autoload -U zmv
 autoload colors; colors
 HISTFILE=~/.histfile
-HISTSIZE=SAVEHIST=9999
+HISTSIZE=SAVEHIST=9999999
 autoload -Uz compinit
 compinit
 setopt correctall
@@ -106,9 +112,12 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(dirpersist extract history history-substring-search vi-mode zsh-syntax-highlighting ssh git \
-	battery brew github autojump cpanm gas gem git git-extras git-hubflow github git-remote-branch gnu-utils \
-	knife osx perl themes vagrant tmuxinator tmux pip rebar)
+
+plugins=(autojump dirpersist extract history history-substring-search vi-mode \
+	zsh-syntax-highlighting ssh git gitfast battery brew git git-extras git-hubflow \
+	git-remote-branch github cpanm gas gem gnu-utils knife osx perl themes \
+	vagrant tmuxinator tmux pip rebar itunes \
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -120,16 +129,15 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
-export PATH=$PATH:$HOME/.scripts/
 if [[ -f $HOME/.scripts/corp.env.sh ]]; then
-  source $HOME/.scripts/corp.env.sh
+	source $HOME/.scripts/corp.env.sh
 fi
 
 if [[ -f $HOME/.scripts/env.sh ]]; then
-  source $HOME/.scripts/env.sh
+	source $HOME/.scripts/env.sh
 fi
 if [[ -f $HOME/.scripts/proj.env.sh ]]; then
-  source $HOME/.scripts/proj.env.sh
+	source $HOME/.scripts/proj.env.sh
 fi
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
@@ -140,21 +148,12 @@ alias -g T='| tee '
 alias vi='mvim -v'
 alias vim='mvim -v'
 alias gvim='mvim -v'
-export EDITOR='mvim -v '
-export SHELL='/usr/local/bin/zsh'
 
-export PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
-export PATH=$PATH:~/workspace/github/rebar/
-
-export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 setopt NO_NOMATCH
 perlbrew switch perl-5.14.2
-#export GITPERLLIB=/opt/local/lib/perl5/site_perl/5.12.4/
-eval "$(hub alias -s)"
 alias hist='history | grep -v rm | grep '
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
 #Appends every command to the history file once it is executed
