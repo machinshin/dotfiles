@@ -1,1 +1,5 @@
 .offlineimaprc
+.vim/bundle/
+.vim/backup/
+.vim/temp/
+.vim/view/

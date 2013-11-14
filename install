@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+use strict;
+use Cwd;
+#TODO, get this working :)
+my $home = glob '~';
+foreach my $file_path (glob cwd().'/\.*'){
+    my $file = (split '/', $file_path)[-1];
+    if(!($file =~ /README|install*/)){
+        my $to = "$home/.$file";
+        if(-e $to){
+            print "! ($to) exists...";
+            if(-l $to){
+                unlink($to);
+                print "as a symlink, removed\n";
+            }else{
+                rename $to => "$to~";
+                print "as a normal file/directory, moved to $to~...\n"
+            }
+        }
+        symlink($file_path, $to);
+    }
+}
