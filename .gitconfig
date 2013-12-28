@@ -40,7 +40,8 @@
     odeps = !git dlog --no-merges origin/master..origin/dev
     deploys = !git dlog --no-merges upstream/master..upstream/dev
 	ctags = !.git/hooks/ctags
-	cma = commit -am
+    cma = commit -am
+    nb = checkout -b
 [github]
     user = machinshin
     token = faf03543c81b5ee13885108ab3582c78

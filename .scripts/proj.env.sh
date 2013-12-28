@@ -1,10 +1,3 @@
-pcb() {
-    ### TODO: how to get git commit to work?
-    echo `git commit -m "$1"`
-    CUR_BRANCH=`git symbolic-ref --short -q HEAD`
-    echo `git push origin $CUR_BRANCH`
-}
-
 gip() {
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
     echo `git push origin $CUR_BRANCH`
@@ -22,10 +15,9 @@ psg() {
 #Git ProTip - Delete all local branches that have been merged into HEAD
 git_purge_local_branches() {
     [ -z $1 ] && return
-    #git branch -d `git branch --merged $1 | grep -v '^*' | grep -v 'master' | grep -v 'dev' | tr -d '\n'`
     BRANCHES=`git branch --merged $1 | grep -v '^*' | grep -v 'master' | grep -v 'dev' | grep -v "/$1$" | tr -d '\n'`
     echo "Running: git branch -d $BRANCHES"
-    git branch -d $BRANCHES
+    #git branch -d $BRANCHES
 }
 
 #Bonus - Delete all remote branches that are merged into HEAD (thanks +Kyle Neath)

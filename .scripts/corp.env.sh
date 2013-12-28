@@ -28,10 +28,49 @@ shc() {
         # If it's in config file, ssh to it regularly
         if [ -n "$(cat ~/.ssh/config | grep "Host $1")" ]; then
             ssh $1
-        # Otherwise tunnel to it
+            # Otherwise tunnel to it
         else
             ssh -t bastion1 "ssh -t $1";
         fi
     fi
+}
+
+# Generate git format string on the fly to get the right top level directory
+_gen_format_string() {
+    echo "<a href=\"https://github.com/Crowdtilt/`basename $(git rev-parse --show-toplevel)`/commit/%h\" style='font-family:\"Courier new\"; color:red; font-weight:bold; text-decoration:none'>%h</a> %s <span style=\"color:green\">(%cr)</span> &lt;<span style=\"color:blue; font-weight:bold;\">%an</span>&gt;<br />"
+}
+
+# Generate the html output for this repo's deploy commits
+_gen_html_output() {
+    (
+    cd $2
+    git fetch origin
+    format=`_gen_format_string`
+    output=`git log --no-merges upstream/master..upstream/dev --pretty=format:"$format" --abbrev-commit`
+    if [ -n "$output" ]; then
+        echo "<b style=\"font-size:16px;\">$3:</b><br /> <div class=\"anchor\"> <br />" >> $1
+        echo $output >> $file
+        echo "</div><br /><br />" >> $file
+    fi
+    )
+}
+
+gen_deploy_email () {
+    if [ -z $1 ]; then
+        echo "Usage: gen_deploy_email /path/to/crowdtilt/root"
+        return 1
+    fi
+
+    file="/tmp/deploys.html"
+    echo "<div style=\"font-family:sans-serif; font-size:13px;\">" > $file
+
+    # Start format
+    _gen_html_output "$file" "$1/crowdtilt-public-site" "Public Site"
+    _gen_html_output "$file" "$1/crowdtilt-internal-api" "API"
+    _gen_html_output "$file" "$1/crowdtilt-internal-admin-site" "Admin Site"
+
+    echo "</div>" >> $file
+
+    open $file
 }
 

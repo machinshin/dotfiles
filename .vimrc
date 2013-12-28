@@ -418,8 +418,8 @@ nnoremap <Leader>f zM<cr>
 nnoremap <Leader>F zR<cr>
 
 " remember folding state
-au BufWinLeave * silent mkview
-au BufWinEnter * silent loadview
+au BufWinLeave ?* silent mkview
+au BufWinEnter ?* silent loadview
 
 "clear hlsearch results by typing ,,c
 nnoremap <silent> <Leader><Leader>c :nohlsearch<CR>
