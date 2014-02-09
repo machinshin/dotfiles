@@ -92,6 +92,7 @@ Bundle 'bling/vim-airline'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
 "Bundle 'myusuf3/numbers.vim'
+Bundle 'hcs42/vim-erlang-runtime'
 
 "##############################################################
 let g:neocomplete#enable_prefetch=1

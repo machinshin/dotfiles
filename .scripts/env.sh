@@ -31,19 +31,11 @@ alias c='clear'
 alias cc='c;c;c;c'
 alias p='pushd .'
 alias u='popd'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ..2='cd ../../../'
-alias ..3='cd ../../../../'
-alias ..4='cd ../../../../../'
-alias ..5='cd ../../../../../../'
-alias ..6='cd ../../../../../../../'
-alias ..7='cd ../../../../../../../../'
-alias ..8='cd ../../../../../../../../../'
-alias ..9='cd ../../../../../../../../../../'
 alias td='tmux detach'
 alias tl='tmux attach -t leftscr'
 alias tr='tmux attach -t rightscr'
+alias t1='tmux attach -t t1'
+alias t2='tmux attach -t t2'
 alias ll='ls -alh'
 alias vi='vim'
 alias v='vim'
@@ -51,4 +43,14 @@ alias n='notes '
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias a='ack'
 alias pct='perl -Ilocallib/lib/perl5 -Ilib'
-alias dbon='ssh -L 5432:database2:5432 bastion1'
+
+rationalise-dot() {
+    if [[ $LBUFFER = *.. ]]; then
+    LBUFFER+=/..
+    else
+    LBUFFER+=.
+    fi
+}
+zle -N rationalise-dot
+bindkey . rationalise-dot
+
