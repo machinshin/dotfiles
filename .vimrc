@@ -91,6 +91,7 @@ Bundle 'bling/vim-airline'
 "Bundle 'mfontani/vim-cute-perl'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
+Bundle 'jimenezrick/vimerl'
 "Bundle 'myusuf3/numbers.vim'
 Bundle 'hcs42/vim-erlang-runtime'
 
@@ -360,8 +361,8 @@ let g:ctrlp_match_window_bottom=0
 "let g:ctrlp_working_path_mode = 0
 " Ctrl-P ignore target dirs so VIM doesn't have to!
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100)$',
-      \ 'file': '\v\.(exe|so|dll|tgz|gz)$',
+      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100|ebin)$',
+      \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$',
       \ }
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
@@ -399,18 +400,6 @@ function HasFoldedLine()
  endfunction
 
 au CursorHold * if HasFoldedLine() == 1 | set foldcolumn=1 | else |set foldcolumn=0 | endif
-
-"function! NeatFoldText()
-  "let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g') . ' '
-  "let lines_count = v:foldend - v:foldstart + 1
-  "let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
-  "let foldchar = split(filter(split(&fillchars, ','), 'v:val =~# "fold"')[0], ':')[-1]
-  "let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-  "let foldtextend = lines_count_text . repeat(foldchar, 8)
-  "let length = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g'))
-  "return foldtextstart . repeat(foldchar, winwidth(0)-length) . foldtextend
-"endfunction
-"set foldtext=NeatFoldText()
 
 "maps for foldng
 " close all open folds
