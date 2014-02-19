@@ -1,5 +1,7 @@
 --ignore-dir=Crowdtilt-Internal-API-0.0100
 --ignore-dir=locallib
+--ignore-dir=locallib2
+--ignore-dir=Crowdtilt-Public-Site-0.0100
 
 --type-set
 pm=.pm

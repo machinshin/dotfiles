@@ -54,3 +54,8 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
+alias dbon='ssh -L 5432:database2:5432 bastion1'
+
+r() {
+    SSH_AUTH_SOCK=`tmux showenv|grep "^SSH_AUTH_SOCK" | cut -d = -f 2`
+}

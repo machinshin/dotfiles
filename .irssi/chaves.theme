@@ -266,9 +266,9 @@ formats = {
     msg_private_query = "{privmsgnick $[17]0}$2";
   };
   "fe-common/irc" = {
-    own_action = "{ownaction $[15]0} $1";
-    action_private = "{pvtaction $[15]0}$1";
-    action_private_query = "{pvtaction_query $[15]0} $2";
-    action_public = "{pubaction $[15]0}$1";
+    own_action = "{ownaction $[19]0} $1";
+    action_private = "{pvtaction $[19]0}$1";
+    action_private_query = "{pvtaction_query $[19]0} $2";
+    action_public = "{pubaction $[19]0}$1";
   };
 };

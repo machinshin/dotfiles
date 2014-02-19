@@ -1,0 +1,14 @@
+#!/bin/bash
+HEAD=$(git symbolic-ref HEAD 2> /dev/null)
+CUR_BRANCH=${HEAD#refs/heads/}
+git push origin $CURR_BRANCH
+UPSTREAM=`dirname $(git remote show -n upstream | grep Fetch | cut -d: -f3- | cut -d\/ -f1- )`
+BRANCH="dev"
+echo "UPSTREAM : $UPSTREAM"
+if [ -z $1 ]; then
+   BRANCH=$1
+fi
+hub pull-request -b crowdtilt:dev -h $CUR_BRANCH
+echo "$UPSTREAM:$BRANCH"
+
+

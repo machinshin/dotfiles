@@ -361,7 +361,7 @@ let g:ctrlp_match_window_bottom=0
 "let g:ctrlp_working_path_mode = 0
 " Ctrl-P ignore target dirs so VIM doesn't have to!
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100|ebin)$',
+      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100|emails|ebin)$',
       \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$',
       \ }
 let g:ctrlp_match_window_reverse=0
@@ -530,6 +530,16 @@ let g:airline_enable_bufferline=1
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
 let g:airline_enable_syntastic=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_perl_lib_path = [ '~/workspace/ct/crowdtilt-internal-api/lib',
+            \ '~/workspace/ct/crowdtilt-internal-api/localib/lib/perl5',
+            \ '~/workspace/ct/crowdtilt-internal-api/',
+            \ '~/workspace/ct/Business-BalancedPayments',
+            \ '~/workspace/ct/Business-GroupPayments',
+            \ '~/workspace/ct/ctpan'
+            \ ]
+
 let g:airline_enable_tagbar=1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
@@ -570,3 +580,33 @@ endif
 " make space execute the 'r' macro (press qr to start recording, q to stop,
 " then [space] to execute.  super convenient)
 noremap <Space> @r
+" Dim inactive windows using 'colorcolumn' setting
+" This tends to slow down redrawing, but is very useful.
+" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+" XXX: this will only work with lines containing text (i.e. not '~')
+function! s:DimInactiveWindows()
+  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+    let l:range = ""
+    if i != winnr()
+      if &wrap
+        " HACK: when wrapping lines is enabled, we use the maximum number
+        " of columns getting highlighted. This might get calculated by
+        " looking for the longest visible line and using a multiple of
+        " winwidth().
+        let l:width=256 " max
+      else
+        let l:width=winwidth(i)
+      endif
+      let l:range = join(range(1, l:width), ',')
+    endif
+    call setwinvar(i, '&colorcolumn', l:range)
+  endfor
+endfunction
+augroup DimInactiveWindows
+  au!
+  au WinEnter * call s:DimInactiveWindows()
+  au WinEnter * set cursorline
+  au WinLeave * set nocursorline
+augroup END
+
+
