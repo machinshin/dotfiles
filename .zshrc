@@ -1,7 +1,3 @@
-#FPATH=/Users/VatRaghavan/.oh-my-zsh/plugins/svn:/Users/VatRaghavan/.oh-my-zsh/plugins/github:/Users/VatRaghavan/.oh-my-zsh/plugins/battery:/Users/VatRaghavan/.oh-my-zsh/plugins/git:/Users/VatRaghavan/.oh-my-zsh/plugins/vi-mode:/Users/VatRaghavan/.oh-my-zsh/plugins/history-substring-search:/Users/VatRaghavan/.oh-my-zsh/plugins/extract:/Users/VatRaghavan/.oh-my-zsh/plugins/dirpersist:/Users/VatRaghavan/.oh-my-zsh/functions:/Users/VatRaghavan/.oh-my-zsh/completions:/usr/share/zsh/site-functions:/usr/share/zsh/functions:/usr/local/share/zsh/site-functions/
-#fpath=($HOME/.zsh/func $fpath)
-#FPATH=($FPATH $fpath)
-#typeset -U fpath
 eval "$(hub alias -s)"
 export PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=$PATH:~/workspace/github/rebar/
@@ -10,19 +6,21 @@ export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'
 autoload -U zmv
-autoload colors; colors
+autoload colors;
+colors
 HISTFILE=~/.histfile
 HISTSIZE=SAVEHIST=9999999
 autoload -Uz compinit
-compinit
 setopt correctall
 autoload -U promptinit
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
-setopt incappendhistory
-setopt sharehistory
-setopt extendedhistory
+setopt extended_history
+# Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history
 
 #superglobs
 setopt extendedglob
@@ -124,7 +122,6 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 #zsh specifc alias
 alias mmv='noglob zmv -W'
-alias ls='ls $LS_OPTIONS'
 alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
@@ -145,18 +142,11 @@ alias irssi='TERM=screen-256color irssi'
 alias -g TC='| tee command.log'
 alias -g T='| tee '
 
-alias vi='mvim -v'
-alias vim='mvim -v'
-alias gvim='mvim -v'
-
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 setopt NO_NOMATCH
 perlbrew switch perl-5.14.2
-alias hist='history | grep -v rm | grep '
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
-#Appends every command to the history file once it is executed
-setopt inc_append_history
-# Reloads the history whenever you use it
-setopt share_history
+compinit
+

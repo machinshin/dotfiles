@@ -5,6 +5,9 @@ if [[ "$OS" == "Darwin" ]]; then
   PORTSBIN="/usr/local/bin/"
   DIRCOLORS="$PORTSBIN/gdircolors"
   alias ls="$PORTSBIN/gls $LS_OPTIONS "
+  alias vi='mvim -v'
+  alias vim='mvim -v'
+  alias gvim='mvim -v'
 else
   DIRCOLORS='/usr/bin/dircolors'
   alias ls="ls $LS_OPTIONS "
@@ -22,40 +25,31 @@ alias grep='grep --color=auto'
 alias gvim='gvim -geom 82x35'
 alias hist='grep '$1' $HOME/.zsh_history'
 alias mem='free -m'
-alias rmdir='rm -rf '
-alias sU='svn up'
+alias rmd='rm -rf '
 alias la='ls -al'
 alias f='find |grep'
 alias lsd='ls -ld *(-/DN)'
 alias c='clear'
-alias cc='c;c;c;c'
 alias p='pushd .'
 alias u='popd'
 alias td='tmux detach'
-alias tl='tmux attach -t leftscr'
-alias tr='tmux attach -t rightscr'
-alias t1='tmux attach -t t1'
-alias t2='tmux attach -t t2'
 alias ll='ls -alh'
 alias vi='vim'
 alias v='vim'
-alias n='notes '
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias a='ack'
-alias pct='perl -Ilocallib/lib/perl5 -Ilib'
 
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
-    LBUFFER+=/..
+        LBUFFER+=/..
     else
-    LBUFFER+=.
+        LBUFFER+=.
     fi
 }
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-alias dbon='ssh -L 5432:database2:5432 bastion1'
-
 r() {
     SSH_AUTH_SOCK=`tmux showenv|grep "^SSH_AUTH_SOCK" | cut -d = -f 2`
 }
+

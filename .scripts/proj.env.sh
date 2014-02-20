@@ -58,11 +58,8 @@ echo "'$1' is not a valid file"
      fi
 }
 
-# Tail a file and search for a pattern
-t() {
-    tail -f $1 | perl -pe "s/$2/\e[1;31;43m$&\e[0m/g"
-}
-
 prod() {
     osascript ~/prod.applescript
 }
+
+
