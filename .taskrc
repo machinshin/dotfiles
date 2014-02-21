@@ -51,3 +51,4 @@ dateformat.annotation=d\/m\/Y H:N
 alias.a=active
 alias.c=calendar
 
+search.case.sensitive=no
