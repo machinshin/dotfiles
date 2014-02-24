@@ -53,7 +53,7 @@ my $mode = $OFF;                     # current mode
 my $need_redraw = 0;                 # nicklist needs redrawing
 my $screen_resizing = 0;             # terminal is being resized
 my $active_channel;                  # (REC)
-
+my $saved_colors = {};
 my @nicklist=();                     # array of hashes, containing the internal nicklist of the active channel
 	# nick => realnick
 	# mode =>
@@ -86,6 +86,7 @@ sub read_settings {
 }
 
 sub update {
+    load_colors();
 	read_settings();
 	make_nicklist();
 }
@@ -260,8 +261,29 @@ sub nicklist_write_line {
 sub calc_text {
 	my ($nick) = @_;
 	my $tmp = $nicklist_width-3;
-	(my $text = $nick->{'nick'}) =~ s/^(.{$tmp})..+$/$1\033[34m~\033[m/;
-	$nick->{'text'} = $prefix_mode[$nick->{'mode'}] . $text . (' ' x ($nicklist_width-length($nick->{'nick'})-1));
+	(my $text = $nick->{nick}) =~ s/^(.{$tmp})..+$/$1\033[34m~\033[m/;
+    my $color = $saved_colors->{$nick->{nick}};
+    my $color_map = {
+        r => '0;31',
+        R => '1;31',
+        g => '0;32',
+        G => '1;32',
+        y => '0;33',
+        Y => '1;33',
+        b => '0;34',
+        B => '1;34',
+        p => '0;35',
+        P => '1;35',
+        m => '0;35',
+        M => '1;35',
+        c => '0;36',
+        C => '1;36',
+        w => '0;37',
+        W => '1;37',
+    };
+    $color =~ s/%([a-zA-Z])/\e[@{[$color_map->{$1}]}m/;
+    $text = $color . $prefix_mode[$nick->{'mode'}] . "$text\e[39m";
+	$nick->{'text'} = $text . (' ' x ($nicklist_width-length($nick->{'nick'})-1));
 	$nick->{'cmp'} = $nick->{'mode'}.lc($nick->{'nick'});
 }
 
@@ -270,7 +292,7 @@ sub redraw_nick_nr {
 	my ($nr) = @_;
 	my $line = $nr - $scroll_pos;
 	if ($line >= 0 && $line < $height) {
-		nicklist_write_line($line, $nicklist[$nr]->{'text'});
+		nicklist_write_line($line, $nicklist[$nr]->{text});
 	}
 }
 
@@ -284,7 +306,7 @@ sub draw_insert_nick_nr {
 		if ($mode == $SCREEN) {
 			need_redraw();
 		} elsif ($mode == $FIFO) {
-			my $data = "\033[m\033[L". $nicklist[$nr]->{'text'}; # reset color & insert line & write nick
+			my $data = "\033[m\033[L". $nicklist[$nr]->{text}; # reset color & insert line & write nick
 			if ($line == $cursor_line) {
 				$data = "\033[1G".$data; # back to beginning of line
 			} else {
@@ -308,7 +330,6 @@ sub draw_remove_nick_nr {
 		if ($mode == $SCREEN) {
 			need_redraw();
 		} elsif ($mode == $FIFO) {
-			#my $data = "\033[m\033[L[i$line]". $nicklist[$nr]->{'text'}; # reset color & insert line & write nick
 			my $data = "\033[M"; # delete line
 			if ($line != $cursor_line) {
 				$data = "\033[".($line+1)."d".$data; # jump
@@ -325,12 +346,11 @@ sub draw_remove_nick_nr {
 # redraw the whole nicklist
 sub redraw {
 	$need_redraw = 0;
-	#make_nicklist();
 	nicklist_write_start();
 	my $line = 0;
 	### draw nicklist ###
 	for (my $i=$scroll_pos;$line < $height && $i < @nicklist; $i++) {
-		nicklist_write_line($line++, $nicklist[$i]->{'text'});
+		nicklist_write_line($line++, $nicklist[$i]->{text});
 	}
 
 	### clean up other lines ###
@@ -559,6 +579,17 @@ sub sig_mode {
 	}
 }
 
+sub load_colors() {
+	open(FID, "<".$ENV{HOME}."/.irssi/saved_colors") || return;
+	while (<FID>) {
+		chomp;
+		my ($k, $v) = split(/:/);
+		next if ($k eq '' || $v eq '');
+		$saved_colors->{$k} = $v;
+	}
+	close(FID);
+}
+
 ##### command binds #####
 Irssi::command_bind 'nicklist' => sub {
     my ( $data, $server, $item ) = @_;
@@ -592,10 +623,10 @@ Irssi::signal_add_first('nick mode changed', \&sig_mode);
 Irssi::signal_add('setup changed', \&read_settings);
 
 ##### settings #####
-Irssi::settings_add_str('nicklist', 'nicklist_screen_prefix', '\e[m ');
-Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_op', '\e[32m@\e[39m');
-Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_halfop', '\e[34m%\e[39m');
-Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_voice', '\e[33m+\e[39m');
+Irssi::settings_add_str('nicklist', 'nicklist_screen_prefix', ' ');
+Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_op', '@');
+Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_halfop', '%');
+Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_voice', '+');
 Irssi::settings_add_str('nicklist', 'nicklist_prefix_mode_normal', ' ');
 
 Irssi::settings_add_int('nicklist', 'nicklist_width',11);
@@ -604,6 +635,7 @@ Irssi::settings_add_str('nicklist', 'nicklist_fifo_path', Irssi::get_irssi_dir .
 Irssi::settings_add_str('nicklist', 'nicklist_screen_split_windows', '');
 Irssi::settings_add_str('nicklist', 'nicklist_automode', '');
 
+load_colors();
 read_settings();
 if (uc(Irssi::settings_get_str('nicklist_automode')) eq 'SCREEN') {
 	cmd_screen_start();

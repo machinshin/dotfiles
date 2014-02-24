@@ -506,8 +506,10 @@ sub formats_to_ansi_basic {
 
 sub remove_uniform {
 	my $o = shift;
-	$o =~ s/^xmpp:(.*?[%@]).+\.[^.]+$/$1/ or
-	$o =~ s#^psyc://.+\.[^.]+/([@~].*)$#$1#;
+    $o =~ s/^xmpp:(.*?[%@]).+\.[^.]+$/$1/ or
+    $o =~ s#^psyc://.+\.[^.]+/([@~].*)$#$1# or
+    $o =~ s/(.*?[%@]).+\.[^.]+$/$1/ or
+    $o =~ s/hilight/*/;
 	$o;
 }
 
