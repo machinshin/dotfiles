@@ -50,7 +50,7 @@ $VERSION = "0.0";
 sub do_notifier {
   my ($server, $title, $data) = @_;
     $data =~ s/["';]//g;
-    system("terminal-notifier -activate \"com.googlecode.iterm2\" -message '$data' -title '$title' >> /dev/null 2>&1");
+    system("terminal-notifier -activate \"com.googlecode.iterm2\" -message '$data' -title '$title' -sound default >> /dev/null 2>&1");
     return 1
 }
 
