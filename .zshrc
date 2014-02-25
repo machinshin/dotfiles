@@ -1,7 +1,7 @@
 eval "$(hub alias -s)"
-export PATH=$PATH:/Applications/:$HOME/.rvm/bin # Add RVM to PATH for scripting
-export PATH=$PATH:~/workspace/github/rebar/
-export PATH=$PATH:$HOME/.scripts/
+export PATH=$PATH:/Applications:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=$PATH:~/workspace/github/rebar
+export PATH=$PATH:$HOME/.scripts
 export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'

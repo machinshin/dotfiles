@@ -2,7 +2,7 @@ OS=`uname`
 
 export LS_OPTIONS='--color=auto'
 if [[ "$OS" == "Darwin" ]]; then
-  PORTSBIN="/usr/local/bin/"
+  PORTSBIN="/usr/local/bin"
   DIRCOLORS="$PORTSBIN/gdircolors"
   alias ls="$PORTSBIN/gls $LS_OPTIONS "
   alias vi='mvim -v'
