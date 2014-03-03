@@ -52,3 +52,4 @@ alias.a=active
 alias.c=calendar
 
 search.case.sensitive=no
+urgency.user.tag.critical.coeffcient=5
