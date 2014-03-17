@@ -136,6 +136,11 @@ fi
 if [[ -f $HOME/.scripts/proj.env.sh ]]; then
 	source $HOME/.scripts/proj.env.sh
 fi
+
+if [[ -f $HOME/.aws ]]; then
+	source $HOME/.aws
+fi
+
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
 

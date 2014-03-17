@@ -62,11 +62,11 @@ Bundle 'vim-scripts/javacomplete'
 Bundle 'Townk/vim-autoclose'
 Bundle 'tomtom/quickfixsigns_vim'
 Bundle 'tomtom/checksyntax_vim'
-Bundle 'vim-scripts/taglist.vim'
+"Bundle 'vim-scripts/taglist.vim'
 "Bundle 'FSwitch' #only useful for c/c++
 Bundle 'godlygeek/tabular'
 Bundle 'ervandew/supertab'
-Bundle 'majutsushi/tagbar'
+"Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/bufexplorer.zip'
 Bundle 'c9s/perlomni.vim'
 Bundle 'vim-perl/vim-perl'
@@ -88,7 +88,6 @@ Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
 Bundle 'bling/vim-bufferline'
 Bundle 'bling/vim-airline'
-"Bundle 'mfontani/vim-cute-perl'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
 Bundle 'jimenezrick/vimerl'
@@ -96,15 +95,15 @@ Bundle 'jimenezrick/vimerl'
 Bundle 'hcs42/vim-erlang-runtime'
 
 "##############################################################
-let g:neocomplete#enable_prefetch=1
-let g:neocomplete#enable_at_startup=1
-let g:neocomplete#enable_ignore_case=1
-let g:neocomplete#enable_fuzzy_completion=1
-let g:neocomplete#temporary_dir='~/.vim/neocon/'
-let g:neocomplete#enable_auto_select=1
-"Plugin key mappings
-inoremap <expr><C-g>  neocomplete#undo_completion()
-inoremap <expr><C-l>  neocomplete#complete_common_string()
+"let g:neocomplete#enable_prefetch=1
+"let g:neocomplete#enable_at_startup=1
+"let g:neocomplete#enable_ignore_case=1
+"let g:neocomplete#enable_fuzzy_completion=1
+"let g:neocomplete#temporary_dir='~/.vim/neocon/'
+"let g:neocomplete#enable_auto_select=1
+""Plugin key mappings
+"inoremap <expr><C-g>  neocomplete#undo_completion()
+"inoremap <expr><C-l>  neocomplete#complete_common_string()
 
 "Recommended key mappings
 "<CR>: close popup and save indent
@@ -119,19 +118,19 @@ inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
 inoremap <expr> <C-u>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()"
+"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y>  neocomplete#close_popup()
+"inoremap <expr><C-e>  neocomplete#cancel_popup()"
 "skybison configuration
 "nnoremap : :<c-u>call SkyBison("")<cr>
-let g:skybison_fuzz=1
+"let g:skybison_fuzz=1
 
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
 filetype plugin indent on
 colorscheme machinshin " my theme
-let g:Powerline_symbols='fancy'
+"let g:Powerline_symbols='fancy'
 "show the current command in progress
 set showcmd
 "automatically save before commands like :next and :make
@@ -201,11 +200,11 @@ set incsearch " BUT do highlight as you type you search phrase
 set formatoptions=rq
 "only show listchars in insert mode
 if has("multi_byte")
-  set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼" what to show when I hit :set listchars
-  let g:tagbar_iconchars = ['▾', '▸']
+  set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼ " what to show when I hit :set listchars
+  "  let g:tagbar_iconchars = ['▾', '▸']
 else
-  set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:<" what to show when I hit :set list
-  let g:tagbar_iconchars = ['+', '-']  (default on Windows)
+  set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:< " what to show when I hit :set list
+  "let g:tagbar_iconchars = ['+', '-']  (default on Windows)
 end
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
@@ -245,10 +244,10 @@ noremap <S-k> <C-u>
 noremap <S-j> <C-d>
 
 " Mappings
-let g:LustyJugglerDefaultMappings=0
-let g:LustyJugglerShowKeys='a'
-nnoremap <F5> :LustyJuggler<CR>
-let g:LustyJugglerSuppressRubyWarning = 1
+"let g:LustyJugglerDefaultMappings=0
+"let g:LustyJugglerShowKeys='a'
+"nnoremap <F5> :LustyJuggler<CR>
+"let g:LustyJugglerSuppressRubyWarning = 1
 
 "turn off *ALL* bells
 set vb t_vb=
@@ -381,7 +380,7 @@ set foldenable
 set foldmethod=manual
 set foldlevelstart=20
 set foldlevel=10
-set foldopen=block,hor,mark,percent,quickfix,tag "what movements open folds"
+set foldopen=block,hor,mark,percent,quickfix ",tag "what movements open folds"
 "let g:NeatFoldTextFillChar = '·'
 let g:NeatFoldTextSymbol='▸'
 let g:NeatFoldTextIndent=1
@@ -433,9 +432,9 @@ nnoremap M [czzzv
 nnoremap <Leader>o do<CR>
 nnoremap <Leader>P dp<CR>
 
-let g:AutoClosePairs_add="<> | ' []"
-let java_highlight_debug=1
-let java_highlight_all=1
+let g:AutoClosePairs_add="<> | ' [] \""
+"let java_highlight_debug=1
+"let java_highlight_all=1
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
@@ -485,14 +484,14 @@ nnoremap Y y$
 
 nnoremap <silent><Leader>~ :set tildeop!<CR>
 let g:ragtag_global_maps = 1
-nnoremap <silent> <F8> :TagbarToggle<CR>
+"nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
-let g:tagbar_compact=1
-if &diff
-else
-    autocmd VimEnter * nested :call tagbar#autoopen(1)
-endif
-set shell=zsh
+"let g:tagbar_compact=1
+"if &diff
+"else
+    "autocmd VimEnter * nested :call tagbar#autoopen(1)
+"endif
+"set shell=zsh
 
 au BufNewFile,BufRead *.tt setf tt2
 au BufNewFile,BufRead *.tt2 setf tt2
@@ -540,7 +539,7 @@ let g:syntastic_perl_lib_path = [ '~/workspace/ct/crowdtilt-internal-api/lib',
             \ '~/workspace/ct/ctpan'
             \ ]
 
-let g:airline_enable_tagbar=1
+"let g:airline_enable_tagbar=1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_iminsert=1
@@ -584,29 +583,29 @@ noremap <Space> @r
 " This tends to slow down redrawing, but is very useful.
 " Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
 " XXX: this will only work with lines containing text (i.e. not '~')
-function! s:DimInactiveWindows()
-  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
-    let l:range = ""
-    if i != winnr()
-      if &wrap
-        " HACK: when wrapping lines is enabled, we use the maximum number
-        " of columns getting highlighted. This might get calculated by
-        " looking for the longest visible line and using a multiple of
-        " winwidth().
-        let l:width=256 " max
-      else
-        let l:width=winwidth(i)
-      endif
-      let l:range = join(range(1, l:width), ',')
-    endif
-    call setwinvar(i, '&colorcolumn', l:range)
-  endfor
-endfunction
-augroup DimInactiveWindows
-  au!
-  au WinEnter * call s:DimInactiveWindows()
-  au WinEnter * set cursorline
-  au WinLeave * set nocursorline
-augroup END
+"function! s:DimInactiveWindows()
+  "for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+    "let l:range = ""
+    "if i != winnr()
+      "if &wrap
+        "" HACK: when wrapping lines is enabled, we use the maximum number
+        "" of columns getting highlighted. This might get calculated by
+        "" looking for the longest visible line and using a multiple of
+        "" winwidth().
+        "let l:width=256 " max
+      "else
+        "let l:width=winwidth(i)
+      "endif
+      "let l:range = join(range(1, l:width), ',')
+    "endif
+    "call setwinvar(i, '&colorcolumn', l:range)
+  "endfor
+"endfunction
+"augroup DimInactiveWindows
+  "au!
+  "au WinEnter * call s:DimInactiveWindows()
+  "au WinEnter * set cursorline
+  "au WinLeave * set nocursorline
+"augroup END
 
 
