@@ -44,7 +44,7 @@ _gen_format_string() {
 _gen_html_output() {
     (
     cd $2
-    git fetch origin
+    git fetch --all
     format=`_gen_format_string`
     output=`git log --no-merges upstream/master..upstream/dev --pretty=format:"$format" --abbrev-commit`
     if [ -n "$output" ]; then
