@@ -42,6 +42,8 @@
 	ctags = !.git/hooks/ctags
     cma = commit -am
     nb = checkout -b
+	rc = rebase --continue
+	ca = commit --amend
 [github]
     user = machinshin
     token = faf03543c81b5ee13885108ab3582c78
