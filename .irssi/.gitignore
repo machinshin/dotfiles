@@ -2,3 +2,7 @@ logs/
 nicklistfifo
 config*
 saved_colors
+chaves.theme
+modules/libfe_xmpp.so
+modules/libtext_xmpp.so
+modules/libxmpp_core.so

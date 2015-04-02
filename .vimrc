@@ -5,8 +5,6 @@ set ambiwidth=double
 set nocompatible
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
-let g:erlangHighlightBif=1
-let g:erlangHighLightOperators=1
 filetype off
 filetype plugin off
 filetype plugin indent off
@@ -91,8 +89,9 @@ Bundle 'bling/vim-airline'
 Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
 Bundle 'jimenezrick/vimerl'
+Bundle 'edkolev/erlang-motions.vim'
 "Bundle 'myusuf3/numbers.vim'
-Bundle 'hcs42/vim-erlang-runtime'
+"Bundle 'hcs42/vim-erlang-runtime'
 
 "##############################################################
 "let g:neocomplete#enable_prefetch=1
@@ -367,6 +366,8 @@ let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
+let g:ctrlp_switch_buffer='Et'
+nmap ; :CtrlPBuffer<CR>
 
 nnoremap <F3> :GundoToggle<CR>
 

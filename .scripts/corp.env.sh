@@ -19,21 +19,7 @@ alias vd3='vagrant destroy srv3'
 alias vr3='vagrant restart srv3'
 alias vp3='vagrant provision srv3'
 alias vbox_rs='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
-
-shc() {
-    # If no inputs, ssh to main
-    if [ -z $1 ]; then
-        ssh bastion1
-    else
-        # If it's in config file, ssh to it regularly
-        if [ -n "$(cat ~/.ssh/config | grep "Host $1")" ]; then
-            ssh $1
-            # Otherwise tunnel to it
-        else
-            ssh -t bastion1 "ssh -t $1";
-        fi
-    fi
-}
+alias pm='mysql --user=root --password=p@ssw0rd --show-warnings phrase_matrix'
 
 # Generate git format string on the fly to get the right top level directory
 _gen_format_string() {
