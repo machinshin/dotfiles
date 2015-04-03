@@ -8,8 +8,6 @@ set spellfile="~/.vim/spellfile"
 
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
-let g:erlangHighlightBif=1
-let g:erlangHighLightOperators=1
 filetype off
 filetype plugin off
 filetype plugin indent off
@@ -96,6 +94,7 @@ Bundle 'bling/vim-bufferline'
 Bundle 'bling/vim-airline'
 Bundle 'vim-scripts/VisIncr'
 Bundle 'jimenezrick/vimerl'
+Bundle 'edkolev/erlang-motions.vim'
 "Bundle 'myusuf3/numbers.vim'
 Bundle 'hcs42/vim-erlang-runtime'
 Bundle 'benmills/vimux'

@@ -20,7 +20,7 @@ alias vd3='vagrant destroy srv3'
 alias vr3='vagrant restart srv3'
 alias vp3='vagrant provision srv3'
 alias vbox_rs='sudo /Library/StartupItems/VirtualBox/VirtualBox restart'
-
+alias pm='mysql --user=root --password=p@ssw0rd --show-warnings phrase_matrix'
 
 # Generate git format string on the fly to get the right top level directory
 _gen_format_string() {

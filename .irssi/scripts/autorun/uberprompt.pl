@@ -771,4 +771,9 @@ sub trim {
     $string =~ s/\s*$//;
 
     return $string;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 5cdc64b042907aa8c9e04c131b15c6a69c3b1f81

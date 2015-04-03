@@ -38,7 +38,7 @@ alias vi='vim'
 alias v='vim'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias a='ack'
-
+export PATH=$PATH:~/workspace/github/concrete
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
         LBUFFER+=/..

@@ -42,6 +42,9 @@
 	ctags = !.git/hooks/ctags
     cma = commit -am
     nb = checkout -b
+	rc = rebase --continue
+    ca = commit --amend
+    pus = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
 [github]
     user = machinshin
     token = faf03543c81b5ee13885108ab3582c78
@@ -56,10 +59,6 @@
     cmd = mvim -v -d \"$LOCAL\" \"$REMOTE\"
 [push]
 	default = current
-[commit]
-	template = /Users/VatRaghavan/.gitmessage.text
-[init]
-	templatedir = /Users/VatRaghavan/.git_template
 [difftool]
 	prompt = false
 [help]
