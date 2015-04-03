@@ -111,12 +111,11 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=(autojump dirpersist extract history history-substring-search vi-mode \
-	zsh-syntax-highlighting ssh git gitfast battery brew git git-extras git-hubflow \
-	git-remote-branch github cpanm gas gem gnu-utils knife osx perl themes \
-	vagrant tmuxinator tmux pip rebar itunes \
-)
 
+plugins=(autojump themes dirpersist history history-substring-search vi-mode zsh-syntax-highlighting gitfast)
+#gnu-utils)
+#vagrant tmux pip \
+#themes knife tmuxinator rebar itunes \
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
@@ -140,6 +139,8 @@ fi
 if [[ -f $HOME/.aws ]]; then
 	source $HOME/.aws
 fi
+
+[[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
 
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'

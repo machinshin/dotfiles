@@ -1,11 +1,11 @@
 gip() {
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
-    echo `git push origin $CUR_BRANCH`
+    echo `git push origin HEAD`
 }
 
 gipf() {
     CUR_BRANCH=`git symbolic-ref --short -q HEAD`
-    echo `git push -f origin $CUR_BRANCH`
+    echo `git push -f origin HEAD`
 }
 
 psg() {
@@ -14,10 +14,19 @@ psg() {
 
 #Git ProTip - Delete all local branches that have been merged into HEAD
 git_purge_local_branches() {
-    [ -z $1 ] && return
-    BRANCHES=`git branch --merged $1 | grep -v '^*' | grep -v 'master' | grep -v 'dev' | grep -v "/$1$" | tr -d '\n'`
+    BRANCH="dev"
+    #DO_RUN = 0
+    #if [ "$1" -eq "-r" ] then
+        #DO_RUN=1
+    #fi
+    #if [ -n $2 ] then
+        #BRANCH=$2
+    #fi
+    BRANCHES=`git branch --merged $BRANCH | grep -v '^*' | grep -v 'master' | grep -v 'dev' | grep -v "/$BRANCH$" | tr -d '\n'`
     echo "Running: git branch -d $BRANCHES"
-    #git branch -d $BRANCHES
+    #if [ "$DO_RUN" -eq "1" ] then
+        #git branch -d $BRANCHES
+    #$fi
 }
 
 #Bonus - Delete all remote branches that are merged into HEAD (thanks +Kyle Neath)

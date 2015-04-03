@@ -1,6 +1,6 @@
 [user]
 	name = Vat Raghavan
-	email = vat@crowdtilt.com
+	email = vat@tilt.com
 [color]
     diff=auto
     status=auto
@@ -12,7 +12,6 @@
     st=status
     df=diff
 	dt=difftool
-    co=checkout
     br=branch
     sta=stash
     l = log --no-merges
@@ -34,8 +33,9 @@
     unstage = reset HEAD --
     last = log -l HEAD
     visual = !gitk
-    po = push origin
-    pod = push origin dev
+    po = push origin HEAD
+    pu = push upstream HEAD
+    puf = push -f upstream HEAD
     dlog = log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     odeps = !git dlog --no-merges origin/master..origin/dev
     deploys = !git dlog --no-merges upstream/master..upstream/dev
@@ -62,3 +62,5 @@
 	templatedir = /Users/VatRaghavan/.git_template
 [difftool]
 	prompt = false
+[help]
+	autocorrect = 1

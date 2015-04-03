@@ -3,6 +3,9 @@ set termencoding=utf-8
 scriptencoding utf-8
 set ambiwidth=double
 set nocompatible
+set spell spelllang=en_us
+set spellfile="~/.vim/spellfile"
+
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
 let g:erlangHighlightBif=1
@@ -80,20 +83,27 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'chreekat/vim-paren-crosshairs'
 "Bundle 'derekwyatt/vim-scala' #only useful for scala
 Bundle 'kana/vim-fakeclip'
+Bundle 'kana/vim-textobj-entire'
+Bundle 'kana/vim-textobj-user'
+Bundle 'tpope/vim-fugitive'
+
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'kien/rainbow_parentheses.vim'
 "Bundle 'Lokaltog/vim-easymotion' #doesn't work with my window-motion keybinds
-Bundle 'sjbach/lusty'
 Bundle 'mileszs/ack.vim'
 Bundle 'bling/vim-bufferline'
 Bundle 'bling/vim-airline'
-Bundle 'HarnoRanaivo/vim-neatfoldtext'
 Bundle 'vim-scripts/VisIncr'
 Bundle 'jimenezrick/vimerl'
 "Bundle 'myusuf3/numbers.vim'
 Bundle 'hcs42/vim-erlang-runtime'
+Bundle 'benmills/vimux'
+Bundle 'codegram/vim-codereview'
+Bundle 'thinca/vim-ref'
+Bundle 'chrisbra/csv.vim'
 
+"nmap <Leader>K yiw :exe '!perldoc -f ' @0<cr>
 "##############################################################
 "let g:neocomplete#enable_prefetch=1
 "let g:neocomplete#enable_at_startup=1
@@ -349,8 +359,6 @@ nnoremap <Leader><Leader>l <C-W>L
 " move current window to top, not j/k cause i hit ,, (then j/k) too often, and fuck things up
 nnoremap <Leader><Leader>t <C-W>K
 " move current window to bottom
-nnoremap <Leader><Leader>b <C-W>J
-"remap j to next row, not next line
 nnoremap j gj
 nnoremap k gk
 "show at top
@@ -367,7 +375,8 @@ let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
-
+let g:ctrlp_extensions=['mixed']
+let g:ctrlp_map='<Leader><Leader>'
 nnoremap <F3> :GundoToggle<CR>
 
 " Window resizing mappings
@@ -377,9 +386,6 @@ nnoremap <silent> <S-Left> :<c-u>exe "vertical resize " . (winwidth(0) - 5)<cr>
 nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
 
 set foldenable
-set foldmethod=manual
-set foldlevelstart=20
-set foldlevel=10
 set foldopen=block,hor,mark,percent,quickfix ",tag "what movements open folds"
 "let g:NeatFoldTextFillChar = '·'
 let g:NeatFoldTextSymbol='▸'
@@ -487,10 +493,11 @@ let g:ragtag_global_maps = 1
 "nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 "let g:tagbar_compact=1
-"if &diff
-"else
+if &diff
+else
     "autocmd VimEnter * nested :call tagbar#autoopen(1)
-"endif
+    nnoremap <silent><Leader>of :.Gbrowse! @upstream<CR>
+endif
 "set shell=zsh
 
 au BufNewFile,BufRead *.tt setf tt2
@@ -525,10 +532,13 @@ nnoremap <Leader><Leader>dw :call Preserve("%s/\\s\\+$//e")<CR>
 nnoremap <Leader><Leader>i  :call Preserve("normal gg=G")<CR>
 
 autocmd BufNewFile,BufRead *.yml set filetype=yaml
-let g:airline_enable_bufferline=1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
-let g:airline_enable_syntastic=1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_perl_lib_path = [ '~/workspace/ct/crowdtilt-internal-api/lib',
@@ -539,7 +549,7 @@ let g:syntastic_perl_lib_path = [ '~/workspace/ct/crowdtilt-internal-api/lib',
             \ '~/workspace/ct/ctpan'
             \ ]
 
-"let g:airline_enable_tagbar=1
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_iminsert=1
@@ -607,5 +617,49 @@ noremap <Space> @r
   "au WinEnter * set cursorline
   "au WinLeave * set nocursorline
 "augroup END
+
+set foldcolumn=1
+function! FormatJson()
+    silent exec '%s/\v\S+\s*:\s*[^,]*,/\0\r'
+    silent exec '%s/\v\S+\s*:\s*\{/\0\r'
+    silent exec '%s/\v[^{]\zs\},/\r\0'
+    normal vie=
+    exec 'set ft=javascript'
+endfunction
+
+noremap <silent><Leader><Leader>j :call FormatJson()<CR>
+
+function! PerlFold(lnum)
+  if (!exists('b:in_pod'))
+    let b:in_pod = 0
+  endif
+  if indent(a:lnum) == 0
+    let l:line = getline(a:lnum)
+    if b:in_pod == 0 && l:line =~ '^=\(head\d\|endpoint\)'
+      let b:in_pod = 1
+      return ">1"
+    elseif l:line !~ '\s*#'
+      if b:in_pod == 0 && l:line =~ '[{(]$'
+        return ">1"
+      elseif l:line =~ '\(\}\|\};\|);\|1;\)$'
+        let b:in_pod = 0
+        return "<1"
+      endif
+    endif
+  endif
+  return "="
+endfunction
+autocmd FileType perl setl foldexpr=PerlFold(v:lnum)
+autocmd FileType perl setl foldmethod=expr
+
+set noscrollbind
+set nocursorbind
+
+" Yank text to the OS X clipboard
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+
+" Preserve indentation while pasting text from the OS X clipboard
+noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 
 
