@@ -23,6 +23,7 @@ syntax off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 set viminfo+=! " make sure it can save viminfo
+set viminfo++!n~/.vim/viminfo
 set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
 " Theme/Colors
 "#################################################################
@@ -367,7 +368,9 @@ let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_clear_cache_on_exit=1
 let g:ctrlp_switch_buffer='Et'
-nmap ; :CtrlPBuffer<CR>
+let g:ctrlp_extensions=['mixed']
+let g:ctrlp_map='<Leader><Leader>'
+"nmap ; :CtrlPBuffer<CR>
 
 nnoremap <F3> :GundoToggle<CR>
 
