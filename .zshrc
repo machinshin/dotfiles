@@ -152,7 +152,16 @@ alias -g T='| tee '
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 setopt NO_NOMATCH
-perlbrew switch perl-5.14.2
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
 compinit
+
+
+# added by travis gem
+[ -f /Users/vat/.travis/travis.sh ] && source /Users/vat/.travis/travis.sh
+
+export NVM_DIR="/Users/vat/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+nvm use stable
+alias ndb="psql -a -d nima -h localhost -U root -w"
 

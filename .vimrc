@@ -98,9 +98,9 @@ Bundle 'edkolev/erlang-motions.vim'
 "Bundle 'myusuf3/numbers.vim'
 Bundle 'hcs42/vim-erlang-runtime'
 Bundle 'benmills/vimux'
-Bundle 'codegram/vim-codereview'
 Bundle 'thinca/vim-ref'
 Bundle 'chrisbra/csv.vim'
+Bundle 'moll/vim-node'
 
 "nmap <Leader>K yiw :exe '!perldoc -f ' @0<cr>
 "##############################################################
@@ -217,7 +217,6 @@ else
 end
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
-"set lines=80 " 80 lines tall
 "set columns=160 " 160 cols wide
 "set so=10 " Keep 10 lines (top/bottom) for scope
 set novisualbell " don't blink
@@ -324,11 +323,11 @@ function! g:ToggleColorColumn()
   if &colorcolumn != ''
     setlocal colorcolumn&
   else
-    setlocal colorcolumn=80
+    setlocal colorcolumn=100
   endif
 endfunction
 noremap <silent><Leader><Leader>l :call g:ToggleColorColumn()<CR>
-set colorcolumn=80
+set colorcolumn=100
 
 "Window movement/management
 " go up a window
@@ -358,6 +357,7 @@ nnoremap <Leader><Leader>l <C-W>L
 " move current window to top, not j/k cause i hit ,, (then j/k) too often, and fuck things up
 nnoremap <Leader><Leader>t <C-W>K
 " move current window to bottom
+nnoremap <Leader><Leader>b <C-W>J
 nnoremap j gj
 nnoremap k gk
 "show at top
@@ -367,7 +367,7 @@ let g:ctrlp_match_window_bottom=0
 "let g:ctrlp_working_path_mode = 0
 " Ctrl-P ignore target dirs so VIM doesn't have to!
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100|emails|ebin)$',
+      \ 'dir':  '\v[\/](\.git|node_modules|ebin)$',
       \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$',
       \ }
 let g:ctrlp_match_window_reverse=0

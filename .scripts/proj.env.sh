@@ -14,7 +14,7 @@ psg() {
 
 #Git ProTip - Delete all local branches that have been merged into HEAD
 git_purge_local_branches() {
-    BRANCH="dev"
+    BRANCH="master"
     #DO_RUN = 0
     #if [ "$1" -eq "-r" ] then
         #DO_RUN=1
