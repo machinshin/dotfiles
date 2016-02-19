@@ -5,9 +5,6 @@ set ambiwidth=double
 set nocompatible
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
-filetype off
-filetype plugin off
-filetype plugin indent off
 set cpoptions=aABceFsmq
             " |||||||||
             " ||||||||+-- When joining lines, leave the cursor between joined lines
@@ -19,81 +16,80 @@ set cpoptions=aABceFsmq
             " |+-- :write updates alternative file name
             " +-- :read updates alternative file name
 "TODO
-syntax off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 set viminfo+=! " make sure it can save viminfo
-set viminfo++!n~/.vim/viminfo
+"set viminfo++!n~/.vim/viminfo
 set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
-" Theme/Colors
-"#################################################################
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused
-"bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
-"let vundle manage vundle
-Bundle 'gmarik/vundle'
-Bundle 'spiiph/vim-space'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-commentary'
-Bundle 'tsaleh/vim-align'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
-Bundle 'Shougo/vimproc'
-"Bundle 'Shougo/neocomplete'
-Bundle 'Shougo/neosnippet'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'honza/vim-snippets'
-Bundle 'garbas/vim-snipmate'
-Bundle 'vim-scripts/javacomplete'
-Bundle 'Townk/vim-autoclose'
-Bundle 'tomtom/quickfixsigns_vim'
-Bundle 'tomtom/checksyntax_vim'
-"Bundle 'vim-scripts/taglist.vim'
-"Bundle 'FSwitch' #only useful for c/c++
-Bundle 'godlygeek/tabular'
-Bundle 'ervandew/supertab'
-"Bundle 'majutsushi/tagbar'
-Bundle 'vim-scripts/bufexplorer.zip'
-Bundle 'c9s/perlomni.vim'
-Bundle 'vim-perl/vim-perl'
-"Bundle 'Rip-Rip/clang_complete' #only useful for c/c++/obj-c
-Bundle 'tehmaze/profont-powerline'
-Bundle 'tmhedberg/matchit'
-Bundle 'vim-scripts/python_match.vim'
-Bundle 'semmons99/vim-ruby-matchit'
-Bundle 'tysontate/HTML-AutoCloseTag'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'chreekat/vim-paren-crosshairs'
-"Bundle 'derekwyatt/vim-scala' #only useful for scala
-Bundle 'kana/vim-fakeclip'
-Bundle 'kien/ctrlp.vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-"Bundle 'Lokaltog/vim-easymotion' #doesn't work with my window-motion keybinds
-Bundle 'sjbach/lusty'
-Bundle 'mileszs/ack.vim'
-Bundle 'bling/vim-bufferline'
-Bundle 'bling/vim-airline'
-Bundle 'HarnoRanaivo/vim-neatfoldtext'
-Bundle 'vim-scripts/VisIncr'
-Bundle 'jimenezrick/vimerl'
-Bundle 'edkolev/erlang-motions.vim'
-"Bundle 'myusuf3/numbers.vim'
-"Bundle 'hcs42/vim-erlang-runtime'
+call plug#begin('~/.vim/bundle')
+Plug 'spiiph/vim-space'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-abolish'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/syntastic'
+Plug 'Shougo/vimproc'
+Plug 'junegunn/vim-easy-align'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'honza/vim-snippets'
+Plug 'garbas/vim-snipmate'
+Plug 'vim-scripts/javacomplete', { 'for' : 'java' }
+Plug 'Townk/vim-autoclose'
+Plug 'tomtom/quickfixsigns_vim'
+Plug 'tomtom/checksyntax_vim'
+"Plug 'vim-scripts/taglist.vim'
+"Plug 'FSwitch' #only useful for c/c++
+Plug 'ervandew/supertab'
+Plug 'vim-scripts/bufexplorer.zip'
+Plug 'c9s/perlomni.vim', { 'for': 'perl' }
+Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+"Plug 'Rip-Rip/clang_complete' #only useful for c/c++/obj-c
+Plug 'tehmaze/profont-powerline'
+Plug 'tmhedberg/matchit'
+Plug 'vim-scripts/python_match.vim', { 'for': 'python' }
+Plug 'semmons99/vim-ruby-matchit', { 'for': 'ruby' }
+Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'chreekat/vim-paren-crosshairs'
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+"Plug 'kana/vim-fakeclip'
+Plug 'kien/ctrlp.vim'
+Plug 'sjl/gundo.vim'
+Plug 'luochen1990/rainbow'
+"Plug 'mileszs/ack.vim'
+Plug 'bling/vim-bufferline'
+Plug 'bling/vim-airline'
+Plug 'HarnoRanaivo/vim-neatfoldtext'
+Plug 'vim-scripts/VisIncr'
+Plug 'jimenezrick/vimerl', { 'for': 'erlang' }
+Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
+"Plug 'myusuf3/numbers.vim'
+Plug 'hcs42/vim-erlang-runtime', { 'for': 'erlang' }
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'vim-scripts/irssilog.vim'
 
+call plug#end()
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_javascript_checkers=['standard', 'eslint']
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+"let g:easy_align_ignore_groups=['Comment', 'String']
+"let g:easy_align_delimeter_align=dl
 "##############################################################
 "let g:neocomplete#enable_prefetch=1
 "let g:neocomplete#enable_at_startup=1
@@ -360,7 +356,7 @@ let g:ctrlp_match_window_bottom=0
 "let g:ctrlp_working_path_mode = 0
 " Ctrl-P ignore target dirs so VIM doesn't have to!
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|local|locallib|Crowdtilt\-Internal\-API\-0\.0100|emails|ebin)$',
+      \ 'dir':  '\v[\/](\.git|log(s)*|node_modules|build|ebin)',
       \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$',
       \ }
 let g:ctrlp_match_window_reverse=0
@@ -468,21 +464,22 @@ inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 noremap <Leader>% v%
 "scroll screen on brace highlight
 
-" Tabularize {
-if exists(":Tabularize")
-    nmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a> :Tabularize /=><CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:<CR>
-    vmap <Leader>a: :Tabularize /:<CR>
-    nmap <Leader>a:: :Tabularize /:\zs<CR>
-    vmap <Leader>a:: :Tabularize /:\zs<CR>
-    nmap <Leader>a, :Tabularize /,<CR>
-    vmap <Leader>a, :Tabularize /,<CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-endif
-" }Tabularize
+
+"" Tabularize {
+"if exists(":Tabularize")
+    "nmap <Leader>a= :Tabularize /=<CR>
+    "nmap <Leader>a> :Tabularize /=><CR>
+    "vmap <Leader>a= :Tabularize /=<CR>
+    "nmap <Leader>a: :Tabularize /:<CR>
+    "vmap <Leader>a: :Tabularize /:<CR>
+    "nmap <Leader>a:: :Tabularize /:\zs<CR>
+    "vmap <Leader>a:: :Tabularize /:\zs<CR>
+    "nmap <Leader>a, :Tabularize /,<CR>
+    "vmap <Leader>a, :Tabularize /,<CR>
+    "nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+"endif
+"" }Tabularize
 " Y to end of line
 nnoremap Y y$
 
@@ -529,19 +526,16 @@ nnoremap <Leader><Leader>dw :call Preserve("%s/\\s\\+$//e")<CR>
 nnoremap <Leader><Leader>i  :call Preserve("normal gg=G")<CR>
 
 autocmd BufNewFile,BufRead *.yml set filetype=yaml
-let g:airline_enable_bufferline=1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#bufferline#overwrite_variables = 1
+let g:airline#extensions#branch#displayed_head_limit = 10
+let g:airline#extensions#branch#format = 1
 let g:airline_powerline_fonts=1
 let g:airline_theme='badwolf'
-let g:airline_enable_syntastic=1
+let g:airline#extensions#syntastic#enabled = 1
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
-let g:syntastic_perl_lib_path = [ '~/workspace/ct/crowdtilt-internal-api/lib',
-            \ '~/workspace/ct/crowdtilt-internal-api/localib/lib/perl5',
-            \ '~/workspace/ct/crowdtilt-internal-api/',
-            \ '~/workspace/ct/Business-BalancedPayments',
-            \ '~/workspace/ct/Business-GroupPayments',
-            \ '~/workspace/ct/ctpan'
-            \ ]
+"let g:syntastic_perl_lib_path = [  ]
 
 "let g:airline_enable_tagbar=1
 let g:airline_detect_modified=1

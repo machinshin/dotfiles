@@ -155,3 +155,7 @@ perlbrew switch perl-5.14.2
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
 compinit
 
+alias s='git checkout '
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

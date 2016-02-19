@@ -3,4 +3,4 @@
 .vim/backup/
 .vim/temp/
 .vim/view/
-.scripts/corp.env.sh
+**/corp.env.sh

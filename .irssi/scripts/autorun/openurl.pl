@@ -27,8 +27,8 @@ $recent = 1;
 
 # RegExp & defaultcommands
 %urltypes = ( http => { regexp => qr#((?:https?://[^\s<>"]+|www\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'w3m "$1"' },
-    ftp  => { regexp => qr#((?:ftp://[^\s<>"]+|ftp\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'ncftp "$1"' },
-    mail => { regexp => qr#([-_a-z0-9.]+\@[-a-z0-9.]+\.[-a-z0-9.]+)#, cmd => 'mutt "$1" -s "$2"' },
+#ftp  => { regexp => qr#((?:ftp://[^\s<>"]+|ftp\.[-a-z0-9.]+)[^\s.,;<">\):])#, cmd => 'ncftp "$1"' },
+#mail => { regexp => qr#([-_a-z0-9.]+\@[-a-z0-9.]+\.[-a-z0-9.]+)#, cmd => 'mutt "$1" -s "$2"' },
 );
 
 sub draw_box ($$$$) {
