@@ -1,6 +1,6 @@
 [user]
 	name = Vat Raghavan
-	email = vat@crowdtilt.com
+	email = vat.raghavan@gmail.com
 [color]
     diff=auto
     status=auto
@@ -17,7 +17,7 @@
     sta=stash
     l = log --no-merges
     # not a fan of random merges
-    pull = pull --ff-only
+    pl = pull --ff-only
         # various pretty loggers from various places
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     lc = log ORIG_HEAD.. --stat --no-merges
