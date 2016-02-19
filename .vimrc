@@ -3,6 +3,9 @@ set termencoding=utf-8
 scriptencoding utf-8
 set ambiwidth=double
 set nocompatible
+set spell spelllang=en_us
+set spellfile="~/.vim/spellfile"
+
 let s:running_windows = has("was16") || has("win32") || has("win64")
 let s:colorful_term= (&term =~ "xterm" ) || (&term =~ "screen")
 set cpoptions=aABceFsmq
@@ -204,7 +207,6 @@ else
 end
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
-"set lines=80 " 80 lines tall
 "set columns=160 " 160 cols wide
 "set so=10 " Keep 10 lines (top/bottom) for scope
 set novisualbell " don't blink
@@ -311,11 +313,11 @@ function! g:ToggleColorColumn()
   if &colorcolumn != ''
     setlocal colorcolumn&
   else
-    setlocal colorcolumn=80
+    setlocal colorcolumn=100
   endif
 endfunction
 noremap <silent><Leader><Leader>l :call g:ToggleColorColumn()<CR>
-set colorcolumn=80
+set colorcolumn=100
 
 "Window movement/management
 " go up a window
@@ -346,7 +348,6 @@ nnoremap <Leader><Leader>l <C-W>L
 nnoremap <Leader><Leader>t <C-W>K
 " move current window to bottom
 nnoremap <Leader><Leader>b <C-W>J
-"remap j to next row, not next line
 nnoremap j gj
 nnoremap k gk
 "show at top
@@ -377,9 +378,6 @@ nnoremap <silent> <S-Left> :<c-u>exe "vertical resize " . (winwidth(0) - 5)<cr>
 nnoremap <silent> <S-Right> :<c-u>exe "vertical resize " . (winwidth(0) + 5)<cr>
 
 set foldenable
-set foldmethod=manual
-set foldlevelstart=20
-set foldlevel=10
 set foldopen=block,hor,mark,percent,quickfix ",tag "what movements open folds"
 "let g:NeatFoldTextFillChar = '·'
 let g:NeatFoldTextSymbol='▸'
@@ -488,10 +486,11 @@ let g:ragtag_global_maps = 1
 "nnoremap <silent> <F8> :TagbarToggle<CR>
 "Tagbar options
 "let g:tagbar_compact=1
-"if &diff
-"else
+if &diff
+else
     "autocmd VimEnter * nested :call tagbar#autoopen(1)
-"endif
+    nnoremap <silent><Leader>of :.Gbrowse! @upstream<CR>
+endif
 "set shell=zsh
 
 au BufNewFile,BufRead *.tt setf tt2
@@ -537,7 +536,7 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 "let g:syntastic_perl_lib_path = [  ]
 
-"let g:airline_enable_tagbar=1
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_detect_iminsert=1
@@ -605,5 +604,49 @@ noremap <Space> @r
   "au WinEnter * set cursorline
   "au WinLeave * set nocursorline
 "augroup END
+
+set foldcolumn=1
+function! FormatJson()
+    silent exec '%s/\v\S+\s*:\s*[^,]*,/\0\r'
+    silent exec '%s/\v\S+\s*:\s*\{/\0\r'
+    silent exec '%s/\v[^{]\zs\},/\r\0'
+    normal vie=
+    exec 'set ft=javascript'
+endfunction
+
+noremap <silent><Leader><Leader>j :call FormatJson()<CR>
+
+function! PerlFold(lnum)
+  if (!exists('b:in_pod'))
+    let b:in_pod = 0
+  endif
+  if indent(a:lnum) == 0
+    let l:line = getline(a:lnum)
+    if b:in_pod == 0 && l:line =~ '^=\(head\d\|endpoint\)'
+      let b:in_pod = 1
+      return ">1"
+    elseif l:line !~ '\s*#'
+      if b:in_pod == 0 && l:line =~ '[{(]$'
+        return ">1"
+      elseif l:line =~ '\(\}\|\};\|);\|1;\)$'
+        let b:in_pod = 0
+        return "<1"
+      endif
+    endif
+  endif
+  return "="
+endfunction
+autocmd FileType perl setl foldexpr=PerlFold(v:lnum)
+autocmd FileType perl setl foldmethod=expr
+
+set noscrollbind
+set nocursorbind
+
+" Yank text to the OS X clipboard
+noremap <leader>y "*y
+noremap <leader>yy "*Y
+
+" Preserve indentation while pasting text from the OS X clipboard
+noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 
 
