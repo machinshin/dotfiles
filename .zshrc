@@ -121,6 +121,7 @@ plugins=(
     \ themes
     \ vi-mode
     \ zsh-syntax-highlighting
+    \ brew
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -156,6 +157,7 @@ alias irssi='TERM=screen-256color irssi'
 
 alias -g TC='| tee command.log'
 alias -g T='| tee '
+
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 [[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"

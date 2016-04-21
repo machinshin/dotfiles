@@ -21,17 +21,16 @@ fi
 
 export CLI_COLOR='Yes'
 set -o vi
+alias gip='git push origin HEAD'
+alias gipf='git push -f origin HEAD'
+
 alias grep='grep --color=auto'
-alias gvim='gvim -geom 82x35'
-alias hist='grep '$1' $HOME/.zsh_history'
 alias mem='free -m'
 alias rmd='rm -rf '
 alias la='ls -al'
 alias f='find |grep'
 alias lsd='ls -ld *(-/DN)'
 alias c='clear'
-alias p='pushd .'
-alias u='popd'
 alias td='tmux detach'
 alias ll='ls -alh'
 alias vi='vim'
@@ -39,7 +38,6 @@ alias v='vim'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias a='ack'
 alias fuck='sudo !!'
-export PATH=$PATH:~/workspace/github/concrete
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
         LBUFFER+=/..
@@ -52,5 +50,15 @@ bindkey . rationalise-dot
 
 r() {
     SSH_AUTH_SOCK=`tmux showenv|grep "^SSH_AUTH_SOCK" | cut -d = -f 2`
+}
+
+s() {
+    [ -z $1 ] && return
+    echo "switching to $1 branch"
+    git checkout $1
+}
+
+psg() {
+    ps axu | grep -v grep | grep "$@" -i --color=auto;
 }
 
