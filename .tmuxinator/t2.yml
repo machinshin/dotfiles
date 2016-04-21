@@ -1,0 +1,12 @@
+# ~/.tmuxinator/t2.yml
+
+name: t2
+root: $HOME
+
+windows:
+  - ed1:
+      layout: main-horizontal
+      panes:
+          - j Weast
+          - j Weast;ls
+
