@@ -112,10 +112,17 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
 
-plugins=(autojump themes dirpersist history history-substring-search vi-mode zsh-syntax-highlighting gitfast)
-#gnu-utils)
-#vagrant tmux pip \
-#themes knife tmuxinator rebar itunes \
+plugins=(
+    \ autojump
+    \ dirpersist
+    \ git-extras
+    \ gitfast
+    \ history
+    \ themes
+    \ vi-mode
+    \ zsh-syntax-highlighting
+)
+
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
@@ -142,6 +149,8 @@ fi
 
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
 
+#source $(brew --prefix)/share/antigen.zsh
+
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
 
@@ -164,5 +173,3 @@ export GOPATH=$HOME/workspace/github/GoPath
 export PATH=$PATH:$GOPATH/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
