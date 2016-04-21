@@ -30,7 +30,7 @@ REPORTTIME=10
 
 #vi editing
 bindkey -v
-bindkey "^R" history-incremental-search-backward
+#bindkey "^R" history-incremental-search-backward
 #autoload -Uz bashcompinit
 #bashcompinit
 #source /usr/local/share/compleat-1.0/compleat_setup
@@ -149,7 +149,7 @@ alias -g TC='| tee command.log'
 alias -g T='| tee '
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
 
 setopt NO_NOMATCH
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
@@ -157,7 +157,12 @@ compinit
 
 alias s='git checkout '
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#nvm use stable
+export GOPATH=$HOME/workspace/github/GoPath
+export PATH=$PATH:$GOPATH/bin
 
-nvm use stable
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+

@@ -1,6 +1,16 @@
+**/corp.env.sh
+.irssi/*.log
+.irssi/*.theme
 .offlineimaprc
+.vim/.viminfo
+kerl
+rebar*
+tags
+
+
 .vim/bundle/
 .vim/backup/
 .vim/temp/
 .vim/view/
-**/corp.env.sh
+
+
