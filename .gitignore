@@ -2,15 +2,9 @@
 .irssi/*.log
 .irssi/*.theme
 .offlineimaprc
+.vim/.netrwhist
 .vim/.viminfo
+.vim/verbose
 kerl
 rebar*
 tags
-
-
-.vim/bundle/
-.vim/backup/
-.vim/temp/
-.vim/view/
-
-
