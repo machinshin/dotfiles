@@ -23,8 +23,10 @@
 # Logs and databases #
 ######################
 *.log
+*.logs
 *.sql
 *.sqlite
+./logs/
 
 # OS generated files #
 ######################
@@ -37,9 +39,6 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-#Tags
-#+/tags
-#+tags
-#*.tags
 tags
+TAGS
 

@@ -4,7 +4,6 @@ set termencoding=utf-8
 scriptencoding utf-8
 set ambiwidth=double
 set spell spelllang=en_us
-set spellfile="~/.vim/spellfile"
 set nospell
 syntax on
 set foldcolumn=1
@@ -26,45 +25,47 @@ set cpoptions=aABceFsmq
 set viminfo+=! " make sure it can save viminfo
 set iskeyword+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
 
-call plug#begin('~/.vim/bundle')
-    Plug 'tpope/vim-speeddating'
-    Plug 'tpope/vim-repeat'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-ragtag'
-    Plug 'tpope/vim-abolish'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/syntastic'
-    Plug 'godlygeek/tabular'
-    Plug 'Shougo/vimproc'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'vim-scripts/javacomplete',    { 'for' : 'java' }
-    Plug 'c9s/perlomni.vim',            { 'for': 'perl' }
-    Plug 'vim-perl/vim-perl',           { 'for': 'perl' }
-    Plug 'vim-scripts/python_match.vim',{ 'for': 'python' }
-    Plug 'semmons99/vim-ruby-matchit',  { 'for': 'ruby' }
-    Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
-    Plug 'derekwyatt/vim-scala',        { 'for': 'scala' }
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'mbbill/undotree'
-    Plug 'luochen1990/rainbow'
-    Plug 'bling/vim-bufferline'
-    Plug 'bling/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'edkolev/erlang-motions.vim',  { 'for': 'erlang' }
-    Plug 'hcs42/vim-erlang-runtime',    { 'for': 'erlang' }
-    Plug 'hcs42/vim-erlang-compiler',   { 'for': 'erlang' }
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'vim-scripts/irssilog.vim'
-    Plug 'elzr/vim-json', { 'for': 'json' }
-    Plug 'fatih/vim-go',  { 'for': 'go'   }
-    Plug 'flazz/vim-colorschemes'
-    Plug 'felixhummel/setcolors.vim'
-    Plug 'jiangmiao/auto-pairs'
+call plug#begin('~/.vim/bundle') " {{{
+	Plug 'tpope/vim-speeddating'
+	Plug 'tpope/vim-repeat'
+	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-ragtag'
+	Plug 'tpope/vim-abolish'
+	Plug 'scrooloose/nerdcommenter'
+	Plug 'scrooloose/syntastic'
+	Plug 'godlygeek/tabular'
+	Plug 'Shougo/vimproc', 				{ 'do': 'make' }
+	Plug 'airblade/vim-gitgutter'
+	Plug 'vim-scripts/javacomplete',    { 'for': 'java' }
+	Plug 'c9s/perlomni.vim',            { 'for': 'perl' }
+	Plug 'vim-perl/vim-perl',           { 'for': 'perl' }
+	Plug 'vim-scripts/python_match.vim',{ 'for': 'python' }
+	Plug 'semmons99/vim-ruby-matchit',  { 'for': 'ruby' }
+	Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
+	Plug 'derekwyatt/vim-scala',        { 'for': 'scala' }
+	Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'mbbill/undotree'
+	Plug 'luochen1990/rainbow'
+	Plug 'bling/vim-bufferline'
+	Plug 'bling/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'edkolev/erlang-motions.vim',  { 'for': 'erlang' }
+	Plug 'hcs42/vim-erlang-runtime',    { 'for': 'erlang' }
+	Plug 'hcs42/vim-erlang-compiler',   { 'for': 'erlang' }
+	Plug 'ludovicchabant/vim-gutentags'
+	Plug 'vim-scripts/irssilog.vim'
+	Plug 'elzr/vim-json', { 'for': 'json' }
+	Plug 'fatih/vim-go',  { 'for': 'go'   }
+	Plug 'flazz/vim-colorschemes'
+	Plug 'felixhummel/setcolors.vim'
+	Plug 'jiangmiao/auto-pairs'
 	Plug 'powerline/fonts'
 	Plug 'Kuniwak/vint'
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
-call plug#end()
+	Plug 'junegunn/vim-emoji'
+	Plug 'tmux-plugins/vim-tmux-focus-events'
+call plug#end() "}}}
 
 " %%%% CUSTOM FUNCTIONs %%%% "
 " Show syntax highlighting groups for word under cursor
@@ -127,16 +128,19 @@ set ffs=unix,mac,dos "support all three, in this order
 " Files/Backups
 set backup " make backup file
 if s:running_windows
-  "set backupdir=$HOME/vimfiles/backup " where to put backup file
-  "set undodir=/vimfiles/undo
-  "set directory=/vimfiles/temp " directory is the directory for temp file
+	set backupdir=$HOME/_vim/backup " where to put backup file
+	set undodir=$HOME/_vim/undo
+	set directory=$HOME/_vim/temp " directory is the directory for temp file
+	set verbosefile=$HOME/_vim/verbose
+	set spellfile=$HOME/_vim/spellfile
 else
-  set backupdir=$HOME/.vim/backup " where to put backup file
-  set undodir=$HOME/.vim/undo
-  set directory=$HOME/.vim/temp " directory is the directory for temp file
+	set backupdir=$HOME/.vim/backup " where to put backup file
+	set undodir=$HOME/.vim/undo
+	set directory=$HOME/.vim/temp " directory is the directory for temp file
+	set verbosefile=$HOME/.vim/verbose
+	set spellfile="$HOME/.vim/spellfile"
 endif
 set undofile
-set verbosefile=$HOME/.vim/verbose
 
 set updatetime=60000 "save to swap file after 1 minute
 set makeef=error.err " When using make, where should it dump the file
@@ -162,24 +166,24 @@ set whichwrap+=<,>,h,l,b,s,[,],~  " backspace and cursor keys wrap to
              " | | | +-- "l" Normal and Visual (not recommended)
              " | | +-- "h" Normal and Visual (not recommended)
              " | +-- <Space> Normal and Visual
-             " +-- <BS> Normal and Visual
+			 " +-- <BS> Normal and Visual
 set mouse=a " use mouse everywhere
 
 set linespace=0
 set sidescroll=10
 set sidescrolloff=10
 set shortmess=filmnrwxsWI " shortens messages to avoid 'press a key' prompt
-             "||||||||||+-- 
-             "|||||||||+-- 
-             "||||||||+-- 
-             "|||||||+-- 
-             "||||||+-- 
-             "|||||+-- 
-             "||||+-- 
-             "|||+-- 
-             "||+-- 
-             "|+-- 
-             "+-- 
+             "||||||||||+--
+             "|||||||||+--
+             "||||||||+--
+             "|||||||+--
+             "||||||+--
+             "|||||+--
+             "||||+--
+             "|||+--
+             "||+--
+             "|+--
+             "+--
 
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
@@ -290,10 +294,24 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:airline#extensions#branch#displayed_head_limit = 10
+let g:airline#extensions#ctrlp#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 2
+"let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+""* configure the title text for location list buffers >
+"let g:airline#extensions#quickfix#location_text = 'Location'
+"let g:airline#extensions#ctrlp#color_template = 'normal'
+"let g:airline#extensions#ctrlp#color_template = 'visual'
+let g:airline#extensions#ctrlp#color_template = 'replace'
+" * configure whether to show the previous and next modes (mru, buffer, etc...)
+let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+
+
+
+
 let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#bufferline#overwrite_variables = 1
 let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=1
 let g:airline_detect_modified=1
@@ -317,8 +335,10 @@ let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#quickfix#location_text = 'Location'
 
 let g:bufferline_show_bufnr = 1
-let g:bufferline_echo=1
+let g:bufferline_echo=0
 let g:bufferline_pathshorten=1
+let g:bufferline_rotate = 1
+let g:bufferline_fixed_index =  0 "always first
 
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_enable_signs= 1
@@ -353,7 +373,6 @@ endif
 """" KEYBOARD SHORTCUTS
 let g:maplocalleader='\\'
 let g:mapleader=','
-
 set pastetoggle=<F2>
 
 "map <Esc> to jj,thus easy to switch to cmd mod
@@ -469,7 +488,7 @@ else
     nnoremap <silent><Leader>of :.Gbrowse! @upstream<CR>
 endif
 
-" lets you do w!! to sudo write the file
+" lets you do ,w! to sudo write the file
 nnoremap <Leader>w! :w !sudo tee % >/dev/null<cr>
 
 "delete whitespace
@@ -518,7 +537,7 @@ let g:go_play_open_browser = 0
 
 augroup golang
 	autocmd!
-	" go specific?
+	" go specific
 	autocmd FileType go nmap <LocalLeader>r <Plug>(go-run)
 	autocmd FileType go nmap <LocalLeader>b <Plug>(go-build)
 	autocmd FileType go nmap <LocalLeader>t <Plug>(go-test)
@@ -559,40 +578,65 @@ augroup golang
 augroup END
 
 " Plugin Config
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+" Default fzf layout
+" - down / up / left / right - window (nvim only)
+let g:fzf_layout = { 'down': '~30%' }
+
 " git-gutter
 " -w => igore whitespace in diff
 let g:gitgutter_diff_args = '-w'
 " No git Gutter mapppings
 let g:gitgutter_map_keys = 0
+silent! if emoji#available()
+  let g:gitgutter_sign_added = emoji#for('white_check_mark')
+  let g:gitgutter_sign_modified = emoji#for('bangbang')
+  let g:gitgutter_sign_removed = emoji#for('x')
+  let g:gitgutter_sign_modified_removed = emoji#for('no_entry')
+endif
+
 let g:AutoPairsFlyMode = 1
+
+" Airline
+let g:airline#extensions#whitespace#enabled = 1
+" let g:airline#extensions#whitespace#symbol = '!'
+let g:airline#extensions#whitespace#show_message = 1
+
+let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#csv#enabled = 1
 " change how columns are displayed.
 let g:airline#extensions#csv#column_display = 'Name'
-
-
-"Note: You must define the dictionary first before setting values. Also, it's a
+" Note: You must define the dictionary first before setting values. Also, it's a
 "good idea to check whether it exists as to avoid accidentally overwriting
 "its contents.
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 
 "The following are some unicode symbols for customizing the left/right
 " separators, as well as the powerline font glyphs.
 " unicode symbols
 let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
 let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
+"let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '◀'
 let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
+"let g:airline_symbols.linenr = '␊'
+"let g:airline_symbols.linenr = '␤'
+"let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
+"let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'

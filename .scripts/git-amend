@@ -1,6 +1,0 @@
-#!/bin/bash
-
-echo `git add .`
-echo `git commit --amend`
-echo `git push -f origin HEAD`
-
