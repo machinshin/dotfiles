@@ -1,85 +1,45 @@
+start_time="$(date +%s)"
 eval "$(hub alias -s)"
-export PATH=$PATH:/Applications:$HOME/.rvm/bin # Add RVM to PATH for scripting
-export PATH=$PATH:~/workspace/github/rebar
-export PATH=$PATH:$HOME/.scripts
-export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'
 autoload -U zmv
-autoload colors;
-colors
-HISTFILE=~/.histfile
-HISTSIZE=SAVEHIST=9999999
 autoload -Uz compinit
-setopt correctall
-autoload -U promptinit
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-
-setopt extended_history
-# Appends every command to the history file once it is executed
-setopt inc_append_history
-# Reloads the history whenever you use it
-setopt share_history
+setopt correct_all
+setopt NO_NOMATCH
 
 #superglobs
 setopt extendedglob
 unsetopt caseglob
-setopt interactivecomments # pound sign in interactive promt
-REPORTTIME=10
+# http://nuclearsquid.com/writings/reporttime-in-zsh/
+REPORTTIME=5
 
-#vi editing
-bindkey -v
-#bindkey "^R" history-incremental-search-backward
-#autoload -Uz bashcompinit
-#bashcompinit
-#source /usr/local/share/compleat-1.0/compleat_setup
-
-ZCACHEDIR=~/.zsh/cache
-zstyle ':completion:*' cache-path $ZCACHEDIR
-zstyle ':completion:*' use-cache on
-compinit -C -d $ZCACHEDIR/compdump
-#color completions
-
-zmodload -i zsh/complist
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
-zstyle ':completion:*:*:kill:*' list-colors '=%*=01;31'
 zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+#If you end up using a directory as argument, this will
+#remove the trailing slash (usefull in ln)
+zstyle ':completion:*' squeeze-slashes true
+
 #history
 zstyle ':completion:*:history-words' stop yes
 zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
 zstyle ':completion:*:history-words' menu yes
 
-# prevent svn files/dirs from being completd
-zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)SVN'
-zstyle ':completion:*:cd*' ignored-patterns '(*/)#SVN'
 #fuzzy completions
 zstyle ':completion:*' completor _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
-# complete approx #'s increase w/ length
-#zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
 #ignore completion for commands i don't have
 zstyle ':completion:*:functions' ignored-patterns '_*'
-xdvi() { command xdvi ${*:-*.dvi(om[1])} }
-#menu selection for autocomplete
-zstyle ':completion:*:*:xdvi:*' menu yes select
-zstyle ':completion:*:*:xdvi:*' file-sort time
 #pids menu selection
-#zstyle 'completion:*:*:*:*:processes' menu yes select
-#zstyle 'copmletion:*:*:*:*:processes' force-list always
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
-#If you end up using a directory as argument, this will
-#remove the trailing slash (usefull in ln)
-zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*:*:kill:*' list-colors '=%*=01;31'
 #cd never select the parent directory (e.g.: cd ../<TAB>):
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-# I'm bonelazy ;) Complete the hosts and - last but not least - the remote
-# directories. Try it:
+# Complete the hosts and directories. Try it:
 #  $ scp file username@<TAB><TAB>:/<TAB>
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
@@ -94,33 +54,33 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="machinshin"
 
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+HYPHEN_INSENSITIVE="true"
+
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
 # Comment this out to disable weekly auto-update checks
 #DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
 DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
+#COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-
-
 plugins=(
-    \ autojump
     \ dirpersist
-    \ git-extras
     \ gitfast
     \ history
     \ themes
     \ vi-mode
     \ zsh-syntax-highlighting
+    \ zsh_reload
     \ brew
 )
 
@@ -133,45 +93,46 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
-if [[ -f $HOME/.scripts/corp.env.sh ]]; then
-	source $HOME/.scripts/corp.env.sh
-fi
+export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
+export GOPATH=$HOME/workspace/github/GoPath
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
 
-if [[ -f $HOME/.scripts/env.sh ]]; then
-	source $HOME/.scripts/env.sh
-fi
-if [[ -f $HOME/.scripts/proj.env.sh ]]; then
-	source $HOME/.scripts/proj.env.sh
-fi
+SCRIPTS=( \
+    $HOME/.scripts/corp.env.sh \
+    $HOME/.scripts/env.sh \
+    $HOME/.scripts/proj.env.sh \
+    $HOME/.aws \
+    $HOME/.fzf.zsh \
+)
 
-if [[ -f $HOME/.aws ]]; then
-	source $HOME/.aws
-fi
+for (( i =1; i <= $#SCRIPTS; i++ )) do
+    echo "running ${SCRIPT[i]}"
+    [[ -f `${SCRIPTS[i]}` ]] && source `${SCRIPTS[i]}`
+done
 
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
-
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 #source $(brew --prefix)/share/antigen.zsh
 
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
-
 alias -g TC='| tee command.log'
 alias -g T='| tee '
 
+export PATH=$PATH:/Applications:$HOME/.rvm/bin:~/workspace/github/rebar:$PATH:$HOME/.scripts
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
 
-setopt NO_NOMATCH
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
 compinit
 
 alias s='git checkout '
 
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#nvm use stable
-export GOPATH=$HOME/workspace/github/GoPath
-export PATH=$PATH:$GOPATH/bin
+export NVM_DIR="$HOME/.nvm"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm use stable
+
+end_time="$(date +%s)"
+echo ".zshrc: $((end_time - start_time)) seconds"
+

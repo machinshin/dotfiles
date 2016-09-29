@@ -1,12 +1,27 @@
 # ~/.tmuxinator/t2.yml
 
 name: t2
-root: $HOME
+root: ~
 
 windows:
   - ed1:
       layout: main-horizontal
       panes:
-          - j Weast
-          - j Weast;ls
+          - j ;
+          - j ;ls
+  - compile:
+      layout: main-horizontal
+      panes:
+          - j
+          - j ;ls
+  - docs:
+      layout: main-horizontal
+      panes:
+          - j
+          - j ;ls
+  - misc:
+      layout: main-horizontal
+      panes:
+          - j
+          - j ;ls
 

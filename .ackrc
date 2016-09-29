@@ -1,8 +1,3 @@
---ignore-dir=Crowdtilt-Internal-API-0.0100
---ignore-dir=locallib
---ignore-dir=locallib2
---ignore-dir=Crowdtilt-Public-Site-0.0100
-
 --type-set
 pm=.pm
 
@@ -11,21 +6,19 @@ tt=.tt
 
 --type-set
 sass=.scss
- 
+
 --type-set
 scss=.scss
- 
+
+--ignore-dir=.git
 --ignore-dir=target
 --ignore-dir=built
 --ignore-dir=.build
 --ignore-dir=node_modules
---ignore-dir=.sass-cache
---ignore-dir=sass/libs/bourbon
- 
---ignore-file=match:Jemplates.js
---ignore-file=match:mobile-jems.js
---ignore-file=match:mobile-jems.js
---ignore-file=match:main.css
---ignore-file=match:mobile.css
---ignore-file=match:filepicker.css
+--ignore-dir=deps
+--ignore-dir=_rel
+--ignore-dir=_rel
+--ignore-file=match:tags
+--ignore-file=match:gitignore
+
 

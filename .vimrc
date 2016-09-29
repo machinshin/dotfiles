@@ -9,6 +9,8 @@ syntax on
 set foldcolumn=1
 set noscrollbind
 set nocursorbind
+set background=dark
+packadd! matchit
 
 let s:running_windows = has('was16') || has('win32') || has('win64')
 let s:colorful_term=(&term =~? 'xterm' ) || (&term =~? 'screen')
@@ -26,75 +28,83 @@ set viminfo+=! " make sure it can save viminfo
 set iskeyword+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
 
 call plug#begin('~/.vim/bundle') " {{{
-	Plug 'tpope/vim-speeddating'
-	Plug 'tpope/vim-repeat'
-	Plug 'tpope/vim-surround'
-	Plug 'tpope/vim-ragtag'
-	Plug 'tpope/vim-abolish'
-	Plug 'scrooloose/nerdcommenter'
-	Plug 'scrooloose/syntastic'
-	Plug 'godlygeek/tabular'
-	Plug 'Shougo/vimproc', 				{ 'do': 'make' }
-	Plug 'airblade/vim-gitgutter'
-	Plug 'vim-scripts/javacomplete',    { 'for': 'java' }
-	Plug 'c9s/perlomni.vim',            { 'for': 'perl' }
-	Plug 'vim-perl/vim-perl',           { 'for': 'perl' }
-	Plug 'vim-scripts/python_match.vim',{ 'for': 'python' }
-	Plug 'semmons99/vim-ruby-matchit',  { 'for': 'ruby' }
-	Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
-	Plug 'derekwyatt/vim-scala',        { 'for': 'scala' }
-	Plug 'ctrlpvim/ctrlp.vim'
-	Plug 'mbbill/undotree'
-	Plug 'luochen1990/rainbow'
-	Plug 'bling/vim-bufferline'
-	Plug 'bling/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
-	Plug 'edkolev/erlang-motions.vim',  { 'for': 'erlang' }
-	Plug 'hcs42/vim-erlang-runtime',    { 'for': 'erlang' }
-	Plug 'hcs42/vim-erlang-compiler',   { 'for': 'erlang' }
-	Plug 'ludovicchabant/vim-gutentags'
-	Plug 'vim-scripts/irssilog.vim'
-	Plug 'elzr/vim-json', { 'for': 'json' }
-	Plug 'fatih/vim-go',  { 'for': 'go'   }
-	Plug 'flazz/vim-colorschemes'
-	Plug 'felixhummel/setcolors.vim'
-	Plug 'jiangmiao/auto-pairs'
-	Plug 'powerline/fonts'
+	"Plug 'idanarye/vim-merginal'
+	"Plug 'scrooloose/syntastic'
+	Plug 'AndrewRadev/splitjoin.vim'
 	Plug 'Kuniwak/vint'
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'Shougo/vimproc', 				{ 'do': 'make' }
+	"Plug 'Valloric/MatchTagAlways', 	{ 'for': ['html', 'xml', 'xhtml'] }
+	Plug 'airblade/vim-gitgutter'
+	Plug 'bling/vim-airline'
+	Plug 'bling/vim-bufferline'
+	Plug 'c9s/perlomni.vim',            { 'for': 'perl' }
+	Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'derekwyatt/vim-scala',        { 'for': 'scala' }
+	Plug 'edkolev/erlang-motions.vim',  { 'for': 'erlang' }
+	Plug 'elzr/vim-json', 				{ 'for': 'json' }
+	Plug 'fatih/vim-go',  				{ 'for': 'go'   }
+	"Plug 'flazz/vim-colorschemes'
+	Plug 'godlygeek/tabular'
+	Plug 'hcs42/vim-erlang-compiler',   { 'for': 'erlang' }
+	Plug 'hcs42/vim-erlang-runtime',    { 'for': 'erlang' }
+	Plug 'jiangmiao/auto-pairs'
+	Plug 'junegunn/fzf', 				{ 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'
 	Plug 'junegunn/vim-emoji'
-	Plug 'tmux-plugins/vim-tmux-focus-events'
-call plug#end() "}}}
+	Plug 'ludovicchabant/vim-gutentags'
+	Plug 'mxw/vim-jsx', 				{ 'for': ['javascript', 'javascript.jsx'] }
+	Plug 'pangloss/vim-javascript', 	{ 'for': ['javascript', 'javascript.jsx'] }
+	Plug 'powerline/fonts'
+	Plug 'scrooloose/nerdcommenter'
+	Plug 'semmons99/vim-ruby-matchit',  { 'for': 'ruby' }
+	Plug 'tpope/vim-abolish'
+	Plug 'tpope/vim-characterize'
+	Plug 'tpope/vim-ragtag'
+	Plug 'tpope/vim-repeat'
+	Plug 'tpope/vim-speeddating'
+	Plug 'tpope/vim-surround'
+	Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'vim-perl/vim-perl',           { 'for': 'perl' }
+	Plug 'vim-scripts/javacomplete',    { 'for': 'java' }
+	"Plug 'Yggdroot/indentLine', { 'for': 'java' }
+	Plug 'vim-scripts/python_match.vim',{ 'for': 'python' }
+    Plug 'junegunn/rainbow_parentheses.vim'
+    Plug 'junegunn/vim-peekaboo'  		"shows register contents
+    Plug 'mbbill/undotree',             { 'on': 'UndoTreeToggle' }
+    Plug 'tmux-plugins/vim-tmux-focus-events'
+	Plug '907th/vim-auto-save'
+	Plug 'ervandew/supertab'
+	Plug 'metakirby5/codi.vim' ", { 'for': ['python', 'javascript', 'haskell', 'ruby', 'ocaml'] }
+	Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh', 'for': 'go'}
 
+call plug#end() "}}}
 " %%%% CUSTOM FUNCTIONs %%%% "
-" Show syntax highlighting groups for word under cursor
-function! <SID>SynStack()
-  if !exists('*synstack')
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")')
-endfunc
+" HL | Find out syntax group
+function! s:hl()
+    echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
+endfunction
+command! HL call <SID>hl()
 
 " Delete all trailing spaces from lines but keep search buffer in place
 function! Preserve(command)
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line('.')
-  let c = col('.')
-  " Do the business:
-  execute a:command
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line('.')
+    let c = col('.')
+    " Do the business:
+    execute a:command
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
 endfunction
 
 function! g:ToggleColorColumn()
-  if &colorcolumn != ''
-    setlocal colorcolumn&
-  else
-    setlocal colorcolumn=100
-  endif
+    if &colorcolumn != ''
+        setlocal colorcolumn&
+    else
+        setlocal colorcolumn=100
+    endif
 endfunction
 
 "</ %%%% CUSTOM FUNCTIONs %%%% >"
@@ -107,11 +117,15 @@ augroup insertMatch
     autocmd InsertLeave * NoMatchParen
 augroup END
 
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow#max_level = 16
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}'], ['<', '>']]
 filetype on " detect the type of file
 filetype plugin on " load filetype plugins
 filetype plugin indent on
 colorscheme machinshin " my theme
+let g:rainbow#blacklist = [ 16, 17, 18, 19, 20, 21, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243 ]
+"colorscheme dracula
+let g:YUNOcommit_after = 30
 "show the current command in progress
 set showcmd
 "automatically save before commands like :next and :make
@@ -144,46 +158,47 @@ set undofile
 
 set updatetime=60000 "save to swap file after 1 minute
 set makeef=error.err " When using make, where should it dump the file
-set lsp=0 " space it out a little more (easier to read)
+set linespace=0 " space it out a little more (easier to read)
 "first tab: longest match. list in the statusbar, follow tabs: cycle through matches
 set wildmenu
 set wildmode=longest:full,full
-set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.so.*,*.jpg,*.gif,*.png
+set wildignore=*/.git,*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.so.*,*.jpg,*.gif,*.png
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*.tgz,*.gz
 set ruler " Always show current positions along the bottom
+set matchpairs+=<:>
 "set cmdheight=2 " the command bar is 2 high
 set relativenumber
 set number " turn on line numbers
-set hid " you can change buffer without saving
+set hidden " you can change buffer without saving
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l,b,s,[,],~  " backspace and cursor keys wrap to
-             " | | | | | | | | |
-             " | | | | | | | | +-- "]" Insert and Replace
-             " | | | | | | | +-- "[" Insert and Replace
-             " | | | | | | +-- "~" Normal
-             " | | | | | +-- <Right> Normal and Visual
-             " | | | | +-- <Left> Normal and Visual
-             " | | | +-- "l" Normal and Visual (not recommended)
-             " | | +-- "h" Normal and Visual (not recommended)
-             " | +-- <Space> Normal and Visual
-			 " +-- <BS> Normal and Visual
+            "  | | | | | | | | +-- "~" Normal
+            "  | | | | | | | +-- "]" Insert and Replace
+            "  | | | | | | +-- "[" Insert and Replace
+            "  | | | | | +-- <Space> Normal and Visual
+            "  | | | | +-- <BS> Normal and Visual
+            "  | | | +-- "l" Normal and Visual (not recommended)
+            "  | | +-- "h" Normal and Visual (not recommended)
+            "  | +--  <Right> Normal and Visual
+            "  +--  <Left> Normal and Visual
 set mouse=a " use mouse everywhere
 
 set linespace=0
 set sidescroll=10
 set sidescrolloff=10
-set shortmess=filmnrwxsWI " shortens messages to avoid 'press a key' prompt
-             "||||||||||+--
-             "|||||||||+--
-             "||||||||+--
-             "|||||||+--
-             "||||||+--
-             "|||||+--
-             "||||+--
-             "|||+--
-             "||+--
-             "|+--
-             "+--
+set shortmess=filmnrwxsWIA
+            " |||||||||||+-- don't give the "ATTENTION" message when an existing swap file is found
+            " ||||||||||+-- I don't give the intro message when starting Vim |:intro|.
+            " |||||||||+-- W don't give "written" or "[w]" when writing a file
+            " ||||||||+-- s don't give "search hit BOTTOM, continuing at TOP" or "search hit TOP, continuing at BOTTOM" messages
+            " |||||||+-- x use "[dos]" instead of "[dos format]", etc..
+            " ||||||+-- w use "[w]" instead of "written" for file write message, etc..
+            " |||||+-- r use "[RO]" instead of "[readonly]"
+            " ||||+-- n use "[New]" instead of "[New File]"
+            " |||+-- m  use "[+]" instead of "[Modified]"
+            " ||+-- l use "999L, 888C" instead of "999 lines, 888 characters"
+            " |+-- i use "[noeol]" instead of "[Incomplete last line]"
+            " +-- f use "(3 of 5)" instead of "(file 3 of 5)"
 
 set report=0 " tell us when anything is changed via :...
 set noerrorbells " don't make noise
@@ -197,9 +212,9 @@ set incsearch " BUT do highlight as you type you search phrase
 set formatoptions=rq
 " only show listchars in insert mode
 if has('multi_byte')
-  set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼ " what to show when I hit :set listchars
+    set listchars=tab:⋯\ ,eol:⋮,trail:⋅,extends:⧽,precedes:⧼ " what to show when I hit :set listchars
 else
-  set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:< " what to show when I hit :set list
+    set listchars=tab:\|\ ,eol:$,trail:.,extends:>,precedes:< " what to show when I hit :set list
 end
 
 set list " turns out, I like listchars -- show chars on end of line, whitespace, etc
@@ -217,22 +232,21 @@ set expandtab " real tabs please!
 set nowrap " do not wrap lines
 set smarttab " use tabs at the start of a line, spaces elsewhere
 
-
 " Mappings
 "turn off *ALL* bells
 set vb t_vb=
 set ofu=syntaxcomplete#Complete
-augroup completion
+augroup completions
 	autocmd!
-	autocmd FileType vim setlocal keywordprg=:help
-	autocmd FileType go setlocal noexpandtab
-	autocmd FileType java setlocal omnifunc=javacomplete#Complete
-	autocmd FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    autocmd FileType vim           setlocal keywordprg=:help
+    autocmd FileType go            setlocal noexpandtab
+    autocmd FileType java          setlocal omnifunc=javacomplete#Complete
+    autocmd FileType java          setlocal completefunc=javacomplete#CompleteParamsInfo
+    autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
 	" Restore cursor position
 	"autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`\"' | endif
 augroup END
@@ -249,7 +263,9 @@ let g:ctrlp_match_window_bottom=0
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/](\.git|log(s)*|node_modules|build|ebin)',
       \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$',
-      \ }
+\ }
+
+let g:ctrlp_cache_dir='$HOME/.vim/ctrlp_cache'
 let g:ctrlp_match_window_reverse=0
 let g:ctrlp_open_multi = 'i'
 let g:ctrlp_match_window_reverse=0
@@ -257,14 +273,7 @@ let g:ctrlp_clear_cache_on_exit=1
 let g:ctrlp_switch_buffer='Et'
 let g:ctrlp_extensions=['mixed']
 "Ignore files in .gitignore
-let g:ctrlp_user_command = [
-    \ '.git',
-    \ 'cd %s && git ls-files -co --exclude-standard'
-    \ ]
-
-let g:airline#extensions#ctrlp#color_template = 'insert' "(default)
-let g:airline#extensions#ctrlp#color_template = 'normal'
-let g:airline#extensions#ctrlp#color_template = 'visual'
+let g:ctrlp_user_command = [ '.git', 'cd %s && git ls-files -co --exclude-standard' ]
 
 set foldenable
 set foldopen=block,hor,mark,percent,quickfix ",tag "what movements open folds"
@@ -278,9 +287,10 @@ augroup END
 set gdefault
 
 if $TMUX == ''
-  set clipboard+=unnamed
+    set clipboard+=unnamed
 endif
-set tags=tags;
+set tags=./tags,~/tags,tags
+
 " highlight trailing whitespace in vim on non empty lines,
 " but not while typing in insert mode!
 augroup foldstate
@@ -291,34 +301,46 @@ augroup foldstate
 	autocmd BufNewFile,BufRead *.yml set filetype=yaml
 augroup END
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+" {{{
+  let g:gutentags_exclude = [
+      \ '*.min.js',
+      \ '*html*',
+      \ 'jquery*.js',
+      \ '*/vendor/*',
+      \ '*/node_modules/*',
+      \ '*/python2.7/*',
+      \ '*/migrate/*.rb'
+      \ ]
+" }}}
+set statusline+=%{gutentags#statusline('[Generating...]')}
+
+let g:gutentags_ctags_executable_erlang='vim-erlang-tags/bin/vim-erlang-tags.erl'
+let g:airline#extensions#ctrlp#color_template = 'insert' "(default)
+"let g:airline#extensions#ctrlp#color_template = 'normal'
+"let g:airline#extensions#ctrlp#color_template = 'visual'
+"let g:airline#extensions#ctrlp#color_template = 'replace'
 
 let g:airline#extensions#ctrlp#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline#extensions#branch#format = 2
 "let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
-""* configure the title text for location list buffers >
+"* configure the title text for location list buffers
 "let g:airline#extensions#quickfix#location_text = 'Location'
-"let g:airline#extensions#ctrlp#color_template = 'normal'
-"let g:airline#extensions#ctrlp#color_template = 'visual'
-let g:airline#extensions#ctrlp#color_template = 'replace'
 " * configure whether to show the previous and next modes (mru, buffer, etc...)
 let g:airline#extensions#ctrlp#show_adjacent_modes = 1
-
-
-
 
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline#extensions#bufferline#overwrite_variables = 1
 let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=1
-let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_exclude_preview = 1
 let g:airline_inactive_collapse=1
 let g:airline_theme='distinguished'
+"let g:airline_theme='dracula'
 "enable/disable showing a summary of changed hunks under source control.
 let g:airline#extensions#hunks#enabled = 0
 " enable/disable showing only non-zero hunks.
@@ -340,24 +362,6 @@ let g:bufferline_pathshorten=1
 let g:bufferline_rotate = 1
 let g:bufferline_fixed_index =  0 "always first
 
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_enable_signs= 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol='✗'
-let g:syntastic_erlang_checkers = ['syntaxerl', 'escript' ]
-let g:syntastic_vim_checkers = ['vint' ]
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck', 'gotype', 'gometalinter', 'go' ] "gofmt
-let g:syntastic_javascript_checkers=['standard', 'eslint']
-let g:syntastic_mode_map = {
-	\ 'mode': 'active',
-	\ 'passive_filetypes': ['vim'],
-	\ 'active_filetypes': ['go', 'erlang']
-	\ }
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_error_symbol ='✗'
 
 " set a nicer cursor in insert mode (from terryma on github)
 " Tmux will only forward escape sequences to the terminal if surrounded by
@@ -371,16 +375,14 @@ else
 endif
 
 """" KEYBOARD SHORTCUTS
-let g:maplocalleader='\\'
+let g:maplocalleader='\'
 let g:mapleader=','
 set pastetoggle=<F2>
 
-"map <Esc> to jj,thus easy to switch to cmd mod
-imap jj <ESC>
 
-map <Leader><Leader>cc :set cursorcolumn!<CR> :set cursorline!<CR>
+noremap <Leader><Leader>cc :set cursorcolumn!<CR> :set cursorline!<CR>
 "fast edit of vimrc
-map <silent> <Leader>v :e! ~/.vimrc<CR>
+noremap <silent> <Leader>v :e! ~/.vimrc<CR>
 "quicksave
 nmap <silent><Leader>s :w!<cr>
 noremap <silent><Leader><Leader>l :call g:ToggleColorColumn()<CR>
@@ -432,17 +434,18 @@ nnoremap <Leader>f zM<cr>
 " open all closed folds
 nnoremap <Leader>F zR<cr>
 "clear hlsearch results by
-nnoremap <silent> <Leader><Leader>c :nohlsearch<CR>
-" Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
-" Keep search matches in the middle of the window and pulse the line when moving
-" to them.
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
+" Keep search matches in the middle of the window and pulse the line when moving to them.
 nnoremap <Space> ]czzzv
 nnoremap <S-Space> [czzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap m ]czzzv
 nnoremap M [czzzv
+nmap * *zz
+nmap # #zz
+nmap g* g*zz
+nmap g# g#zz
 " diff ops, copy to left & copy to right, iirc
 nnoremap <Leader>o do<CR>
 nnoremap <Leader>P dp<CR>
@@ -451,10 +454,6 @@ nnoremap <Leader>P dp<CR>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
-
-" jump to start & end of line using home-row keys
-map H ^
-map L $
 
 "map Q to last recorded macro
 map Q @@
@@ -495,9 +494,29 @@ nnoremap <Leader>w! :w !sudo tee % >/dev/null<cr>
 nnoremap <Leader><Leader>dw :call Preserve("%s/\\s\\+$//e")<CR>
 "autoindent whole
 nnoremap <Leader><Leader>i  :call Preserve("normal gg=G")<CR>
-nnoremap <F8> :help <C-r><C-w><CR>
 
-" make space execute the 'r' macro (press qr to start recording, q to stop,
+function! s:colors(...)
+    return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+                \ 'v:val !~ "^/usr/"'),
+                \ 'fnamemodify(v:val, ":t:r")'),
+                \ '!a:0 || stridx(v:val, a:1) >= 0')
+endfunction
+" ----------------------------------------------------------------------------
+" <F5> | Color scheme selector
+" ----------------------------------------------------------------------------
+function! s:rotate_colors()
+    if !exists('s:colors')
+        let s:colors = s:colors()
+    endif
+    let name = remove(s:colors, 0)
+    call add(s:colors, name)
+    execute 'colorscheme' name
+    redraw
+    echo name
+endfunction
+nnoremap <silent><F5> :call <SID>rotate_colors()<cr>
+
+" make space execute the 'q' macro (press qr to start recording, q to stop,
 " then [space] to execute.  super convenient)
 noremap <C-Space> @q
 
@@ -505,41 +524,40 @@ noremap <C-Space> @q
 noremap <Leader>y "*y
 noremap <Leader>yy "*Y
 
-" Preserve indentation while pasting text from the OS X clipboard
-" 4/10/16 - dunno if this neeeded? iirc it was a weird-ass etrade thing
-" noremap <Leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
-
 " keep selection on indenting in visual mode
 vnoremap < <gv
 vnoremap > >gv
 " map page-up and page-down to ctrl-k & ctrl-j respectively
 noremap <S-k> <C-u>
 noremap <S-j> <C-d>
-
-" By default syntax-highlighting for Functions,
-"   Methods and Structs is disabled.
-"   To change it:
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-" Enable goimports to automatically insert
-"   import paths instead of gofmt:
-let g:go_fmt_command = 'goimports'
-"By default vim-go shows errors for the fmt command, to disable it:
-let g:go_fmt_fail_silently = 1
-"Disable auto fmt on save:
-let g:go_fmt_autosave = 0
-"Disable opening browser after posting your snippet to play.golang.org:
-let g:go_play_open_browser = 0
+"map <silent> <F9> :make %<CR>:copen<CR>
 
 augroup golang
 	autocmd!
+	let g:go_textobj_enabled=0
+	"By default syntax-highlighting for Functions, Methods and Structs is disabled
+	" to change it:
+	let g:go_highlight_functions = 1
+	let g:go_highlight_methods = 1
+	let g:go_highlight_structs = 1
+	let g:go_highlight_interfaces = 1
+	let g:go_highlight_operators = 1
+	let g:go_highlight_build_constraints = 1
+	" Enable goimports to automatically insert import paths instead of gofmt:
+	"let g:go_fmt_command = 'goimports'
+	"By default vim-go shows errors for the fmt command, to disable it:
+	let g:go_fmt_fail_silently = 1
+	"Disable auto fmt on save:
+	"let g:go_fmt_autosave = 0
+	"Disable opening browser after posting your snippet to play.golang.org:
+	let g:go_play_open_browser = 0
+
+	"map <silent> <F9> :make %<CR>:copen<CR>
+
+	autocmd Filetype go noremap <silent><F9> <Plug>(go-run)
 	" go specific
 	autocmd FileType go nmap <LocalLeader>r <Plug>(go-run)
-	autocmd FileType go nmap <LocalLeader>b <Plug>(go-build)
+	"autocmd FileType go nmap <LocalLeader>b <Plug>(go-build)
 	autocmd FileType go nmap <LocalLeader>t <Plug>(go-test)
 	autocmd FileType go nmap <LocalLeader>c <Plug>(go-coverage)
 
@@ -559,7 +577,6 @@ augroup golang
 	autocmd FileType go nmap <LocalLeader>gb <Plug>(go-doc-browser)
 
 	"Or open the Godoc in browser
-
 	autocmd FileType go nmap <LocalLeader>gb <Plug>(go-doc-browser)
 	"Show a list of interfaces which is implemented by the type under your cursor with <LocalLeader>s
 	autocmd FileType go nmap <LocalLeader>s <Plug>(go-implements)
@@ -577,13 +594,12 @@ augroup golang
 
 augroup END
 
-" Plugin Config
-
 " This is the default extra key bindings
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+  \ 'ctrl-v': 'vsplit'
+\ }
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -597,19 +613,17 @@ let g:gitgutter_diff_args = '-w'
 " No git Gutter mapppings
 let g:gitgutter_map_keys = 0
 silent! if emoji#available()
-  let g:gitgutter_sign_added = emoji#for('white_check_mark')
-  let g:gitgutter_sign_modified = emoji#for('bangbang')
-  let g:gitgutter_sign_removed = emoji#for('x')
-  let g:gitgutter_sign_modified_removed = emoji#for('no_entry')
+let g:gitgutter_sign_added = emoji#for('white_check_mark')
+let g:gitgutter_sign_modified = emoji#for('bangbang')
+let g:gitgutter_sign_removed = emoji#for('x')
+let g:gitgutter_sign_modified_removed = emoji#for('no_entry')
 endif
-
-let g:AutoPairsFlyMode = 1
 
 " Airline
 let g:airline#extensions#whitespace#enabled = 1
-" let g:airline#extensions#whitespace#symbol = '!'
+let g:airline#extensions#whitespace#symbol = '!'
 let g:airline#extensions#whitespace#show_message = 1
-
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#csv#enabled = 1
 " change how columns are displayed.
@@ -627,17 +641,24 @@ endif
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_right_sep = '«'
-"let g:airline_left_sep = '▶'
-"let g:airline_right_sep = '◀'
 let g:airline_symbols.crypt = '🔒'
-"let g:airline_symbols.linenr = '␊'
-"let g:airline_symbols.linenr = '␤'
-"let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
-"let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
-"let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
+
+augroup javascript
+    let g:javascript_conceal_function       = "ƒ"
+    let g:javascript_conceal_null           = "ø"
+    let g:javascript_conceal_this           = "@"
+    let g:javascript_conceal_return         = "⇚"
+    let g:javascript_conceal_undefined      = "¿"
+    let g:javascript_conceal_NaN            = "ℕ"
+    let g:javascript_conceal_prototype      = "¶"
+    let g:javascript_conceal_static         = "•"
+    let g:javascript_conceal_super          = "Ω"
+    let g:javascript_conceal_arrow_function = "⇒"
+augroup END
 

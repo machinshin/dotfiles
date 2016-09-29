@@ -1,11 +1,11 @@
 " local syntax file - set colors on a per-machine basis:
 " vim: tw=0 ts=4 sw=4
 " Vim color file
-" Maintainer:		Srivatsan Raghavan - vat.raghavan@gmail.com
-" Last Change:	Feb 06 2013
+" Maintainer:       Vat Raghavan - vat.raghavan@gmail.com
+" Last Change:      Sept 28, 2016
 
 set background=dark
-hi clear
+highlight clear
 if exists("syntax_on")
 	syntax reset
 endif
@@ -64,7 +64,7 @@ function! s:hibg(group,guibg,first,second)
 	exe "highlight ".a:group." guibg=".a:guibg." ctermbg=".ctermbg
 endfunction
 
-if has("gui_running") 
+if has("gui_running")
 	hi Normal guifg=#17e600 guibg=Black
 	hi Comment term=standout ctermfg=gray guifg=gray
 	hi Constant term=underline ctermfg=Magenta guifg=Magenta
@@ -72,10 +72,10 @@ if has("gui_running")
 	hi PmenuSel guifg=Red guibg=White ctermfg=Red ctermbg=White
 	hi PmenuSbar guifg=White guibg=DarkBlue ctermfg=White ctermbg=DarkBlue
 	hi PmenuThumb guifg=LightGray guibg=Black ctermfg=LightGray ctermbg=Black
-	hi Tag guifg=DarkGreen term=bold ctermfg=DarkGreen 
-	hi Todo guifg=Black guibg=Yellow term=standout ctermbg=Yellow ctermfg=Black 
-	hi Visual guifg=Yellow guibg=Red term=reverse ctermfg=Yellow ctermbg=Red 
-	hi Search guifg=Black guibg=Cyan term=reverse ctermfg=Black ctermbg=Cyan 
+	hi Tag guifg=DarkGreen term=bold ctermfg=DarkGreen
+	hi Todo guifg=Black guibg=Yellow term=standout ctermbg=Yellow ctermfg=Black
+	hi Visual guifg=Yellow guibg=Red term=reverse ctermfg=Yellow ctermbg=Red
+	hi Search guifg=Black guibg=Cyan term=reverse ctermfg=Black ctermbg=Cyan
 	hi StatusLine gui=reverse guifg=Yellow guibg=DarkGray term=reverse cterm=NONE ctermfg=Yellow ctermbg=DarkGray
 	hi Folded  gui=undercurl guifg=Yellow guibg=Black  ctermfg=Yellow ctermbg=Black cterm=bold,undercurl
 	hi Character guifg=#FEAE5E guibg=#262626
@@ -109,10 +109,10 @@ else
 	call s:hifg("Identifier"     ,"#FFCC00","Yellow",72) " 220
 	call s:hifg("Type"           ,"#AAAA77","Grey",57) " 101
 	call s:hifg("Statement"      ,"#FF6600","Brown",68) " 202
-	hi Visual term=reverse ctermfg=Yellow ctermbg=Red 
-	hi Search term=reverse ctermfg=Black ctermbg=Cyan 
-	hi Tag term=bold ctermfg=DarkGreen 
-	hi Todo term=standout ctermbg=Yellow ctermfg=Black 
+	hi Visual term=reverse ctermfg=Yellow ctermbg=Red
+	hi Search term=reverse ctermfg=Black ctermbg=Cyan
+	hi Tag term=bold ctermfg=DarkGreen
+	hi Todo term=standout ctermbg=Yellow ctermfg=Black
 	hi StatusLine term=bold,reverse cterm=NONE ctermfg=Yellow ctermbg=DarkGray
 	hi Pmenu ctermfg=DarkGreen ctermbg=Black
 	hi PmenuSel ctermfg=Red ctermbg=White
@@ -161,4 +161,7 @@ hi link SpecialComment Special
 hi link Debug		Special
 hi IndentGuidesOdd ctermbg=black
 hi IndentGuidesEven ctermbg=darkgrey
-
+" vertical line indentation
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#09AA08'
+let g:indentLine_char = '│'
