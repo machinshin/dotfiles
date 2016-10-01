@@ -1,138 +1,153 @@
-start_time="$(date +%s)"
+#add zsh debugging
+#setopt VERBOSE
+#Add the following to your zshrc to access the online help:
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/help
+# load zgen
+source "${HOME}/.zgen/zgen.zsh"
+
+export ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc ${HOME}/.zshrc.local)
+# if the init scipt doesn't exist
+if ! zgen saved; then
+
+    zgen oh-my-zsh
+
+    #zgen oh-my-zsh plugins/jira
+    zgen oh-my-zsh plugins/autojump
+    zgen oh-my-zsh plugins/brew
+    zgen oh-my-zsh plugins/command-not-found
+    zgen oh-my-zsh plugins/dirpersist
+    zgen oh-my-zsh plugins/extract
+    zgen oh-my-zsh plugins/gnu-utils
+    zgen oh-my-zsh plugins/history
+    zgen oh-my-zsh plugins/kubectl
+    zgen oh-my-zsh plugins/taskwarrior
+    zgen oh-my-zsh plugins/vi-mode
+
+    zgen load bhilburn/powerlevel9k powerlevel9k
+    zgen load djui/alias-tips
+    zgen load supercrabtree/k
+    zgen load tarruda/zsh-autosuggestions
+    zgen load zsh-users/zsh-completions src
+    zgen load zsh-users/zsh-history-substring-search
+    zgen load zsh-users/zsh-syntax-highlighting
+
+    # generate the init script from plugins above
+    zgen save
+fi
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)
 eval "$(hub alias -s)"
+export PATH=$PATH:~/workspace/github/rebar:$HOME/.scripts
+export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'
-autoload -U zmv
-autoload -Uz compinit
-setopt correct_all
-setopt NO_NOMATCH
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+nvm use stable
+export GOPATH=$HOME/workspace/github/GoPath
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
+[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
+[[ -f ~/.fzf.zsh ]]                             && source ~/.fzf.zsh
+#[[ -s "$HOME/.rvm/scripts/rvm" ]]               && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 #superglobs
 setopt extendedglob
 unsetopt caseglob
-# http://nuclearsquid.com/writings/reporttime-in-zsh/
-REPORTTIME=5
+setopt NO_NOMATCH
+REPORTTIME=10
 
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
-zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
-#If you end up using a directory as argument, this will
-#remove the trailing slash (usefull in ln)
-zstyle ':completion:*' squeeze-slashes true
+#zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+#zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
+#zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+##history
+#zstyle ':completion:*:history-words' stop yes
+#zstyle ':completion:*:history-words' remove-all-dups yes
+#zstyle ':completion:*:history-words' list false
+#zstyle ':completion:*:history-words' menu yes
 
-#history
-zstyle ':completion:*:history-words' stop yes
-zstyle ':completion:*:history-words' remove-all-dups yes
-zstyle ':completion:*:history-words' list false
-zstyle ':completion:*:history-words' menu yes
+##fuzzy completions
+#zstyle ':completion:*' completor _complete _match _approximate
+#zstyle ':completion:*:match:*' original only
+#zstyle ':completion:*:approximate:*' max-errors 1 numeric
+##pids menu selection
+#zstyle ':completion:*:kill:*'   force-list always
+##If you end up using a directory as argument, this will
+##remove the trailing slash (usefull in ln)
+#zstyle ':completion:*' squeeze-slashes true
+##cd never select the parent directory (e.g.: cd ../<TAB>):
+#zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-#fuzzy completions
-zstyle ':completion:*' completor _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
-#ignore completion for commands i don't have
-zstyle ':completion:*:functions' ignored-patterns '_*'
-#pids menu selection
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*'   force-list always
-zstyle ':completion:*:*:kill:*' list-colors '=%*=01;31'
-#cd never select the parent directory (e.g.: cd ../<TAB>):
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-
-# Complete the hosts and directories. Try it:
-#  $ scp file username@<TAB><TAB>:/<TAB>
+## I'm bonelazy ;) Complete the hosts and - last but not least - the remote
+## directories.
+##  $ scp file username@<TAB><TAB>:/<TAB>
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
-#--------------
+##--------------
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="machinshin"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
-
-# Set to this to use case-sensitive completion
-CASE_SENSITIVE="true"
-# Comment this out to disable weekly auto-update checks
-#DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
-DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-#COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(
-    \ dirpersist
-    \ gitfast
-    \ history
-    \ themes
-    \ vi-mode
-    \ zsh-syntax-highlighting
-    \ zsh_reload
-    \ brew
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
 #zsh specifc alias
 alias mmv='noglob zmv -W'
 alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
-export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
-export GOPATH=$HOME/workspace/github/GoPath
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOPATH/bin
-
-SCRIPTS=( \
-    $HOME/.scripts/corp.env.sh \
-    $HOME/.scripts/env.sh \
-    $HOME/.scripts/proj.env.sh \
-    $HOME/.aws \
-    $HOME/.fzf.zsh \
-)
-
-for (( i =1; i <= $#SCRIPTS; i++ )) do
-    echo "running ${SCRIPT[i]}"
-    [[ -f `${SCRIPTS[i]}` ]] && source `${SCRIPTS[i]}`
-done
-
-[[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-#source $(brew --prefix)/share/antigen.zsh
-
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
+
 alias -g TC='| tee command.log'
 alias -g T='| tee '
-
-export PATH=$PATH:/Applications:$HOME/.rvm/bin:~/workspace/github/rebar:$PATH:$HOME/.scripts
-
-
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
-compinit
-
 alias s='git checkout '
 
-export NVM_DIR="$HOME/.nvm"
+[[ -f $HOME/.scripts/corp.env.sh ]] && source $HOME/.scripts/corp.env.sh
+[[ -f $HOME/.scripts/env.sh ]]      && source $HOME/.scripts/env.sh
+[[ -f $HOME/.scripts/proj.env.sh ]] && source $HOME/.scripts/proj.env.sh
+[[ -f $HOME/.aws ]]                 && source $HOME/.aws
 
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-nvm use stable
+# (Zsh) "zsh-history-substring-search" plugin
+# => zsh-history-substring-search customisation
+setopt HIST_IGNORE_ALL_DUPS
+# => Key bindings (for UP and DOWN arrow keys)
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+#zsh theme config
+#move to a theme file?
+#NewLine
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
-end_time="$(date +%s)"
-echo ".zshrc: $((end_time - start_time)) seconds"
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="╰─ \$ "
+# => Segments
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator history vi_mode context dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs time background_jobs_joined)
+POWERLEVEL9K_HISTORY_FOREGROUND='178'
+POWERLEVEL9K_HISTORY_BACKGROUND='black'
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S %m/%d/%y}"
+# `git hub colors`
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='236'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='119'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='214'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='236'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='196'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='236'
+# Vi-Mode
+POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='214'
+POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='black'
+POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='214'
+POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='black'
+POWERLEVEL9K_STATUS_VERBOSE=false
+
+POWERLEVEL9K_DIR_HOME_BACKGROUND='black'
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='black'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='black'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='09'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='09'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='09'
+#fish style
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 

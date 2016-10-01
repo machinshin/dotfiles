@@ -31,6 +31,7 @@ alias gipf='git push -f origin HEAD'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias la='ls -al'
 alias ll='ls -alh'
+alias l='ll'
 alias lsd='ls -ld *(-/DN)'
 alias mem='free -m'
 alias rmd='rm -rf '
