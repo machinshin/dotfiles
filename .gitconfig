@@ -1,72 +1,72 @@
 [user]
-	name  = Vat Raghavan
-	email = vat.raghavan@gmail.com
+    name=Vat Raghavan
+    email=vat.raghavan@gmail.com
 [color]
-    branch      = auto
-    diff        = auto
-    interactive = auto
-    status      = auto
-    ui          = true
+    branch=auto
+    diff=auto
+    interactive=auto
+    status=auto
+    ui=true
 [alias]
-    ;display all aliases
-    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
-    br  = branch
-    cm  = commit -m
-    df  = diff
-    dt  = difftool
-    dm  = diff master..
-    dtm  = difftool master..
-    l   = log --no-merges
-    st  = status
-    sta = stash
-    up  = pull origin
-    ; not a fan of random merges
-    pl = pull --ff-only
-    ; various pretty loggers from various places
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    lc = log ORIG_HEAD.. --stat --no-merges
-    ; from http://blog.kfish.org/2010/04/git-lola.html
-    ll   = log --graph --date= short
-    lol  = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    ; from https://git.wiki.kernel.org/index.php/Aliases
-    whois  = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
-    whatis = show -s --pretty = 'tformat:%h (%s, %ad)' --date   = short
-    unstage = reset HEAD --
-    last    = log -l HEAD
-    visual  = !gitk
-    dlog  = log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    ;odeps = !git dlog --no-merges origin/master..origin/dev
+    changed=show --pretty=\"format:\" --name-only
+    lg=log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --date=relative  ; various pretty loggers from various places
     ;deploys = !git dlog --no-merges upstream/master..upstream/dev
-    rc    = rebase --continue
-    ca    = commit --amend
-    cma   = commit -am
-    co    = checkout
-    nb    = checkout -b
-    ;pus = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+    ;odeps=!git dlog --no-merges origin/master..origin/dev
+    ;pus=!"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+    aliases="!git config -l | grep alias | cut -c 7-"     ;display all aliases
+    br=branch
+    ca=commit --amend
+    cm=commit -m
+    cma=commit -am
+    co=checkout
+    df=diff
+    dlog=log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    dm=diff master..
+    dt=difftool
+    dtm=difftool master..
+    l=log --no-merges
+    last=log -l HEAD
+    lc=log ORIG_HEAD.. --stat --no-merges
+    ll=log --graph --date= short  ; from http://blog.kfish.org/2010/04/git-lola.html
+    lol=log --graph --decorate --pretty=oneline --abbrev-commit
+    lola=log --graph --decorate --pretty=oneline --abbrev-commit --all
+    nb=checkout -b
+    pl=pull --ff-only             ; not a fan of random merges
+    rc=rebase --continue
+    sapply=!sh -c 'git stash apply stash^{/$*}' -
+    ssave=!sh -c 'git stash save \"${1}\"' -
+    sshow=!sh -c 'git stash show stash^{/$*} -p' -
+    st=status
+    sta=stash
+    unstage=reset HEAD --
+    up= pull origin
+    visual=!gitk
+    whatis=show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    whois="!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"; from https://git.wiki.kernel.org/index.php/Aliases
 [github]
-    token = faf03543c81b5ee13885108ab3582c78
-    user = machinshin
+    token=xxxxxxxxxxxx
+    user=machinshin
 [core]
-    editor       = vim -f
-    excludesfile = /Users/vat/.gitignore_global
-    pager        = cat
-    trustctime   = false
+    editor=vim -f
+    excludesfile=/Users/vat/.gitignore_global
+    pager=cat
+    trustctime=false
 [diff]
-	tool = mvimdiff
+    tool=mvimdiff
 [difftool "mvimdiff"]
-    cmd = mvim -v -d \"$LOCAL\" \"$REMOTE\"
+    cmd=mvim -v -d \"$LOCAL\" \"$REMOTE\"
 [push]
-	default = current
+    default=current
 [difftool]
-	prompt = false
+    prompt=false
 [help]
-	autocorrect = 1
+    autocorrect=1
 [credential]
-	helper = cache
+    helper=cache
 [fetch]
-    prune = true
+    prune=true
+	prune = true
 [mergetool]
-    prompt = false
+    prompt=false
 [merge]
-    tool = vimdiff
+    tool=vimdiff
