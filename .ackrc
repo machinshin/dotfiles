@@ -10,15 +10,18 @@ sass=.scss
 --type-set
 scss=.scss
 
---ignore-dir=.git
---ignore-dir=target
---ignore-dir=built
 --ignore-dir=.build
---ignore-dir=node_modules
+--ignore-dir=.git
+--ignore-dir=.idea
+--ignore-dir=_rel
+--ignore-dir=_rel
+--ignore-dir=built
 --ignore-dir=deps
---ignore-dir=_rel
---ignore-dir=_rel
---ignore-file=match:tags
---ignore-file=match:gitignore
+--ignore-dir=dist
+--ignore-dir=node_modules
+--ignore-dir=target
 
+#--ignore-file=*debug*
+--ignore-file=match:gitignore
+--ignore-file=match:tags
 

@@ -5,3 +5,11 @@ as/!
 SID
 html
 c/!
+#PROJECT_NAME/!
+status
+curl/!
+EXPOSE
+partner-users
+env/!
+const
+-f
