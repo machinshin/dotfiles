@@ -1,7 +1,7 @@
 # Compiled source #
 ###################
-*.com
 *.class
+*.com
 *.dll
 *.exe
 *.o
@@ -22,11 +22,9 @@
 
 # Logs and databases #
 ######################
-*.log
-*.logs
-*.sql
+log
 *.sqlite
-./logs/
+logs
 
 # OS generated files #
 ######################
@@ -41,4 +39,7 @@ Thumbs.db
 
 tags
 TAGS
+tags.*
+#vim spelling-file
+*.spl
 

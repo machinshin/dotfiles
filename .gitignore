@@ -7,3 +7,5 @@
 kerl
 rebar*
 tags
+*.spl
+
