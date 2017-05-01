@@ -33,7 +33,7 @@ if ! zgen saved; then
     zgen load djui/alias-tips
     zgen load supercrabtree/k
     zgen load tarruda/zsh-autosuggestions
-    zgen load zsh-users/zsh-completions src
+    zgen load zsh-users/zsh-completions
     zgen load zsh-users/zsh-history-substring-search
     zgen load zsh-users/zsh-syntax-highlighting
 
@@ -160,7 +160,6 @@ POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 #temporary until this is fixed/revereted in POWERLEVEL9K
-
 function zle-line-init {
   powerlevel9k_prepare_prompts
   if (( ${+terminfo[smkx]} )); then

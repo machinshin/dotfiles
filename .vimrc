@@ -89,6 +89,11 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'tpope/vim-surround'
     Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'mhinz/vim-startify'
+    Plug 'nixprime/cpsm', { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
+
+
 call plug#end() "}}}
 
 " autosave
@@ -274,6 +279,20 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/](\.git|log(s)*|node_modules|build|ebin|dist)',
     \ 'file': '\v\.(exe|so|dll|tgz|gz|beam)$'
 \ }
+nnoremap <Leader><Leader>o :CtrlPMRUFiles<CR>
+nnoremap <Leader><Leader>p :CtrlP<CR>
+
+let g:ctrlp_mruf_exclude = '.*/tmp/.*\|.*/.git/.*|.*/dist/\.*\'
+let g:ctrlp_max_files = 200000
+let g:ctrlp_mruf_relative = 1
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore=vendor --ignore images --ignore svg --ignore fonts -g ""'
+    let g:ctrlp_use_caching = 0
+else
+    let g:ctrlp_clear_cache_on_exit = 0
+endif
+
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 let g:ctrlp_cache_dir='$HOME/.vim/ctrlp_cache'
 let g:ctrlp_match_window_reverse=0
