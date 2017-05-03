@@ -668,9 +668,32 @@ endif
 
 let g:vimfiler_as_default_explorer=1
 
-
 augroup javascript
   set foldmethod=syntax
+augroup END
+
+augroup startify
+  let g:startify_skiplist = [
+    \ 'COMMIT_EDITMSG',
+    \ '*.log',
+    \ 'node_modules'
+    \ ]
+
+  "When opening a file or bookmark, seek and change to the root directory of the
+  "VCS (if there is one).
+  let g:startify_change_to_vcs_root = 1
+  let g:startify_fortune_use_unicode = 1
+  let g:startify_session_dir = '~/.vim/session'
+  let g:startify_custom_header = startify#fortune#cowsay('═','║','╔','╗','╝','╚')
+  let g:startify_custom_footer = ['', "   Vim is charityware. Please read ':help uganda'.", '']
+  hi StartifyBracket ctermfg=240
+  hi StartifyFile    ctermfg=147
+  hi StartifyFooter  ctermfg=240
+  hi StartifyHeader  ctermfg=114
+  hi StartifyNumber  ctermfg=215
+  hi StartifyPath    ctermfg=245
+  hi StartifySlash   ctermfg=240
+  hi StartifySpecial ctermfg=240
 
 augroup END
 
