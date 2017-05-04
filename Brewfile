@@ -2,7 +2,7 @@
 # Created by: @seethroughtrees
 # https://github.com/seethroughtrees/brew-cask-dotfile-generator
 
-
+install memcached
 install ack
 install antigen
 install apple-gcc42
