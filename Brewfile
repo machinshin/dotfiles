@@ -119,3 +119,5 @@ install zsh
 install zsh-completions
 install zsh-lovers
 install zsh-syntax-highlighting
+install typescript
+

@@ -13,3 +13,6 @@ env/!
 const
 -f
 ancestors/!
+questionText
+then
+models

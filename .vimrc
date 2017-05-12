@@ -50,20 +50,20 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'Quramy/tsuquyomi',                { 'for': 'typescript' }
     Plug 'Quramy/vim-js-pretty-template',   { 'for': 'typescript' }
     Plug 'Shougo/unite.vim'
-    Plug 'Shougo/vimproc',              { 'do': 'make' }
-    Plug 'Valloric/MatchTagAlways',     { 'for': ['html', 'xml', 'xhtml'] }
+    Plug 'Shougo/vimproc',                  { 'do': 'make' }
+    Plug 'Valloric/MatchTagAlways',         { 'for': ['html', 'xml', 'xhtml'] }
     Plug 'airblade/vim-gitgutter'
     Plug 'bling/vim-airline'
     Plug 'bling/vim-bufferline'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'editorconfig/editorconfig-vim'
-    Plug 'elzr/vim-json',                { 'for': 'json' }
+    Plug 'elzr/vim-json',                   { 'for': 'json' }
     Plug 'gilsondev/searchtasks.vim'
     Plug 'godlygeek/tabular'
     Plug 'janko-m/vim-test'
     Plug 'jeetsukumaran/vim-buffergator'
     Plug 'jiangmiao/auto-pairs'
-    Plug 'junegunn/fzf',                 { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf',                    { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/rainbow_parentheses.vim'
     Plug 'junegunn/vim-emoji'
@@ -74,10 +74,7 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'metakirby5/codi.vim',
     Plug 'othree/es.next.syntax.vim',   { 'for': 'javascript' }
     Plug 'othree/yajs.vim',             { 'for': 'javascript' }
-    Plug 'marijnh/tern_for_vim',        { 'for': 'javascript' }
-    let g:tern_show_argument_hints='on_hold'
-    " and
-    let g:tern_map_keys=1
+    Plug 'marijnh/tern_for_vim',        { 'for': [ 'javascript', 'typescript' ] }
     Plug 'powerline/fonts'
     Plug 'scrooloose/nerdcommenter'
     Plug 'tmux-plugins/vim-tmux',
@@ -91,10 +88,24 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'vim-airline/vim-airline-themes'
     Plug 'ryanoasis/vim-devicons'
     Plug 'mhinz/vim-startify'
-    Plug 'nixprime/cpsm', { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
+    Plug 'nixprime/cpsm',         { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
+    Plug 'sts10/vim-mustard'
+    "Plug 'ervandew/supertab'
+    Plug 'wellle/tmux-complete.vim'
+    "Plug 'gregsexton/gitv', {'on': ['Gitv']}
+    "Plug 'wellle/tmux-complete.vim'
+    Plug 'szw/vim-g'
 
 
 call plug#end() "}}}
+"tern settings
+let g:tern_show_argument_hints='on_hold'
+" and
+let g:tern_map_keys=1
+
+" Make the dot command work as expected in visual mode (via
+" https://www.reddit.com/r/vim/comments/3y2mgt/do_you_have_any_minor_customizationsmappings_that/cya0x04)
+vnoremap . :norm.<CR>
 
 " autosave
 let g:auto_save=1  " enable AutoSave on Vim startup
@@ -136,6 +147,7 @@ filetype on
 filetype plugin on
 filetype plugin indent on
 colorscheme machinshin
+"colorscheme mustard
 let g:YUNOcommit_after  = 30
 "show the current command in progress
 set showcmd
@@ -153,6 +165,12 @@ set undofile
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 " Files/Backups
+" Save temporary/backup files not in the local directory, but in your ~/.vim
+" directory, to keep them out of git repos.
+" But first mkdir backup, swap, and undo first to make this work
+  call system('mkdir ~/.vim')
+  call system('mkdir ~/.vim/backup')
+  call system('mkdir ~/.vim/swap')
 set backup
 if s:running_windows
   set backupdir=$HOME/_vim/backup
@@ -245,6 +263,7 @@ set cindent
 set tabstop=2 " tab spacing (settings below are just to unify it)
 set softtabstop=2
 set shiftwidth=2
+set numberwidth=2
 set expandtab
 set nowrap
 set smarttab
