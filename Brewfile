@@ -100,7 +100,6 @@ install readline
 install reattach-to-user-namespace
 install rename
 install sbt
-install springboot
 install sqlite
 install swagger-codegen
 install task
@@ -119,5 +118,5 @@ install zsh
 install zsh-completions
 install zsh-lovers
 install zsh-syntax-highlighting
-install typescript
+install hub
 
