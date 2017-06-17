@@ -46,15 +46,18 @@ call plug#begin('~/.vim/bundle') " {{{
     "Plug 'tpope/vim-ragtag'
     "Plug 'vim-scripts/python_match.vim',{ 'for': 'python' }
     "Plug 'flazz/vim-colorschemes'
+    "Plug 'ervandew/supertab'
+    "Plug 'gregsexton/gitv', {'on': ['Gitv']}
+    "Plug 'wellle/tmux-complete.vim'
     Plug '907th/vim-auto-save'
     Plug 'Quramy/tsuquyomi',                { 'for': 'typescript' }
     Plug 'Quramy/vim-js-pretty-template',   { 'for': 'typescript' }
-    Plug 'Shougo/unite.vim'
+    "Plug 'Shougo/unite.vim'
     Plug 'Shougo/vimproc',                  { 'do': 'make' }
     Plug 'Valloric/MatchTagAlways',         { 'for': ['html', 'xml', 'xhtml'] }
     Plug 'airblade/vim-gitgutter'
     Plug 'bling/vim-airline'
-    Plug 'bling/vim-bufferline'
+    "Plug 'bling/vim-bufferline'
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'elzr/vim-json',                   { 'for': 'json' }
@@ -70,32 +73,29 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'junegunn/vim-peekaboo'        "shows register contents
     Plug 'leafgarland/typescript-vim',      { 'for': 'typescript' }
     Plug 'ludovicchabant/vim-gutentags'
+    "Plug 'marijnh/tern_for_vim',        { 'for': [ 'javascript', 'typescript' ] }
     Plug 'mbbill/undotree',
     Plug 'metakirby5/codi.vim',
+    Plug 'mhinz/vim-startify'
+    Plug 'nixprime/cpsm',         { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
     Plug 'othree/es.next.syntax.vim',   { 'for': 'javascript' }
     Plug 'othree/yajs.vim',             { 'for': 'javascript' }
-    Plug 'marijnh/tern_for_vim',        { 'for': [ 'javascript', 'typescript' ] }
     Plug 'powerline/fonts'
+    Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdcommenter'
+    Plug 'sts10/vim-mustard'
+    Plug 'szw/vim-g'
     Plug 'tmux-plugins/vim-tmux',
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'tpope/vim-characterize'
     Plug 'tpope/vim-dispatch'
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-speeddating'
     Plug 'tpope/vim-surround'
     Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'mhinz/vim-startify'
-    Plug 'nixprime/cpsm',         { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
-    Plug 'sts10/vim-mustard'
-    "Plug 'ervandew/supertab'
     Plug 'wellle/tmux-complete.vim'
-    "Plug 'gregsexton/gitv', {'on': ['Gitv']}
-    "Plug 'wellle/tmux-complete.vim'
-    Plug 'szw/vim-g'
-
 
 call plug#end() "}}}
 "tern settings
@@ -271,18 +271,24 @@ set lazyredraw          " redraw only when we need to.
 "
 set ofu=syntaxcomplete#Complete
 augroup completions
-    autocmd!
-    autocmd FileType vim           setlocal keywordprg=:help
-    "autocmd FileType go            setlocal noexpandtab
-    "autocmd FileType java          setlocal omnifunc=javacomplete#Complete
-    "utocmd FileType java          setlocal completefunc=javacomplete#CompleteParamsInfo
-    autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    "autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-    "autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-    "autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-    " Restore cursor position
-    "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`\"' | endif
+  autocmd!
+  autocmd FileType vim           setlocal keywordprg=:help
+  "autocmd FileType go            setlocal noexpandtab
+  "autocmd FileType java          setlocal omnifunc=javacomplete#Complete
+  "utocmd FileType java          setlocal completefunc=javacomplete#CompleteParamsInfo
+  autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  "autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+  "autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+  "autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+  " Restore cursor position
+  "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`\"' | endif
+  "from: http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+  set completeopt=longest,menuone
+  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :'<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :'<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 augroup END
 
 set showmode

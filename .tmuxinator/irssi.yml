@@ -1,0 +1,14 @@
+# ~/.tmuxinator/irssi.yml
+
+name: irssi
+root: ~
+
+windows:
+  - irc:
+    - irssi
+  - docs:
+      layout: main-horizontal
+      panes:
+          - j
+          - j ;ls
+

@@ -64,9 +64,10 @@
 [credential]
     helper=cache
 [fetch]
-    prune=true
-	prune = true
+  prune=true
 [mergetool]
     prompt=false
 [merge]
-    tool=vimdiff
+  tool=fugitive
+[mergetool "fugitive"]
+  cmd=vim -f -c \"Gdiff\" \"$MERGED\"

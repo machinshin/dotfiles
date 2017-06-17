@@ -36,6 +36,9 @@ alias lsd='ls -ld *(-/DN)'
 alias mem='free -m'
 alias rmd='rm -rf '
 alias gtr='go test ./...'
+alias n='npm install --save '
+alias nd='npm install --save-dev '
+
 rationalise-dot() {
   if [[ $LBUFFER = *.. ]]; then
     LBUFFER+=/..
