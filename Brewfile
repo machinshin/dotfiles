@@ -120,3 +120,5 @@ install zsh-lovers
 install zsh-syntax-highlighting
 install hub
 
+tap-pin 'dbcli/tap' || true
+install pgcli
