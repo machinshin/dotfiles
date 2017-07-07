@@ -1,31 +1,32 @@
 # ~/.tmuxinator/bee.yml
 name: bee
-root: ~/workspace/github/machinshin/Bee/
+root: ~/workspace/github/machinshin/Bee/my-assistant-friday
 
 windows:
   - ed:
       layout: f07b,238x55,0,0{119x55,0,0,0,118x55,120,0[118x27,120,0,13,118x27,120,28,14]}
       panes:
-        - cd my-assistant-friday;
-        - cd my-assistant-friday;
-        - cd my-assistant-friday/test;
+        - vi
+        - npm run dev
+        - cd test/data;
   - api:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
-        - cd my-assistant-friday
+        - ;
         - ls
   - web:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
-        - cd my-assistant-friday
-        - cd my-assistant-friday && ls
+        - ;
+        - ls
   - db:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
-        - cd my-assistant-friday
-        - cd my-assistant-friday
+        - ;
+        - ls
   - scratch:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - vi
         - ls
+
