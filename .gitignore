@@ -4,8 +4,8 @@
 .vim/.netrwhist
 .vim/.viminfo
 .vim/verbose
+.vim/spell/*
 kerl
 rebar*
 tags
 *.spl
-
