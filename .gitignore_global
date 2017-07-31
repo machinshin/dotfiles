@@ -38,8 +38,9 @@ ehthumbs.db
 Thumbs.db
 
 tags
-TAGS
-tags.*
+^TAGS$
+tags.temp
+tags.lock
 #vim spelling-file
 *.spl
 

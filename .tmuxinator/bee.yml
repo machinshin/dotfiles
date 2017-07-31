@@ -29,4 +29,9 @@ windows:
       panes:
         - vi
         - ls
+  - services:
+      layout: main-horizontal
+      panes:
+        - ngrok http 8080 -subdomain=izi
+        - ls
 

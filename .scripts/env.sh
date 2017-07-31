@@ -26,8 +26,9 @@ export CLI_COLOR='Yes'
 set -o vi
 alias a='ack'
 alias c='clear'
-alias gip='git push origin HEAD'
-alias gipf='git push -f origin HEAD'
+alias gs='git status'
+alias gp='git push'
+alias gf='git push -f'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias la='ls -al'
 alias ll='ls -alh'
@@ -38,6 +39,19 @@ alias rmd='rm -rf '
 alias gtr='go test ./...'
 alias n='npm install --save '
 alias nd='npm install --save-dev '
+
+alias -g TC='| tee command.log'
+alias -g T='| tee '
+alias -g J="| jq '.'"
+alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
+alias s='git checkout '
+
+
+#zsh specific alias
+alias mmv='noglob zmv -W'
+alias mv='nocorrect mv'
+alias cp='nocorrect cp'
+alias mkdir='nocorrect mkdir'
 
 rationalise-dot() {
   if [[ $LBUFFER = *.. ]]; then
@@ -66,4 +80,5 @@ codi() {
     hi NonText ctermfg=0 |\
     Codi $syntax" "> $ @"
 }
+source '/usr/local/share/zsh/site-functions'
 

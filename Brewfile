@@ -122,3 +122,5 @@ install hub
 
 tap-pin 'dbcli/tap' || true
 install pgcli
+install tig --with-docs
+

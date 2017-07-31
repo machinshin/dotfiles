@@ -20,7 +20,8 @@ scss=.scss
 --ignore-dir=dist
 --ignore-dir=node_modules
 --ignore-dir=target
-
+--ignore-dir=coverage
+--ignore-dir=*nyc_output*
 #--ignore-file=*debug*
 --ignore-file=match:gitignore
 --ignore-file=match:tags

@@ -77,9 +77,11 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'mbbill/undotree',
     Plug 'metakirby5/codi.vim',
     Plug 'mhinz/vim-startify'
-    Plug 'nixprime/cpsm',         { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
-    Plug 'othree/es.next.syntax.vim',   { 'for': 'javascript' }
-    Plug 'othree/yajs.vim',             { 'for': 'javascript' }
+    Plug 'nixprime/cpsm',             { 'dir': '~/.vim/bundle/cpsm', 'do': './install.sh' }
+    Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+    Plug 'othree/yajs.vim',           { 'for': 'javascript' }
+    Plug 'othree/jsdoc-syntax.vim',   { 'for': 'javascript' }
+    Plug 'w0rp/ale',                  { 'for': 'javascript' }
     Plug 'powerline/fonts'
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdcommenter'
@@ -564,7 +566,7 @@ nnoremap Y y$
 nnoremap <silent><Leader>~ :set tildeop!<CR>
 if &diff
   "ignore whitespace in diff mode
-  set diffopt+=iwhite
+  "set diffopt+=iwhite
 else
   nnoremap <silent><Leader>of :.Gbrowse! @upstream<CR>
 endif
@@ -620,15 +622,15 @@ augroup golang
   let g:go_highlight_structs=1
   let g:go_highlight_interfaces=1
   let g:go_highlight_operators=1
-    let g:go_highlight_build_constraints=1
-    " Enable goimports to automatically insert import paths instead of gofmt:
-    "let g:go_fmt_command = 'goimports'
-    "By default vim-go shows errors for the fmt command, to disable it:
-    let g:go_fmt_fail_silently=1
-    "Disable auto fmt on save:
-    "let g:go_fmt_autosave = 0
-    "Disable opening browser after posting your snippet to play.golang.org:
-    let g:go_play_open_browser=0
+  let g:go_highlight_build_constraints=1
+  " Enable goimports to automatically insert import paths instead of gofmt:
+  "let g:go_fmt_command = 'goimports'
+  "By default vim-go shows errors for the fmt command, to disable it:
+  let g:go_fmt_fail_silently=1
+  "Disable auto fmt on save:
+  "let g:go_fmt_autosave = 0
+  "Disable opening browser after posting your snippet to play.golang.org:
+  let g:go_play_open_browser=0
 
     "map <silent> <F9> :make %<CR>:copen<CR>
 
@@ -695,13 +697,19 @@ let g:vimfiler_as_default_explorer=1
 
 augroup javascript
   set foldmethod=syntax
+  " autocmd FileType javascript set formatprg=prettier-standard
+  " autocmd BufWritePre *.js :normal gggqG
+  set autoread
 augroup END
 
+set macligatures
+set guifont=Fira\ Code:h12
+
 augroup startify
-  let g:startify_skiplist = [
-    \ 'COMMIT_EDITMSG',
-    \ '*.log',
-    \ 'node_modules'
+    let g:startify_skiplist = [
+      \ 'COMMIT_EDITMSG',
+      \ '*.log',
+      \ 'node_modules'
     \ ]
 
   "When opening a file or bookmark, seek and change to the root directory of the

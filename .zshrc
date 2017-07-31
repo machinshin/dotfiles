@@ -43,8 +43,6 @@ if ! zgen saved; then
 fi
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(icons_test)
-eval "$(hub alias -s)"
-export PATH=$PATH:~/workspace/github/rebar:$HOME/.scripts
 export AUTOJUMP_AUTOCOMPLETE_CMDS='cp vim cd'
 export EDITOR='mvim -v '
 export SHELL='/usr/local/bin/zsh'
@@ -92,25 +90,13 @@ REPORTTIME=10
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
 
-#zsh specifc alias
-alias mmv='noglob zmv -W'
-alias mv='nocorrect mv'
-alias cp='nocorrect cp'
-alias mkdir='nocorrect mkdir'
-
 #this stops refresh issues with irssi && tmux in iterm2
 alias irssi='TERM=screen-256color irssi'
-
-alias -g TC='| tee command.log'
-alias -g T='| tee '
-alias -g J="| jq '.'"
-alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
-alias s='git checkout '
 
 [[ -f $HOME/.scripts/corp.env.sh ]] && source $HOME/.scripts/corp.env.sh
 [[ -f $HOME/.scripts/env.sh ]]      && source $HOME/.scripts/env.sh
 [[ -f $HOME/.scripts/proj.env.sh ]] && source $HOME/.scripts/proj.env.sh
-[[ -f $HOME/.aws ]]                 && source $HOME/.aws
+# [[ -f $HOME/.aws ]]                 && source $HOME/.aws
 
 # (Zsh) "zsh-history-substring-search" plugin
 # => zsh-history-substring-search customisation
@@ -209,7 +195,7 @@ load-nvmrc() {
     fi
   elif [ "$node_version" != "$(nvm version default)" ]; then
     echo "Reverting to nvm default version"
-    nvm use default
+    nvm use stable
   fi
 }
 add-zsh-hook chpwd load-nvmrc
