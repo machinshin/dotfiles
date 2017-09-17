@@ -1,6 +1,6 @@
 [user]
     name=Vat Raghavan
-    email=vat.raghavan@gmail.com
+	useConfigOnly = true
 [color]
     branch=auto
     diff=auto
@@ -8,41 +8,38 @@
     status=auto
     ui=true
 [alias]
-    changed=show --pretty=\"format:\" --name-only
-    lg=log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --date=relative  ; various pretty loggers from various places
-    ;deploys = !git dlog --no-merges upstream/master..upstream/dev
-    ;odeps=!git dlog --no-merges origin/master..origin/dev
-    ;pus=!"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
-    aliases="!git config -l | grep alias | cut -c 7-"     ;display all aliases
-    br=branch
-    ca=commit --amend
-    cm=commit -m
-    cma=commit -am
-    co=checkout
-    df=diff
-    dlog=log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    dm=diff master..
-    dt=difftool
-    dtm=difftool master..
-    l=log --no-merges
-    last=log -l HEAD
-    lc=log ORIG_HEAD.. --stat --no-merges
-    ll=log --graph --date= short  ; from http://blog.kfish.org/2010/04/git-lola.html
-    lol=log --graph --decorate --pretty=oneline --abbrev-commit
-    lola=log --graph --decorate --pretty=oneline --abbrev-commit --all
-    nb=checkout -b
-    pl=pull --ff-only             ; not a fan of random merges
-    rc=rebase --continue
-    sapply=!sh -c 'git stash apply stash^{/$*}' -
-    ssave=!sh -c 'git stash save \"${1}\"' -
-    sshow=!sh -c 'git stash show stash^{/$*} -p' -
-    st=status
-    sta=stash
-    unstage=reset HEAD --
-    up= pull origin
-    visual=!gitk
-    whatis=show -s --pretty='tformat:%h (%s, %ad)' --date=short
-    whois="!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"; from https://git.wiki.kernel.org/index.php/Aliases
+  aliases="!git config -l | grep alias | cut -c 7-"     ;display all aliases
+  br=branch
+  ca=commit --amend
+  changed=show --pretty=\"format:\" --name-only
+  cm=commit -m
+  cma=commit -am
+  co=checkout
+  df=diff
+  dlog=log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  dm=diff master..
+  dt=difftool
+  dtm=difftool master..
+  l=log --no-merges
+  last=log -l HEAD
+  lc=log ORIG_HEAD.. --stat --no-merges
+  lg=log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --date=relative  ; various pretty loggers from various places
+  ll=log --graph --date= short  ; from http://blog.kfish.org/2010/04/git-lola.html
+  lol=log --graph --decorate --pretty=oneline --abbrev-commit
+  lola=log --graph --decorate --pretty=oneline --abbrev-commit --all
+  nb=checkout -b
+  pl=pull --ff-only             ; not a fan of random merges
+  rc=rebase --continue
+  sapply=!sh -c 'git stash apply stash^{/$*}' -
+  ssave=!sh -c 'git stash save \"${1}\"' -
+  sshow=!sh -c 'git stash show stash^{/$*} -p' -
+  st=status
+  sta=stash
+  unstage=reset HEAD --
+  up= pull origin
+  visual=!gitk
+  whatis=show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  whois="!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"; from https://git.wiki.kernel.org/index.php/Aliases
 [github]
     token=faf03543c81b5ee13885108ab3582c78
     user=machinshin
@@ -52,22 +49,27 @@
     pager=cat
     trustctime=false
 [diff]
-    tool=mvimdiff
-[difftool "mvimdiff"]
+ tool=mvimdiff
+# tool = webstorm
+   prompt=false
+ [difftool "mvimdiff"]
     cmd=mvim -v -d \"$LOCAL\" \"$REMOTE\"
-[push]
-    default=current
-[difftool]
     prompt=false
+#[difftool "webstorm"]
+#  cmd = webstorm diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+#  prompt=false
+[push]
+  default=current
 [help]
     autocorrect=1
 [credential]
-    helper=cache
+    helper = cache
 [fetch]
-  prune=true
-[mergetool]
-    prompt=false
-[merge]
-  tool=fugitive
-[mergetool "fugitive"]
-  cmd=vim -f -c \"Gdiff\" \"$MERGED\"
+  prune = true
+#[merge]
+#  tool = webstorm
+#  prompt=false
+#[mergetool "webstorm"]
+#   cmd = webstorm merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
+#   trustExitCode = true
+#   prompt=false

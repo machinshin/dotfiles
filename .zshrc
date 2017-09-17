@@ -204,3 +204,5 @@ load-nvmrc
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/vat/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/vat/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
+# added by travis gem
+[ -f /Users/vat/.travis/travis.sh ] && source /Users/vat/.travis/travis.sh

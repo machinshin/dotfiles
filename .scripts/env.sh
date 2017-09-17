@@ -53,6 +53,9 @@ alias mv='nocorrect mv'
 alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir'
 
+export WEBSTORM_HOME=/Applications/WebStorm.app/Contents/MacOS
+PATH=$PATH:${WEBSTORM_HOME}
+
 rationalise-dot() {
   if [[ $LBUFFER = *.. ]]; then
     LBUFFER+=/..
