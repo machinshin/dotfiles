@@ -29,6 +29,7 @@ alias c='clear'
 alias gs='git status'
 alias gp='git push'
 alias gf='git push -f'
+alias gppd='git push && git push upstream develop'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
 alias la='ls -al'
 alias ll='ls -alh'

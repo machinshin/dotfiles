@@ -700,6 +700,9 @@ augroup javascript
   " autocmd FileType javascript set formatprg=prettier-standard
   " autocmd BufWritePre *.js :normal gggqG
   set autoread
+  let g:ale_fixers = {
+        \   'javascript': ['prettier-standard'],
+        \}
 augroup END
 
 set macligatures

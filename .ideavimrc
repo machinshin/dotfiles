@@ -5,17 +5,24 @@ set surround
 set gdefault
 set ignorecase
 
+let mapleader = ","
+"Integrate with system clipboard
+set clipboard=unnamedplus,unnamed
+" ==========
+" save file
+nnorremap <leader>s :wall
+
 " ============================================================================
 " Movement
 " ============================================================================
 
 " Scroll screen with the cursor
-noremap <C-j> gj<C-e>
-noremap <C-k> gk<C-y>
+noremap <S-j> gj<C-e>
+noremap <S-k> gk<C-y>
 
 " Left / right
-noremap <C-h> h
-noremap <C-l> l
+noremap <S-h> h
+noremap <S-l> l
 
 " Insert mode
 inoremap <C-k> <Up>
@@ -27,7 +34,16 @@ inoremap <C-h> <Left>
 noremap H ,
 noremap L ;
 
-nnorremap ,s :w!
+" nnorremap <leader>s :wall
+nnorremap <leader>s :SaveFile<CR>
+
+" key bindings for quickly moving between windows
+" h left, l right, k up, j down
+nmap <leader>h <c-w>h
+nmap <leader>l <c-w>l
+nmap <leader>k <c-w>k
+nmap <leader>j <c-w>j
+
 
 "" Home row beginning / end of line
 "noremap h ^
@@ -53,19 +69,19 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Select all text
-"map <Space>a ggVG
+"map <leader>a ggVG
 
 " Copy until the end of the line
 noremap Y y$
 
 " Indent everything
-noremap <Space>I ggvG=
+noremap <leader>I ggvG=
 
 " Indent selection in visual mode
-vnoremap <Space>i =
+vnoremap <leader>i =
 
 " Indent the current line
-noremap <Space>i v=
+noremap <leader>i v=
 
 " Change current word - kill
 "noremap K ciw
@@ -74,7 +90,7 @@ noremap <Space>i v=
 "oremap J ci"
 
 " Join lines
-"noremap <Space>J J
+"noremap <leader>J J
 
 
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -85,7 +101,7 @@ noremap <Space>i v=
 noremap <CR> :
 
 " Reload .ideavimrc
-nnoremap <Space>vs :source ~/.ideavimrc<CR>
+nnoremap <leader>vs :source ~/.ideavimrc<CR>
 
 
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -97,10 +113,92 @@ nnoremap n :action FindNext<CR>
 nnoremap N :action FindPrevious<CR>
 nnoremap U :action $Redo<CR>
 nnoremap ; :action AceJumpAction<CR>
-nnoremap <Space>o :action GotoClass<CR>
-nnoremap <Space>O :action GotoFile<CR>
-nnoremap <Space>d :action CloseContent<CR>
-nnoremap <Space>j :action RecentFiles<CR>
-nnoremap <Space>k :action FileStructurePopup<CR>
-nnoremap <Space>h :action QuickJavaDoc<CR>
+nnoremap <leader>o :action GotoClass<CR>
+nnoremap <leader>O :action GotoFile<CR>
+nnoremap <leader>d :action CloseContent<CR>
+nnoremap <leader>j :action RecentFiles<CR>
+nnoremap <leader>k :action FileStructurePopup<CR>
+nnoremap <leader>h :action QuickJavaDoc<CR>
+
+" Won't work in visual mode (with vmap) for some reason.
+" Use default map of <c-/> for that.
+nmap gcc :action CommentByLineComment<cr>
+
+"set hlsearch
+"set scrolloff=3
+"set ignorecase smartcase
+"set showmode
+"set history=1000
+
+"" easy system clipboard copy/paste
+"noremap <space>y "*y
+"noremap <space>Y "*Y
+"noremap <space>p "*p
+"noremap <space>P "*P
+
+"" easy window navigation
+"nnoremap <c-l> <c-w>l
+"nnoremap <c-j> <c-w>j
+"nnoremap <c-h> <c-w>h
+"nnoremap <c-k> <c-w>k
+"nnoremap <a-h> gT
+"nnoremap <a-l> gt
+"nnoremap <c-s-tab> gT
+"nnoremap <c-tab> gt
+
+"" clear the search buffer when hitting return
+"nnoremap <space><cr> :nohlsearch<cr>
+
+"" options
+"nnoremap cow :action EditorToggleUseSoftWraps<cr>
+"nnoremap col :action EditorToggleShowWhitespaces<cr>
+
+"" actions
+"nnoremap <space>q :action CloseContent<cr>
+"nnoremap <space>Q :action ReopenClosedTab<cr>
+"nnoremap <space>\ :action VimFilePrevious<cr>
+"nnoremap <space>e :action SearchEverywhere<cr>
+"nnoremap <space>E :action Switcher<cr>
+"nnoremap <space>t :action FileStructurePopup<cr>
+"nnoremap <space>T :action GotoSymbol<cr>
+"nnoremap <space>a :action GotoAction<cr>
+"nnoremap <space>b :action ToggleLineBreakpoint<cr>
+
+"" code navigation
+"nnoremap <space>] :action GotoImplementation<cr>
+"nnoremap <space>[ :action GotoSuperMethod<cr>
+"nnoremap <space>u :action FindUsages<cr>
+"nnoremap <space>gt :action GotoTest<cr>
+"nnoremap <space>k :action HighlightUsagesInFile<cr>
+"nnoremap \r :action RunClass<cr>
+"nnoremap \R :action Run<cr>
+"nnoremap \d :action DebugClass<cr>
+"nnoremap \D :action Debug<cr>
+"nnoremap \c :action CheckStyleCurrentFileAction<cr>
+
+"" code refactoring
+"nnoremap <space>rr :action RenameElement<cr>
+
+"" unimpaired mappings
+"nnoremap [<space> O<esc>j
+"nnoremap ]<space> o<esc>k
+"nnoremap [q :action PreviousOccurence<cr>
+"nnoremap ]q :action NextOccurence<cr>
+"nnoremap [m :action MethodUp<cr>
+"nnoremap ]m :action MethodDown<cr>
+"nnoremap [c :action VcsShowPrevChangeMarker<cr>
+"nnoremap ]c :action VcsShowNextChangeMarker<cr>
+
+
+"" built-in navigation to navigated items works better
+"nnoremap <c-o> :action Back<cr>
+"nnoremap <c-i> :action Forward<cr>
+"" but preserve ideavim defaults
+"nnoremap g<c-o> <c-o>
+"nnoremap g<c-i> <c-i>
+
+"" built in search looks better
+"nnoremap / :action Find<cr>
+"" but preserve ideavim search
+"nnoremap g/ /
 

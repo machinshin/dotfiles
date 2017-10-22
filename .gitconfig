@@ -1,12 +1,12 @@
 [user]
-    name=Vat Raghavan
-	useConfigOnly = true
+  name=Vat Raghavan
+  useConfigOnly = true
 [color]
-    branch=auto
-    diff=auto
-    interactive=auto
-    status=auto
-    ui=true
+  branch=auto
+  diff=auto
+  interactive=auto
+  status=auto
+  ui=true
 [alias]
   aliases="!git config -l | grep alias | cut -c 7-"     ;display all aliases
   br=branch
@@ -41,29 +41,26 @@
   whatis=show -s --pretty='tformat:%h (%s, %ad)' --date=short
   whois="!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"; from https://git.wiki.kernel.org/index.php/Aliases
 [github]
-    token=faf03543c81b5ee13885108ab3582c78
-    user=machinshin
+  token=faf03543c81b5ee13885108ab3582c78
+  user=machinshin
 [core]
-    editor=vim -f
-    excludesfile=/Users/vat/.gitignore_global
-    pager=cat
-    trustctime=false
+  editor=vim -f
+  excludesfile=/Users/vat/.gitignore_global
+  pager=cat
+  trustctime=false
 [diff]
- tool=mvimdiff
+  tool=mvimdiff
 # tool = webstorm
-   prompt=false
- [difftool "mvimdiff"]
-    cmd=mvim -v -d \"$LOCAL\" \"$REMOTE\"
-    prompt=false
-#[difftool "webstorm"]
-#  cmd = webstorm diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
-#  prompt=false
+[difftool "mvimdiff"]
+  cmd=mvim -v -d \"$LOCAL\" \"$REMOTE\"
+[difftool "webstorm"]
+  cmd = webstorm diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
 [push]
   default=current
 [help]
-    autocorrect=1
+  autocorrect=1
 [credential]
-    helper = cache
+  helper = cache
 [fetch]
   prune = true
 #[merge]
@@ -73,3 +70,5 @@
 #   cmd = webstorm merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
 #   trustExitCode = true
 #   prompt=false
+[difftool]
+	prompt = false
