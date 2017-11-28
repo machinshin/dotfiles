@@ -1,9 +1,11 @@
-set visualbell
 set noerrorbells
+set novisualbell
 set surround
 
 set gdefault
 set ignorecase
+set smartcase
+set scrolloff=3  "3 lines above/below cursor when scrolling
 
 let mapleader = ","
 "Integrate with system clipboard
@@ -17,8 +19,8 @@ nnorremap <leader>s :wall
 " ============================================================================
 
 " Scroll screen with the cursor
-noremap <S-j> gj<C-e>
-noremap <S-k> gk<C-y>
+nnoremap <S-j> <C-d>
+nnoremap <S-k> <C-u>
 
 " Left / right
 noremap <S-h> h
@@ -45,14 +47,6 @@ nmap <leader>k <c-w>k
 nmap <leader>j <c-w>j
 
 
-"" Home row beginning / end of line
-"noremap h ^
-"noremap l $
-
-"" Previous / next word
-"noremap k #
-"noremap j *
-
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Editing
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,10 +66,12 @@ vnoremap > >gv
 "map <leader>a ggVG
 
 " Copy until the end of the line
-noremap Y y$
+nnoremap Y y$
+" visually select everything between 2 %'s'
+noremap <Leader>% v%
 
 " Indent everything
-noremap <leader>I ggvG=
+nnoremap <leader>I ggvG=
 
 " Indent selection in visual mode
 vnoremap <leader>i =
@@ -87,7 +83,7 @@ noremap <leader>i v=
 "noremap K ciw
 
 " Change in double quotes
-"oremap J ci"
+"noremap J ci"
 
 " Join lines
 "noremap <leader>J J
@@ -98,7 +94,7 @@ noremap <leader>i v=
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Enter the command-line mode
-noremap <CR> :
+nnoremap <CR> :
 
 " Reload .ideavimrc
 nnoremap <leader>vs :source ~/.ideavimrc<CR>

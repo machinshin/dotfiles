@@ -12,3 +12,8 @@ if [ $? = 0 ]; then
 fi;
 config checkout
 config config status.showUntrackedFiles no
+
+# git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+

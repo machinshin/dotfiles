@@ -1,6 +1,7 @@
 #add zsh debugging
 #setopt VERBOSE
 #Add the following to your zshrc to access the online help:
+export PATH=$PATH:/usr/local/bin
 unalias run-help
 autoload run-help
 HELPDIR=/usr/local/share/zsh/help
@@ -19,13 +20,13 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/command-not-found
     zgen oh-my-zsh plugins/common-aliases
     zgen oh-my-zsh plugins/dirpersist
-    zgen oh-my-zsh plugins/docker
-    zgen oh-my-zsh plugins/docker-compose
+    # zgen oh-my-zsh plugins/docker
+    # zgen oh-my-zsh plugins/docker-compose
     zgen oh-my-zsh plugins/extract
     zgen oh-my-zsh plugins/gnu-utils
     zgen oh-my-zsh plugins/history
-    zgen oh-my-zsh plugins/kubectl
-    zgen oh-my-zsh plugins/taskwarrior
+    # zgen oh-my-zsh plugins/kubectl
+    # zgen oh-my-zsh plugins/taskwarrior
     zgen oh-my-zsh plugins/tmux
     zgen oh-my-zsh plugins/vi-mode
 
@@ -62,10 +63,7 @@ setopt extendedglob
 unsetopt caseglob
 setopt NO_NOMATCH
 REPORTTIME=10
-
-#zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-#zstyle ':completion:*' list-colors  'reply=( "=(#b)(*$PREFIX)(?)*=00=$color[green]=$color[bg-green]" )'
-#zstyle ':completion:*' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+zstyle ':completion:*' rehash true
 ##history
 #zstyle ':completion:*:history-words' stop yes
 #zstyle ':completion:*:history-words' remove-all-dups yes
@@ -90,9 +88,6 @@ REPORTTIME=10
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' hosts $hosts
 zstyle ':completion:*:(ssh|scp|ftp|sftp):*' users $users
 
-#this stops refresh issues with irssi && tmux in iterm2
-alias irssi='TERM=screen-256color irssi'
-
 [[ -f $HOME/.scripts/corp.env.sh ]] && source $HOME/.scripts/corp.env.sh
 [[ -f $HOME/.scripts/env.sh ]]      && source $HOME/.scripts/env.sh
 [[ -f $HOME/.scripts/proj.env.sh ]] && source $HOME/.scripts/proj.env.sh
@@ -110,11 +105,11 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 #NewLine
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="╰─ \$ "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─>>> \$  "
 # => Segments
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator status vcs background_jobs_joined vi_mode history context dir)
 #POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs background_jobs_joined)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(battery)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(nodeenv os_icon battery)
 POWERLEVEL9K_HISTORY_FOREGROUND='178'
 POWERLEVEL9K_HISTORY_BACKGROUND='black'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S %m/%d/%y}"
@@ -206,3 +201,5 @@ if [ -f '/Users/vat/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then sourc
 
 # added by travis gem
 [ -f /Users/vat/.travis/travis.sh ] && source /Users/vat/.travis/travis.sh
+alias config='/usr/bin/git --git-dir=/Users/vat/.dotfiles.git/ --work-tree=/Users/vat'
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -1,23 +1,26 @@
 OS=`uname`
 
-export LS_OPTIONS='--color=auto'
+source '/usr/local/share/zsh/site-functions'
+source <(npx --shell-auto-fallback zsh)
+
+# export LS_OPTIONS='--color=auto'
 if [[ "$OS" == "Darwin" ]]; then
   PORTSBIN="/usr/local/bin"
-  DIRCOLORS="$PORTSBIN/gdircolors"
+  # DIRCOLORS="$PORTSBIN/gdircolors"
   alias gvim='mvim -v'
-  alias ls="$PORTSBIN/gls $LS_OPTIONS "
+  # alias ls="$PORTSBIN/gls $LS_OPTIONS "
+  alias ls='exa --color-scale -G -F '
   alias vi='mvim -v'
   alias vim='mvim -v'
 else
-  DIRCOLORS='/usr/bin/dircolors'
-  alias ls="ls $LS_OPTIONS "
+  # DIRCOLORS='/usr/bin/dircolors'
+  alias ls='exa --color-scale -G -F'
+  # alias ls="ls $LS_OPTIONS "
   alias v='vim'
   alias vi='vim'
 fi
 
-eval `$DIRCOLORS ~/.dir_colors`
-
-if [[ "$OS" == "Darwin" ]]; then
+if [[ "$OS" == 'Darwin' ]]; then
   export JAVA_HOME=`/usr/libexec/java_home`
   export PATH=${JAVA_HOME}/bin:$PATH
 fi
@@ -31,14 +34,16 @@ alias gp='git push'
 alias gf='git push -f'
 alias gppd='git push && git push upstream develop'
 alias hist="git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short"
+alias git-sync='git checkout develop && git pull upstream develop && git merge upstream/develop && git push'
+alias sync-master='git checkout master && git pull upstream master  && git merge upstream/master && git push'
 alias la='ls -al'
 alias ll='ls -alh'
 alias l='ll'
 alias lsd='ls -ld *(-/DN)'
 alias mem='free -m'
 alias rmd='rm -rf '
-alias gtr='go test ./...'
-alias n='npm install --save '
+#alias gtr='go test ./...'
+alias n='npm i --save '
 alias nd='npm install --save-dev '
 
 alias -g TC='| tee command.log'
@@ -84,5 +89,4 @@ codi() {
     hi NonText ctermfg=0 |\
     Codi $syntax" "> $ @"
 }
-source '/usr/local/share/zsh/site-functions'
 
