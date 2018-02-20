@@ -1,6 +1,7 @@
 [user]
   name=Vat Raghavan
   useConfigOnly = true
+  email=machinshin@gmail.com
 [color]
   branch=auto
   diff=auto

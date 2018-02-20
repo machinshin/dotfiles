@@ -1,22 +1,49 @@
-set noerrorbells
-set novisualbell
-set surround
+" ====
+" command list
+" https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
+" ====
+
+
+let mapleader = ','
+let maplocalleader = ' '
 
 set gdefault
 set ignorecase
-set smartcase
+set incsearch
 set scrolloff=3  "3 lines above/below cursor when scrolling
+set smartcase
+set surround
+set undolevels=100
 
-let mapleader = ","
 "Integrate with system clipboard
 set clipboard=unnamedplus,unnamed
-" ==========
+
+set relativenumber
+set number
+set showmode
+set viminfo
+
 " save file
 nnorremap <leader>s :wall
 
-" ============================================================================
-" Movement
-" ============================================================================
+" =================
+" Window Movement
+" =================
+nnoremap <silent> gh :WriteBufferIfNecessary<CR>:wincmd h<CR>
+nnoremap <silent> gj :WriteBufferIfNecessary<CR>:wincmd j<CR>
+nnoremap <silent> gk :WriteBufferIfNecessary<CR>:wincmd k<CR>
+nnoremap <silent> gl :WriteBufferIfNecessary<CR>:wincmd l<CR>
+
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
+" ---------------
+" Sounds
+" ---------------
+set noerrorbells
+set visualbell
+set t_vb=
 
 " Scroll screen with the cursor
 nnoremap <S-j> <C-d>
@@ -47,9 +74,9 @@ nmap <leader>k <c-w>k
 nmap <leader>j <c-w>j
 
 
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =============
 " Editing
-" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =============
 
 " Escape
 "inoremap jk <Esc>`^
@@ -120,18 +147,36 @@ nnoremap <leader>h :action QuickJavaDoc<CR>
 " Use default map of <c-/> for that.
 nmap gcc :action CommentByLineComment<cr>
 
-"set hlsearch
+set hlsearch
 "set scrolloff=3
 "set ignorecase smartcase
 "set showmode
-"set history=1000
+set history=1000
+" Toggle paste mode with F2
+set pastetoggle=<F2>
+nnoremap <silent> <F2> :set paste!<CR>
 
-"" easy system clipboard copy/paste
-"noremap <space>y "*y
-"noremap <space>Y "*Y
-"noremap <space>p "*p
-"noremap <space>P "*P
+" Paste and select pasted
+nnoremap <expr> gpp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
+" Insert date
+iabbrev ddate <C-R>=strftime("%Y-%m-%d")<CR>
+
+" copy current file name (relative/absolute) to system clipboard
+" from http://stackoverflow.com/a/17096082/22423
+if has('mac') || has('gui_macvim') || has('gui_mac')
+  " relative path  (src/foo.txt)
+  nnoremap <silent> <leader>yp :let @*=expand("%")<CR>
+
+  " absolute path  (/something/src/foo.txt)
+  nnoremap <silent> <leader>yP :let @*=expand("%:p")<CR>
+
+  " filename       (foo.txt)
+  nnoremap <silent> <leader>yf :let @*=expand("%:t")<CR>
+
+  " directory name (/something/src)
+  nnoremap <silent> <leader>yd :let @*=expand("%:p:h")<CR>
+endif
 "" easy window navigation
 "nnoremap <c-l> <c-w>l
 "nnoremap <c-j> <c-w>j
@@ -144,10 +189,6 @@ nmap gcc :action CommentByLineComment<cr>
 
 "" clear the search buffer when hitting return
 "nnoremap <space><cr> :nohlsearch<cr>
-
-"" options
-"nnoremap cow :action EditorToggleUseSoftWraps<cr>
-"nnoremap col :action EditorToggleShowWhitespaces<cr>
 
 "" actions
 "nnoremap <space>q :action CloseContent<cr>
