@@ -56,7 +56,8 @@ alias -g T='| tee '
 alias -g J="| jq '.'"
 alias mg='git diff --name-status --diff-filter=U | sort | cut -f2'
 alias s='git checkout '
-alias -g OVI=' -l | xargs -o vim'
+alias -g OVI=' | xargs -o vim'
+alias -g AVI='-l | xargs -o vim'
 
 #zsh specific alias
 alias mmv='noglob zmv -W'

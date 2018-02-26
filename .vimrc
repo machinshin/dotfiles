@@ -81,7 +81,6 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
     Plug 'othree/yajs.vim',           { 'for': 'javascript' }
     Plug 'othree/jsdoc-syntax.vim',   { 'for': 'javascript' }
-    Plug 'w0rp/ale',                  { 'for': 'javascript' }
     Plug 'powerline/fonts'
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdcommenter'
@@ -368,7 +367,6 @@ let g:gutentags_exclude_project_root = [
       \ 'jquery*.js',
       \ '*/vendor/*',
       \ '*/node_modules/*',
-      \ '*/python2.7/*',
       \ '*/migrate/*.rb'
     \ ]
 
@@ -700,9 +698,6 @@ augroup javascript
   " autocmd FileType javascript set formatprg=prettier-standard
   " autocmd BufWritePre *.js :normal gggqG
   set autoread
-  let g:ale_fixers = {
-        \   'javascript': ['prettier-standard'],
-        \}
 augroup END
 
 "if has("")
