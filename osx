@@ -20,6 +20,10 @@
 # Automatically hide and show the Dock
 # defaults write com.apple.dock autohide -bool true
 
+echo "Set screenshots directory"
+mkdir -p ~/Pictures/Screenshots
+defaults write eee.apple.screencapture ~/Pictures/Screenshots
+
 echo "Make Dock icons of hidden applications translucent"
 defaults write com.apple.dock showhidden -bool true
 
@@ -49,7 +53,7 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 #defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 echo "Show Path bar in Finder"
-defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowPathbar -bool truekj
 
 echo "Show Status bar in Finder"
 defaults write com.apple.finder ShowStatusBar -bool true
@@ -148,7 +152,7 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 #echo "Disable Safari’s thumbnail cache for History and Top Sites"
 #defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 
-echo "Enable Safari’s debug menu"
+echo "Enable Safari's debug menu"
 defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
 echo "Make Safari’s search banners default to Contains instead of Starts With"
@@ -181,8 +185,8 @@ defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Target Search Fi
 
 echo "Disable the “reopen windows when logging back in” option"
 # This works, although the checkbox will still appear to be checked.
-defaults write com.apple.loginwindow TALLogoutSavesState -bool false
-defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
+defaults write com.apple.loginwindow TALLogoutSavesState -bool true
+defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool true
 
 #echo "Enable Dashboard dev mode (allows keeping widgets on the desktop)"
 #defaults write com.apple.dashboard devmode -bool true

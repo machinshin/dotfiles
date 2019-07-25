@@ -13,7 +13,7 @@ syntax on
 syntax enable
 
 " highlight last inserted text
-nnoremap gV `[v`]
+"nnoremap gV `[v`]
 let s:running_windows = has('was16') || has('win32') || has('win64')
 set cpoptions=aABceFsmq
             " ||||||||+-- When joining lines, leave the cursor between joined lines
@@ -81,7 +81,6 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
     Plug 'othree/yajs.vim',           { 'for': 'javascript' }
     Plug 'othree/jsdoc-syntax.vim',   { 'for': 'javascript' }
-    Plug 'w0rp/ale',                  { 'for': 'javascript' }
     Plug 'powerline/fonts'
     Plug 'ryanoasis/vim-devicons'
     Plug 'scrooloose/nerdcommenter'
@@ -98,12 +97,12 @@ call plug#begin('~/.vim/bundle') " {{{
     Plug 'tysontate/HTML-AutoCloseTag', { 'for': ['html', 'xml', 'xhtml'] }
     Plug 'vim-airline/vim-airline-themes'
     Plug 'wellle/tmux-complete.vim'
-
+    Plug 'KabbAmine/yowish.vim'
+    Plug 'haya14busa/vim-signjk-motion'
 call plug#end() "}}}
-"tern settings
-let g:tern_show_argument_hints='on_hold'
-" and
-let g:tern_map_keys=1
+
+map <Leader>i <Plug>(signjk-j)
+map <Leader>o <Plug>(signjk-k)
 
 " Make the dot command work as expected in visual mode (via
 " https://www.reddit.com/r/vim/comments/3y2mgt/do_you_have_any_minor_customizationsmappings_that/cya0x04)
@@ -319,7 +318,7 @@ else
     let g:ctrlp_clear_cache_on_exit = 0
 endif
 
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 let g:ctrlp_cache_dir='$HOME/.vim/ctrlp_cache'
 let g:ctrlp_match_window_reverse=0
@@ -368,7 +367,6 @@ let g:gutentags_exclude_project_root = [
       \ 'jquery*.js',
       \ '*/vendor/*',
       \ '*/node_modules/*',
-      \ '*/python2.7/*',
       \ '*/migrate/*.rb'
     \ ]
 
@@ -544,18 +542,18 @@ nnoremap <silent>.n :n<cr>
 nnoremap <silent>.p :N<cr>
 "really quit vim
 nnoremap <silent><Leader><Leader>q :qa<CR>
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 "make traversing help docs easier
-nnoremap <buffer> <CR> <C-]>
-nnoremap <buffer> <BS> <C-T>
-nnoremap <buffer> o /'\l\{2,\}'<CR>
-nnoremap <buffer> O ?'\l\{2,\}'<CR>
-nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
-nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
-inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
-inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+"nnoremap <buffer> <CR> <C-]>
+"nnoremap <buffer> <BS> <C-T>
+"nnoremap <buffer> o /'\l\{2,\}'<CR>
+"nnoremap <buffer> O ?'\l\{2,\}'<CR>
+"nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+"nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+"inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+"inoremap nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 
 " visually select everything between 2 %'s'
 noremap <Leader>% v%
@@ -700,13 +698,11 @@ augroup javascript
   " autocmd FileType javascript set formatprg=prettier-standard
   " autocmd BufWritePre *.js :normal gggqG
   set autoread
-  let g:ale_fixers = {
-        \   'javascript': ['prettier-standard'],
-        \}
 augroup END
 
-set macligatures
-set guifont=Fira\ Code:h12
+"if has("")
+"set macligatures
+"set guifont=Fira\ Code:h12
 
 augroup startify
     let g:startify_skiplist = [

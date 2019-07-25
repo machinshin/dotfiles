@@ -33,5 +33,6 @@ windows:
       layout: main-horizontal
       panes:
         - ngrok http 8080 -subdomain=izi
+        - cloud_sql_proxy -dir=/cloudsql -max_connections=0 -instances=friday-167305:us-central1:friday-staging-db=tcp:3310 -credential-file=./config/friday-b0b3f20f3ff4.json 2>&1
         - ls
 
